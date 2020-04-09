@@ -8,10 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CharactherComponent implements Component {
 	
+	
+	
+	
+	
 	public Race race;
 	public Style style;
 	public Vector2 lookDir;
-	
+		
 	public float maxHealth;
 	public float maxEnergy;
 	
@@ -21,6 +25,12 @@ public class CharactherComponent implements Component {
 	public float speed;	
 	public float strength;
 	public float armor;
+	public float visibility;
+	public float healthRegen;
+	public float energyRegen;
+
+	
+	
 	
 	public Skill[] skill = new Skill[4];
 	public float[] progress = new float[4];

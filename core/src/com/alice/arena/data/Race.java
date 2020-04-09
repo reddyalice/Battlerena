@@ -12,17 +12,50 @@ public abstract class Race {
 	
 	public int id;
 	public Texture racialTexture;
+	public String name;
+	
+	public float baseHealth;
+	public float baseEnergy;
+	public float baseSpeed;	
+	public float baseStrength;
+	public float baseArmor;
+	public float baseVisibility;
+	public float baseHealthRegen;
+	public float baseEnergyRegen;
+
 	
 	
-	public int baseHealth;
-	public int baseEnergy;
-	public int baseSpeed;	
-	public int baseStrength;
-	public int baseArmor;
 	
 	
 	
-	public HashMap<Skill, Integer> raceSkills;
+	public HashMap<Skill, Integer> raceSkills = new HashMap<Skill, Integer>();
+	
+	
+	
+	public Race(int id, String name, Texture texture, float baseHealth,
+			float baseEnergy, float baseSpeed,  float baseStrength, float baseArmor, float baseVisibility,
+			float baseHealthRegen, float baseEnergyRegen,
+			Skill... skills){
+		
+		this.id = id;
+		this.name = name;
+		this.racialTexture = texture;
+		this.baseHealth = baseHealth;
+		this.baseEnergy = baseEnergy;
+		this.baseSpeed = baseSpeed;
+		this.baseStrength = baseStrength;
+		this.baseArmor = baseArmor;
+		this.baseVisibility = baseVisibility;
+		this.baseHealthRegen = baseHealthRegen;
+		this.baseEnergyRegen = baseEnergyRegen;
+		
+		for(Skill skill : skills) {
+			raceSkills.put(skill, skill.level);
+		}
+		
+		Registry.raceList.put(id, this);
+		
+	}
 	
 	
 	public abstract void RacialInit(CharactherComponent cc);

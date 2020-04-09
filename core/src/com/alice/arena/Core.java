@@ -1,33 +1,34 @@
 package com.alice.arena;
 
+import com.alice.arena.screens.PlayScreen;
+import com.alice.arena.utils.Assets;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 
 public class Core extends Game {
-	SpriteBatch batch;
-	Texture img;
+
+	public static Color backgroundColor = Color.WHITE;
+	public static Core instance;
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		instance = this;
+		setScreen(new PlayScreen());
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		Assets.Dispose();
+		super.dispose();
 	}
 }

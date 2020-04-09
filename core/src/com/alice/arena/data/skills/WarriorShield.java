@@ -7,10 +7,10 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class WarriorSheild extends Skill{
+public class WarriorShield extends Skill{
 
-	public WarriorSheild() {
-		super("Warrior's Sheild", Assets.GetTexture("warriorsheild"), 1, 0, "Warrior's Trusted Sheild");
+	public WarriorShield() {
+		super("Warrior's Shield", Assets.GetTexture("warriorshield"), 1, 0, "Warrior's Trusted Shield");
 		// TODO Auto-generated constructor stub
 	}
 

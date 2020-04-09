@@ -2,6 +2,7 @@ package com.alice.arena.systems;
 
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.data.Skill;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -36,9 +37,12 @@ public class RenderingSystem extends IteratingSystem {
 		CharactherComponent cc = cm.get(entity);
 		
 		float rot = Vector2.dot(1, 0, cc.lookDir.x, cc.lookDir.y);
-		
-		
-		
+		batch.draw(cc.race.racialTexture, pc.x, pc.y, 0,0, 32, 32, 1, 1, rot, 0,0
+				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);
+		batch.draw(cc.style.styleTexture, pc.x, pc.y, 0,0, 32, 32, 1, 1, rot, 0,0
+				,cc.style.styleTexture.getWidth(), cc.style.styleTexture.getHeight(), false, false);
+		for(Skill s : cc.skill)
+			s.SkillRender(batch, cc);
 		
 		
 		

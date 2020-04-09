@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.alice.arena.data.skills.VeryNormal;
 import com.alice.arena.data.skills.WarriorSword;
-import com.alice.arena.data.skills.WarriorSheild;
+import com.alice.arena.data.skills.WarriorShield;
 import com.alice.arena.data.skills.HumanSpirit;
 
 
@@ -18,7 +18,7 @@ public class Registry {
 	public static class SKILLS{
 		public static final Skill VeryNormal = new VeryNormal();
 		public static final Skill WarriorSword = new WarriorSword();
-		public static final Skill WarriorSheild = new WarriorSheild();
+		public static final Skill WarriorSheild = new WarriorShield();
 		public static final Skill HumanSpirit = new HumanSpirit();
 	}
 	

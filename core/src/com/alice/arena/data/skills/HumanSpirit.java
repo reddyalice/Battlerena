@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class HumanSpirit extends Skill {
 
 	public HumanSpirit() {
-		super("Human's Spirit", Assets.GetTexture("humanspirit"), 1, 0, "Human's Stubborness");
+		super("Human's Spirit", null, 1, 0, "Human's Stubborness");
 		// TODO Auto-generated constructor stub
 	}
 

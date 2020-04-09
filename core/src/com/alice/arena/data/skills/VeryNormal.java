@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class VeryNormal extends Skill {
 
 	public VeryNormal() {
-		super("Extremely Avarage", Assets.GetTexture("verynormal"), 1, 10, "Less noticable");
+		super("Extremely Avarage",null, 1, 1, "Less noticable");
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.alice.arena.data.races;
 
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Registry;
 import com.alice.arena.utils.Assets;
@@ -23,7 +24,7 @@ public class Human extends Race {
 	}
 
 	@Override
-	public void RacialUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc) {
+	public void RacialUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,6 +2,7 @@ package com.alice.arena.data.skills;
 
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.badlogic.ashley.core.Engine;
@@ -22,7 +23,7 @@ public class WarriorSword extends Skill {
 	}
 
 	@Override
-	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, int index) {
+	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc, int index) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -34,10 +35,11 @@ public class WarriorSword extends Skill {
 	}
 
 	@Override
-	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
+	public void ActiveCall(CharactherComponent cc, int index) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 

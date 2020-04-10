@@ -7,6 +7,7 @@ import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.MPComponent;
 import com.alice.arena.components.PlayerComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
@@ -80,6 +81,7 @@ public class Core extends Game {
 		
 		
 		e.add(cc);
+		e.add(new VelocityComponent());
 		cc.race.RacialInit(cc);
 		cc.style.StyleInit(cc);
 		for(Skill s : cc.skill)

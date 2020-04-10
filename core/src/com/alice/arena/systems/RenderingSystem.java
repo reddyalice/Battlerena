@@ -8,15 +8,14 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class RenderingSystem extends IteratingSystem {
 
 	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
 	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private SpriteBatch batch;
-	
 	
 	public RenderingSystem(SpriteBatch batch) {
 		super(Family.all(PositionComponent.class, CharactherComponent.class).get());
@@ -34,7 +33,12 @@ public class RenderingSystem extends IteratingSystem {
 		PositionComponent pc = pm.get(entity);
 		CharactherComponent cc = cm.get(entity);
 		
+		Color c = new Color(Color.WHITE);
+		if(cc.visibility < 1f)
+		c.a *= cc.visibility;
+
 		
+		batch.setColor(c);
 		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
 				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);
 		batch.draw(cc.style.styleTexture, pc.x, pc.y,32,32, 64, 64, 1, 1, cc.rotation, 0,0
@@ -44,8 +48,7 @@ public class RenderingSystem extends IteratingSystem {
 			s.SkillRender(batch, cc, pc, i);
 			i++;
 		}
-		
-		
+
 		
 	}
 

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -55,7 +56,7 @@ public abstract class Style {
 	
 	
 	public abstract void StyleInit(CharactherComponent cc);
-	public abstract void StyleUpdate(CharactherComponent cc,Engine en, float deltaTime, PositionComponent pc);
+	public abstract void StyleUpdate(CharactherComponent cc,Engine en, float deltaTime, PositionComponent pc, VelocityComponent vc);
 	
 	
 	

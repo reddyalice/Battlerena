@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,7 +62,7 @@ public abstract class Race {
 	
 	
 	public abstract void RacialInit(CharactherComponent cc);
-	public abstract void RacialUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc);
+	public abstract void RacialUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc, VelocityComponent vc);
 	
 	
 }

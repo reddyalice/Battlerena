@@ -76,6 +76,7 @@ public class PlayScreen implements Screen {
 		world.step(delta, 8, 3);
 		engine.update(delta);
 		batch.end();
+		
 
 	}
 

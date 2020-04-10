@@ -1,5 +1,7 @@
 package com.alice.arena.components;
 
+import java.util.HashMap;
+
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
@@ -25,7 +27,9 @@ public class CharactherComponent implements Component {
 	public float visibility;
 	public float healthRegen;
 	public float energyRegen;
-
+	public HashMap<String, Object> var = new HashMap<String, Object>();
+	
+	
 	public Skill[] skill;
 	public float[] progress;
 

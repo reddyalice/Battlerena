@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class WarriorShield extends Skill{
 
 	
-	private boolean renderSheild = false;
+	
 	private BitmapFont font;
 	public WarriorShield() {
 		super("Warrior's Shield", Assets.GetTexture("warriorshield"), 1, 10, "Warrior's Trusted Shield");
@@ -22,8 +22,7 @@ public class WarriorShield extends Skill{
 
 	@Override
 	public void SkillInit(CharactherComponent cc) {
-		// TODO Auto-generated method stub
-		
+		cc.var.put("renderSheild", false);		
 	}
 
 	@Override
@@ -31,12 +30,12 @@ public class WarriorShield extends Skill{
 		
 		if(cc.progress[index] >= cooldown)
 		{
-			renderSheild = false;
+			cc.var.put("renderSheild", false);
 			cc.progress[index] = cooldown;
 		}
 		
 		
-		if(renderSheild) {
+		if((boolean)(cc.var.get("renderSheild"))) {
 			cc.progress[index] += delta;
 		}else {
 			if(cc.progress[index] > 0)
@@ -54,7 +53,7 @@ public class WarriorShield extends Skill{
 		float x = pc.x  + cc.lookDir.x * 40f;
 		float y = pc.y + cc.lookDir.y * 40f;
 		
-		if(renderSheild)
+		if((boolean)(cc.var.get("renderSheild")))
 		{
 			batch.draw(texture, x, y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
 					,texture.getWidth(), texture.getHeight(), false, false);
@@ -77,10 +76,10 @@ public class WarriorShield extends Skill{
 
 	@Override
 	public void ActiveCall(CharactherComponent cc,int index) {
-		if(!renderSheild) {
+		if(!(boolean)(cc.var.get("renderSheild"))) {
 			if(cc.progress[index] == 0)
 			{
-				renderSheild = true;
+				cc.var.put("renderSheild", true);
 			}
 		}
 		

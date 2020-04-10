@@ -1,7 +1,6 @@
 package com.alice.arena.screens;
 
 import com.alice.arena.Core;
-import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
@@ -9,9 +8,6 @@ import com.alice.arena.systems.ControlSystem;
 import com.alice.arena.systems.RenderingSystem;
 import com.alice.arena.systems.UpdateCharactherSystem;
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
@@ -19,13 +15,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+
+
 public class PlayScreen implements Screen {
 
-	OrthographicCamera camera;
-	ExtendViewport viewport;
-	Engine engine;
-	SpriteBatch batch;
-	
+	private OrthographicCamera camera;
+	private ExtendViewport viewport;
+	private Engine engine;
+   
+	private SpriteBatch batch;
+
 	
 	
 	public PlayScreen(Race selectedR, Style selectedS, Skill... selectedSS) {
@@ -41,6 +40,10 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new RenderingSystem(batch));
 		engine.addEntity(Core.SpawnPlayerCharacther(0, 0, selectedR, selectedS, selectedSS));
+		
+		
+
+		
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			
 			@Override
@@ -63,6 +66,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		camera.update();
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
 		engine.update(delta);
@@ -96,7 +100,7 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void dispose() {
-	
+		batch.dispose();
 	}
 
 }

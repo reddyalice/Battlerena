@@ -47,7 +47,7 @@ public class ControlSystem extends EntitySystem {
 			VelocityComponent vc = vm.get(en);
 			CharactherComponent cc = cm.get(en);
 			PositionComponent pc = pm.get(en);
-			diff.sub(pc.x, pc.y);
+			diff.sub(pc.x + 16f, pc.y + 16f);
 			diff.nor();
 			Vector2 m = new Vector2(0,0);
 			

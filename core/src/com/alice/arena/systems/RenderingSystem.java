@@ -35,7 +35,6 @@ public class RenderingSystem extends IteratingSystem {
 		CharactherComponent cc = cm.get(entity);
 		
 		
-		
 		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
 				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);
 		batch.draw(cc.style.styleTexture, pc.x, pc.y,32,32, 64, 64, 1, 1, cc.rotation, 0,0

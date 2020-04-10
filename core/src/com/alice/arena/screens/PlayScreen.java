@@ -106,6 +106,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		world.dispose();
 	}
 
 }

@@ -33,6 +33,13 @@ public class WarriorSword extends Skill {
 		
 	}
 
+	@Override
+	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 }

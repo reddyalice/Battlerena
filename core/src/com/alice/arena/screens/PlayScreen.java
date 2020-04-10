@@ -7,6 +7,7 @@ import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.systems.ControlSystem;
 import com.alice.arena.systems.RenderingSystem;
+import com.alice.arena.systems.UpdateCharactherSystem;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -36,6 +37,7 @@ public class PlayScreen implements Screen {
 		
 		
 		engine = new Engine();
+		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new RenderingSystem(batch));
 		engine.addEntity(Core.SpawnPlayerCharacther(0, 0, selectedR, selectedS, selectedSS));

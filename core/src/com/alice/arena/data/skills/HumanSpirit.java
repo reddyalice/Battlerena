@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HumanSpirit extends Skill {
 
+	
+	
 	public HumanSpirit() {
 		super("Human's Spirit", null, 1, 0, "Human's Stubborness");
 		// TODO Auto-generated constructor stub
@@ -31,6 +33,13 @@ public class HumanSpirit extends Skill {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

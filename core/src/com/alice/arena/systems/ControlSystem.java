@@ -61,6 +61,23 @@ public class ControlSystem extends EntitySystem {
 				m.x++;
 			}
 			
+			if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
+				cc.skill[0].ActiveCall(cc, pc, 0);
+			
+			if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
+				cc.skill[1].ActiveCall(cc, pc, 1);
+			
+			if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+				cc.skill[2].ActiveCall(cc, pc, 2);
+			
+			
+			if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+				cc.skill[3].ActiveCall(cc, pc, 3);
+			
+			
+			
+			
+			
 			m.nor();
 			
 			pc.x += m.x * cc.speed * deltaTime * 100f;

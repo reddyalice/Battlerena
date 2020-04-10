@@ -15,7 +15,6 @@ public class RenderingSystem extends IteratingSystem {
 
 	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
 	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
-	private Engine engine;
 	private SpriteBatch batch;
 	
 	
@@ -26,7 +25,6 @@ public class RenderingSystem extends IteratingSystem {
 	
 	@Override
 	public void addedToEngine(Engine engine) {
-		this.engine = engine;
 		super.addedToEngine(engine);
 	}
 
@@ -35,12 +33,7 @@ public class RenderingSystem extends IteratingSystem {
 		
 		PositionComponent pc = pm.get(entity);
 		CharactherComponent cc = cm.get(entity);
-		cc.lookDir.nor();
 		
-		float dot = -cc.lookDir.x;
-		float det = -cc.lookDir.y;
-		cc.rotation = (float) Math.atan2(det, dot);
-		cc.rotation *= 180f / (float)(Math.PI);
 		
 		
 		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0

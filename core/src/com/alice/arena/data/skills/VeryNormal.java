@@ -1,6 +1,7 @@
 package com.alice.arena.data.skills;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.badlogic.ashley.core.Engine;
@@ -20,15 +21,17 @@ public class VeryNormal extends Skill {
 	}
 
 	@Override
-	public void SkillUpdate(CharactherComponent cc, Engine en, float delta) {
+	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, int index) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc) {
+	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+
 
 }

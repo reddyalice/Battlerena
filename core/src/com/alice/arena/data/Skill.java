@@ -1,6 +1,7 @@
 package com.alice.arena.data;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,8 +29,8 @@ public abstract class Skill {
 	
 	
 	public abstract void SkillInit(CharactherComponent cc);
-	public abstract void SkillUpdate(CharactherComponent cc,Engine en, float delta);
-	public abstract void SkillRender(SpriteBatch batch, CharactherComponent cc);
+	public abstract void SkillUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc, int index);
+	public abstract void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index);
 	
 	
 	

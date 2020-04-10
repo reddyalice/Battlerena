@@ -35,15 +35,23 @@ public class RenderingSystem extends IteratingSystem {
 		
 		PositionComponent pc = pm.get(entity);
 		CharactherComponent cc = cm.get(entity);
+		cc.lookDir.nor();
 		
-		float rot = Vector2.dot(1, 0, cc.lookDir.x, cc.lookDir.y);
-		batch.draw(cc.race.racialTexture, pc.x, pc.y, 0,0, 32, 32, 1, 1, rot, 0,0
+		float dot = -cc.lookDir.x;
+		float det = -cc.lookDir.y;
+		cc.rotation = (float) Math.atan2(det, dot);
+		cc.rotation *= 180f / (float)(Math.PI);
+		
+		
+		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
 				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);
-		batch.draw(cc.style.styleTexture, pc.x, pc.y, 0,0, 32, 32, 1, 1, rot, 0,0
+		batch.draw(cc.style.styleTexture, pc.x, pc.y,32,32, 64, 64, 1, 1, cc.rotation, 0,0
 				,cc.style.styleTexture.getWidth(), cc.style.styleTexture.getHeight(), false, false);
-		for(Skill s : cc.skill)
-			s.SkillRender(batch, cc);
-		
+		int i = 0;
+		for(Skill s : cc.skill) {
+			s.SkillRender(batch, cc, pc, i);
+			i++;
+		}
 		
 		
 		

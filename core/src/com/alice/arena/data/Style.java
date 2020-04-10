@@ -1,8 +1,10 @@
 package com.alice.arena.data;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -21,7 +23,7 @@ public abstract class Style {
 	public int healthRegenPercentMul;
 	public int energyRegenPercentMul;
 	
-	public HashMap<Skill, Integer> styleSkills = new HashMap<Skill, Integer>();
+	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 
 	public Style(int id, String name, Texture texture,
 			int healthPercentMul, int energyPercentMul, int speedPercentMul, int strengthPercentMul, int armorPercentMul,
@@ -42,7 +44,7 @@ public abstract class Style {
 		
 		
 		for(Skill skill : skills) {
-			styleSkills.put(skill, skill.level);
+			styleSkills.add(skill);
 		}
 		
 		Registry.styleList.put(id, this);
@@ -53,7 +55,7 @@ public abstract class Style {
 	
 	
 	public abstract void StyleInit(CharactherComponent cc);
-	public abstract void StyleUpdate(CharactherComponent cc,Engine en, float deltaTime);
+	public abstract void StyleUpdate(CharactherComponent cc,Engine en, float deltaTime, PositionComponent pc);
 	
 	
 	

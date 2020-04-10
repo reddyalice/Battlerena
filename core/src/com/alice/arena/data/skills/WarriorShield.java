@@ -1,6 +1,7 @@
 package com.alice.arena.data.skills;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.badlogic.ashley.core.Engine;
@@ -21,15 +22,20 @@ public class WarriorShield extends Skill{
 	}
 
 	@Override
-	public void SkillUpdate(CharactherComponent cc, Engine en, float delta) {
-		// TODO Auto-generated method stub
+	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, int index) {
+
+		
 		
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc) {
-		// TODO Auto-generated method stub
+	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
+		
+		batch.draw(texture, pc.x  + cc.lookDir.x * 40f, pc.y + cc.lookDir.y * 40f, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
+				,texture.getWidth(), texture.getHeight(), false, false);
 		
 	}
+
+
 
 }

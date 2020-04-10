@@ -1,8 +1,10 @@
 package com.alice.arena.data;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,7 +30,7 @@ public abstract class Race {
 	
 	
 	
-	public HashMap<Skill, Integer> raceSkills = new HashMap<Skill, Integer>();
+	public HashSet<Skill> raceSkills = new HashSet<Skill>();
 	
 	
 	
@@ -50,7 +52,7 @@ public abstract class Race {
 		this.baseEnergyRegen = baseEnergyRegen;
 		
 		for(Skill skill : skills) {
-			raceSkills.put(skill, skill.level);
+			raceSkills.add(skill);
 		}
 		
 		Registry.raceList.put(id, this);
@@ -59,7 +61,7 @@ public abstract class Race {
 	
 	
 	public abstract void RacialInit(CharactherComponent cc);
-	public abstract void RacialUpdate(CharactherComponent cc,Engine en, float delta);
+	public abstract void RacialUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc);
 	
 	
 }

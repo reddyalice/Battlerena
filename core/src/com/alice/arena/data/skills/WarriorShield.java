@@ -58,18 +58,13 @@ public class WarriorShield extends Skill{
 			batch.draw(texture, x, y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
 					,texture.getWidth(), texture.getHeight(), false, false);
 			
-			font.draw(batch, (cooldown - cc.progress[index]) + "",x, y);
-			
-			
-			
-			
-			
+			font.draw(batch, (cooldown - cc.progress[index]) + "",x + 64, y + 32f);			
 		}
 		else {
 			if(cc.progress[index] > 0)
-			font.draw(batch, "Recharging in \n" +  (cc.progress[index]), x, y);
+			font.draw(batch, "Recharging in \n" +  (cc.progress[index]), x + 64f, y + 32f);
 			else
-			font.draw(batch, "Sheild Ready", x, y);
+			font.draw(batch, "Sheild Ready", x + 64f, y + 32f);
 		}
 		
 	}

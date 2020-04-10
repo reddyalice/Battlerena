@@ -8,13 +8,20 @@ import com.alice.arena.data.Style;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 
+import box2dLight.ConeLight;
+import box2dLight.Light;
+import box2dLight.PointLight;
+
 public class CharactherComponent implements Component {
 	
 	public Race race;
 	public Style style;
 	public Vector2 lookDir;
 	public float rotation;
-		
+	
+	public ConeLight coneLight;
+	public PointLight pointLight;
+	
 	public float maxHealth;
 	public float maxEnergy;
 	

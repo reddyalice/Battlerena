@@ -37,7 +37,6 @@ public class RenderingSystem extends IteratingSystem {
 		if(cc.visibility < 1f)
 		c.a *= cc.visibility;
 
-		
 		batch.setColor(c);
 		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, 0, 0,0
 				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);

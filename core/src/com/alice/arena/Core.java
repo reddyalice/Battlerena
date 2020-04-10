@@ -20,7 +20,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+
+import box2dLight.ConeLight;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 
 public class Core extends Game {
@@ -33,6 +38,7 @@ public class Core extends Game {
 	@Override
 	public void create () {
 		instance = this;
+		Assets.fonts.put("empty", new BitmapFont());
 		setScreen(new PlayScreen(Registry.RACES.Human, Registry.STYLES.Warrior, Registry.SKILLS.WarriorSheild, 
 				Registry.SKILLS.WarriorSword,Registry.SKILLS.VeryNormal, Registry.SKILLS.HumanSpirit));
 	}
@@ -52,7 +58,7 @@ public class Core extends Game {
 		super.dispose();
 	}
 	
-	private static Entity CreateCharactherEntity(Race race, Style style,Skill... skills ) {
+	private static Entity CreateCharactherEntity(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
 		
 		Entity e = new Entity();
 		CharactherComponent cc = new CharactherComponent();
@@ -77,10 +83,11 @@ public class Core extends Game {
 		cc.energyRegen = race.baseEnergyRegen + (race.baseEnergyRegen * style.energyRegenPercentMul / 100f);
 		cc.lookDir = new Vector2(1,0);
 		cc.rotation = 0;
-		
-		
+		cc.coneLight = CreateSpotLight(rh, x, y, Color.WHITE, 500, 10000,cc.rotation, 40f);
+		cc.pointLight = CreatePointLight(rh, x, y, Color.WHITE, 70f, 10000);
 		
 		e.add(cc);
+		e.add(new PositionComponent(x,y));
 		e.add(new VelocityComponent());
 		cc.race.RacialInit(cc);
 		cc.style.StyleInit(cc);
@@ -95,31 +102,28 @@ public class Core extends Game {
 	}
 	
 	
-	public static Entity SpawnPlayerCharacther(float x, float y, Race race, Style style,Skill... skills ) {
-		Entity e = CreateCharactherEntity(race, style, skills);
-		e.add(new PositionComponent(x,y));
+	public static Entity SpawnPlayerCharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
+		Entity e = CreateCharactherEntity(rh, x, y, race, style, skills);
 		e.add(new PlayerComponent());
 		return e;
 	}
 	
 	
-	public static Entity SpawnAICharacther(float x, float y, Race race, Style style,Skill... skills ) {
-		Entity e = CreateCharactherEntity(race, style, skills);
-		e.add(new PositionComponent(x,y));
+	public static Entity SpawnAICharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
+		Entity e = CreateCharactherEntity(rh, x,y, race, style, skills);
 		e.add(new AIComponent());
 		return e;
 	}
 	
 	
-	public static Entity SpawnMPCharacther(float x, float y, Race race, Style style,Skill... skills )
+	public static Entity SpawnMPCharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills )
 	{
-		Entity e = CreateCharactherEntity(race, style, skills);
-		e.add(new PositionComponent(x,y));
+		Entity e = CreateCharactherEntity(rh, x, y, race, style, skills);
 		e.add(new MPComponent());
 		return e;
 	}
 	
-	public static Entity SpawnRandomAICharacther(float x, float y, int level) {
+	public static Entity SpawnRandomAICharacther(RayHandler rh, float x, float y, int level) {
 		int r = (int)(Math.random() * Registry.raceList.size());
 		int c = (int)(Math.random() * Registry.styleList.size());
 		ArrayList<Skill> rcs = new ArrayList<Skill>();
@@ -155,10 +159,23 @@ public class Core extends Game {
 			skills.add(scs.get(i));
 		}
 		
-		return SpawnAICharacther(x, y, ra, sa, skills.toArray(new Skill[0]));
+		return SpawnAICharacther(rh, x, y, ra, sa, skills.toArray(new Skill[0]));
 		
 
 	}
+	
+	public static PointLight CreatePointLight(RayHandler rayHandler, float x, float y, Color lightColor, float range, int numberOfRays) {
+		 
+		 PointLight light = new PointLight(rayHandler, numberOfRays, lightColor, range, x, y);
+		 return light;
+	 }
+	 
+	 public static  ConeLight CreateSpotLight(RayHandler rayHandler, float x, float y, Color lightColor, float range, int numberOfRays, float directionDegree, float coneDegree) {
+		 
+		 ConeLight light = new ConeLight(rayHandler, numberOfRays, lightColor, range, x, y, directionDegree, coneDegree);
+		 return light;
+	 }
+	 
 	
 	
 	

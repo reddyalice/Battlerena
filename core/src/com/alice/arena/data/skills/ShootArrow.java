@@ -53,7 +53,7 @@ public class ShootArrow extends Skill {
 				if(dist <= range) {
 					pos.x += lookDir.x * speed * 200f * delta;
 					pos.y += lookDir.y * speed * 200f * delta;
-					light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f);
+					light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
 				}else {
 					cc.var.remove("shootArrow" + i);
 					cc.var.remove("shootArrowLook" + i);
@@ -104,7 +104,7 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f, pc.y + cc.race.height / 2f - 16f - 10f));
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
-					cc.var.put("shootArrowLight" + n, Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 64, 5));
+					cc.var.put("shootArrowLight" + n, Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5));
 					cc.progress[index] = cooldown;
 				}
 			}

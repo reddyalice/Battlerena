@@ -8,6 +8,7 @@ import com.alice.arena.data.Registry;
 import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
+import com.alice.arena.utils.UtilFunctions;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,14 +31,7 @@ public class Human extends Race {
 	@Override
 	public void RacialUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc) {
 		
-		if(vc.x + vc.y != 0) {
-			cc.raceTimeHolder	+= delta * 10f;
-			cc.raceAnimationStep =  15 + (int)(cc.raceTimeHolder ) % 3;
-		}else
-		{
-			cc.raceAnimationStep = 0;
-		}
-		
+		UtilFunctions.StandartRaceAnim(cc, vc, delta);
 	}
 
 

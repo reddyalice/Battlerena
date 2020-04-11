@@ -8,6 +8,7 @@ import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
+import com.alice.arena.utils.UtilFunctions;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -28,14 +29,8 @@ public class Warrior extends Style {
 	@Override
 	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
 		
-		if(vc.x + vc.y != 0) {
-			cc.styleTimeHolder	+= deltaTime * 10f;
-			cc.styleAnimationStep =  15 + (int)(cc.styleTimeHolder ) % 3;
-		}else
-		{
-			cc.styleAnimationStep = 0;
-		}
-		
+		UtilFunctions.StandartStyleAnim(cc, vc, deltaTime);
+
 	}
 
 

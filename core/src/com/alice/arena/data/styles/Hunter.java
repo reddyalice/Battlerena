@@ -9,33 +9,27 @@ import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
 import com.alice.arena.utils.UtilFunctions;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.graphics.Texture;
 
-public class Warrior extends Style {
+public class Hunter extends Style {
 
-	public Warrior() {
-		super(0, "Warrior", new TextureHolder(Assets.GetTexture("warrior"), 16, 24), 32, 48, 
-				10, 0, -10, 20, 
-				20, 0, 0, 0, 0,
-				Registry.SKILLS.WarriorSword,
-				Registry.SKILLS.WarriorSheild);
+	public Hunter() {
+		super(1, "Hunter", new TextureHolder(Assets.GetTexture("hunter"), 16, 24), 32, 48, 
+				-10, 0, 10, -30,
+				-30, 0, 30, 0, 0,
+				Registry.SKILLS.ShootArrow);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void StyleInit(CharactherComponent cc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
-		
+		// TODO Auto-generated method stub
 		UtilFunctions.StandartStyleAnim(cc, vc, deltaTime);
-
 	}
-
-
-	
 
 }

@@ -1,0 +1,44 @@
+package com.alice.arena.data.skills;
+
+import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PositionComponent;
+import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.data.Skill;
+import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class ShootArrow extends Skill {
+
+	public ShootArrow() {
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("spear")), 1, 0.5f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void SkillInit(CharactherComponent cc) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc,
+			int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void ActiveCall(CharactherComponent cc, int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

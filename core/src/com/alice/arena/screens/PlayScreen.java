@@ -36,7 +36,7 @@ public class PlayScreen implements Screen {
 	private Engine engine;
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
-	private EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
+	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
 	
 	
 	
@@ -45,8 +45,8 @@ public class PlayScreen implements Screen {
 	
 	
 	
-	private World world;
-	private RayHandler rayHandler;
+	public static World world;
+	public static RayHandler rayHandler;
 	
 	public PlayScreen(Race selectedR, Style selectedS, Skill... selectedSS) {
 	

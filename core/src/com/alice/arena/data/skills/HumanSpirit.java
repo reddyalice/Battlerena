@@ -49,7 +49,7 @@ public class HumanSpirit extends Skill {
 	}
 
 	@Override
-	public void ActiveCall(CharactherComponent cc, int index) {
+	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		
 		
 	}

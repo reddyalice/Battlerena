@@ -33,7 +33,7 @@ public abstract class Skill {
 	public abstract void SkillInit(CharactherComponent cc);
 	public abstract void SkillUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc,VelocityComponent vc,int index);
 	public abstract void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index);
-	public abstract void ActiveCall(CharactherComponent cc, int index);
+	public abstract void ActiveCall(CharactherComponent cc, PositionComponent pc, int index);
 	
 	
 	

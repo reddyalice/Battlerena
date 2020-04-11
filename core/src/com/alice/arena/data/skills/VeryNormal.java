@@ -34,7 +34,7 @@ public class VeryNormal extends Skill {
 	}
 
 	@Override
-	public void ActiveCall(CharactherComponent cc, int index) {
+	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		// TODO Auto-generated method stub
 		
 	}

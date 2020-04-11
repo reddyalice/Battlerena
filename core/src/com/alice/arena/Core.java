@@ -39,8 +39,8 @@ public class Core extends Game {
 	public void create () {
 		instance = this;
 		Assets.fonts.put("empty", new BitmapFont());
-		setScreen(new PlayScreen(Registry.RACES.Human, Registry.STYLES.Warrior, Registry.SKILLS.WarriorSheild, 
-				Registry.SKILLS.WarriorSword,Registry.SKILLS.VeryNormal, Registry.SKILLS.HumanSpirit));
+		setScreen(new PlayScreen(Registry.RACES.Orc, Registry.STYLES.Hunter, Registry.SKILLS.WarriorSheild, 
+				Registry.SKILLS.ShootArrow,Registry.SKILLS.VeryNormal, Registry.SKILLS.HumanSpirit));
 	}
 
 	@Override
@@ -86,9 +86,12 @@ public class Core extends Game {
 		
 		cc.lookDir = new Vector2(1,0);
 		cc.rotation = 0;
-		
-		//cc.coneLight = CreateSpotLight(rh, x, y, Color.WHITE, 500, 10000,cc.rotation, 40f);
-		cc.pointLight = CreatePointLight(rh, x, y, Color.WHITE, 70f, 10000);
+		Color c = new Color(Color.WHITE);
+		c.mul(0.5f);
+		Color b = new Color(Color.WHITE);
+		b.mul(0.75f);
+		cc.coneLight = CreateSpotLight(rh, x, y, c, 500, 1000,cc.rotation, 40f);
+		cc.pointLight = CreatePointLight(rh, x, y, b, 70f, 1000);
 		
 		e.add(cc);
 		e.add(new PositionComponent(x,y));

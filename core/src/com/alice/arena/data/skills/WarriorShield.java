@@ -24,6 +24,7 @@ public class WarriorShield extends Skill{
 	@Override
 	public void SkillInit(CharactherComponent cc) {
 		cc.var.put("renderSheild", false);		
+		
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class WarriorShield extends Skill{
 	}
 
 	@Override
-	public void ActiveCall(CharactherComponent cc,int index) {
+	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		if(!(boolean)(cc.var.get("renderSheild"))) {
 			if(cc.progress[index] == 0)
 			{

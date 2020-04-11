@@ -63,17 +63,17 @@ public class ControlSystem extends EntitySystem {
 		}
 			
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
-			cc.skill[0].ActiveCall(cc, 0);
+			cc.skill[0].ActiveCall(cc, pc, 0);
 		
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
-			cc.skill[1].ActiveCall(cc, 1);
+			cc.skill[1].ActiveCall(cc, pc, 1);
 		
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
-			cc.skill[2].ActiveCall(cc, 2);
+			cc.skill[2].ActiveCall(cc, pc, 2);
 			
 			
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
-			cc.skill[3].ActiveCall(cc, 3);
+			cc.skill[3].ActiveCall(cc, pc, 3);
 		
 			
 			
@@ -83,7 +83,7 @@ public class ControlSystem extends EntitySystem {
 			
 		vc.x = m.x * cc.speed * deltaTime;
 		vc.y = m.y * cc.speed * deltaTime;
-		viewport.getCamera().position.set(pc.x, pc.y, 0);
+		//viewport.getCamera().position.set(pc.x, pc.y, 0);
 		cc.lookDir = diff;
 			
 			

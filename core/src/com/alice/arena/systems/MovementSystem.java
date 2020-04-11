@@ -25,8 +25,8 @@ public class MovementSystem extends IteratingSystem {
 		vc.speed2 = (float) (Math.pow(vc.x, 2) + Math.pow(vc.y, 2));
 		
 		
-		pc.x += vc.x * 100f;
-		pc.y += vc.y * 100f;
+		pc.x += vc.x * 200f;
+		pc.y += vc.y * 200f;
 		
 
 	}

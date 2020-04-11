@@ -27,7 +27,14 @@ public class Warrior extends Style {
 
 	@Override
 	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
-		// TODO Auto-generated method stub
+		
+		if(vc.x + vc.y != 0) {
+			cc.styleTimeHolder	+= deltaTime * 10f;
+			cc.styleAnimationStep =  15 + (int)(cc.styleTimeHolder ) % 3;
+		}else
+		{
+			cc.styleAnimationStep = 0;
+		}
 		
 	}
 

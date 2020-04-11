@@ -3,6 +3,7 @@ package com.alice.arena.systems;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.data.Skill;
+import com.alice.arena.screens.PlayScreen;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -34,8 +35,10 @@ public class RenderingSystem extends IteratingSystem {
 		CharactherComponent cc = cm.get(entity);
 		
 		Color c = new Color(Color.WHITE);
-		if(cc.visibility < 1f)
-		c.a *= cc.visibility;
+		float vis = (cc.visibility +  PlayScreen.playerChar.vision) / 2f;
+		
+		if(vis < 1f && vis >= 0.5f)
+			c.a *= vis;
 		
 		if(cc.lookDir.x < 0 )
 			cc.flip = true;

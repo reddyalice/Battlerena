@@ -31,6 +31,7 @@ public class CharactherComponent implements Component {
 	
 	public float maxHealth;
 	public float maxEnergy;
+	public float noMoveVisibility;
 	
 	public float health;
 	public float energy;
@@ -39,6 +40,7 @@ public class CharactherComponent implements Component {
 	public float strength;
 	public float armor;
 	public float visibility;
+	public float vision;
 	public float healthRegen;
 	public float energyRegen;
 	public HashMap<String, Object> var = new HashMap<String, Object>();

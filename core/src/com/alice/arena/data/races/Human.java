@@ -18,7 +18,7 @@ public class Human extends Race {
 	public Human() {
 		super(0, "Human", new TextureHolder(Assets.GetTexture("human"), 16, 24),
 				32, 48,
-				100, 100, 1, 1, 1, 1, 10f, 10f,
+				100, 100, 1, 1, 1, 1f, 1f,  10f, 10f,
 				Registry.SKILLS.VeryNormal,
 				Registry.SKILLS.HumanSpirit);
 	}

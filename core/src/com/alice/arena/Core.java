@@ -78,12 +78,16 @@ public class Core extends Game {
 		cc.speed = race.baseSpeed + (race.baseSpeed * style.speedPercentMul / 100f);
 		cc.strength = race.baseStrength + (race.baseStrength * style.strengthPercentMul / 100f);
 		cc.armor = race.baseArmor + (race.baseArmor * style.armorPercentMul / 100f);
-		cc.visibility = race.baseVisibility + (race.baseVisibility * style.visibilityPercentMul / 100f);
+		cc.noMoveVisibility = race.baseVisibility + (race.baseVisibility * style.visibilityPercentMul / 100f);
+		cc.visibility = cc.noMoveVisibility;
+		cc.vision = race.baseVision + (race.baseVision * style.visionPercentMul / 100f);
 		cc.healthRegen = race.baseHealthRegen + (race.baseHealthRegen * style.healthRegenPercentMul / 100f);
 		cc.energyRegen = race.baseEnergyRegen + (race.baseEnergyRegen * style.energyRegenPercentMul / 100f);
+		
 		cc.lookDir = new Vector2(1,0);
 		cc.rotation = 0;
-		cc.coneLight = CreateSpotLight(rh, x, y, Color.WHITE, 500, 10000,cc.rotation, 40f);
+		
+		//cc.coneLight = CreateSpotLight(rh, x, y, Color.WHITE, 500, 10000,cc.rotation, 40f);
 		cc.pointLight = CreatePointLight(rh, x, y, Color.WHITE, 70f, 10000);
 		
 		e.add(cc);

@@ -22,6 +22,8 @@ public class MovementSystem extends IteratingSystem {
 		
 		PositionComponent pc = pm.get(entity);
 		VelocityComponent vc = vm.get(entity);
+		vc.speed2 = (float) (Math.pow(vc.x, 2) + Math.pow(vc.y, 2));
+		
 		
 		pc.x += vc.x * 100f;
 		pc.y += vc.y * 100f;

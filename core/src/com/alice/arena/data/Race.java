@@ -25,9 +25,12 @@ public abstract class Race {
 	public float baseStrength;
 	public float baseArmor;
 	public float baseVisibility;
+	public float baseVision;
 	public float baseHealthRegen;
 	public float baseEnergyRegen;
-
+	
+	
+	
 	public int width;
 	public int height;
 	
@@ -40,7 +43,7 @@ public abstract class Race {
 	
 	public Race(int id, String name, TextureHolder texture, int width, int height, float baseHealth,
 			float baseEnergy, float baseSpeed,  float baseStrength, float baseArmor, float baseVisibility,
-			float baseHealthRegen, float baseEnergyRegen,
+			float baseVision, float baseHealthRegen, float baseEnergyRegen,
 			Skill... skills){
 		
 		this.id = id;
@@ -57,6 +60,7 @@ public abstract class Race {
 		this.baseStrength = baseStrength;
 		this.baseArmor = baseArmor;
 		this.baseVisibility = baseVisibility;
+		this.baseVision = baseVision;
 		this.baseHealthRegen = baseHealthRegen;
 		this.baseEnergyRegen = baseEnergyRegen;
 		

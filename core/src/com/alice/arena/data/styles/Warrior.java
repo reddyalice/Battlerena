@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Warrior extends Style {
 
 	public Warrior() {
-		super(0, "Warrior", new TextureHolder(Assets.GetTexture("warrior"), 16, 24), 32, 48, 5, 0, -10, 5, 5, 5, 10, -5,
+		super(0, "Warrior", new TextureHolder(Assets.GetTexture("warrior"), 16, 24), 32, 48, 5, 0, -10, 5, 5, 5, -5, 10, -5,
 				Registry.SKILLS.WarriorSword,
 				Registry.SKILLS.WarriorSheild);
 	}

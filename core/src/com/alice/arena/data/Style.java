@@ -25,14 +25,16 @@ public abstract class Style {
 	public int strengthPercentMul;
 	public int armorPercentMul;
 	public int visibilityPercentMul;
+	public int visionPercentMul;
 	public int healthRegenPercentMul;
 	public int energyRegenPercentMul;
+	
 	
 	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 
 	public Style(int id, String name, TextureHolder texture,int width, int height,
 			int healthPercentMul, int energyPercentMul, int speedPercentMul, int strengthPercentMul, int armorPercentMul,
-			int visibilityPercentMul, int healthRegenPercentMul, int energyRegenPercentMul,
+			int visibilityPercentMul, int visionPercentMul, int healthRegenPercentMul, int energyRegenPercentMul,
 			Skill... skills ) {
 		
 		this.id = id;
@@ -47,6 +49,7 @@ public abstract class Style {
 		this.strengthPercentMul = strengthPercentMul;
 		this.armorPercentMul = armorPercentMul;
 		this.visibilityPercentMul = visibilityPercentMul;
+		this.visionPercentMul = visionPercentMul;
 		this.healthPercentMul = healthPercentMul;
 		this.energyPercentMul = energyPercentMul;
 		

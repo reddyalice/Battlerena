@@ -51,8 +51,8 @@ public class WarriorShield extends Skill{
 	@Override
 	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
 		
-		float x = pc.x - cc.race.width / 2f + cc.lookDir.x * 40f;
-		float y = pc.y - cc.race.height / 2f + cc.lookDir.y * 40f;
+		float x = pc.x -32f + cc.race.width / 2f + cc.lookDir.x * 20f;
+		float y = pc.y -32f + cc.race.height / 2f - 10f + cc.lookDir.y * 20f;
 		
 		if((boolean)(cc.var.get("renderSheild")))
 		{

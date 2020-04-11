@@ -5,6 +5,7 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +16,7 @@ public class HumanSpirit extends Skill {
 
 	
 	public HumanSpirit() {
-		super("Human's Spirit", null, 1, 20, "Human's Stubborness");
+		super("Human's Spirit", new TextureHolder(Assets.GetTexture("triangle")), 1, 20, "Human's Stubborness");
 		// TODO Auto-generated constructor stub
 	}
 

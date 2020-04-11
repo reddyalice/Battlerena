@@ -5,6 +5,7 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class VeryNormal extends Skill {
 
 	public VeryNormal() {
-		super("Extremely Avarage",null, 1, 1, "Less noticable");
+		super("Extremely Avarage",new TextureHolder(Assets.GetTexture("triangle")), 1, 1, "Less noticable");
 	}
 
 	@Override

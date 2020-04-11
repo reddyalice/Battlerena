@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class WarriorSword extends Skill {
 
 	public WarriorSword() {
-		super("Warrior's Sword", null, 1, 1, "A Warrior's Trustworthy Sword");
+		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("triangle")), 1, 1, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
 	}
 

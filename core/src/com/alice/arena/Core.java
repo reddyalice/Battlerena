@@ -13,6 +13,7 @@ import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.screens.PlayScreen;
+import com.alice.arena.screens.SelectScreen;
 import com.alice.arena.utils.Assets;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -33,14 +34,13 @@ public class Core extends Game {
 	public static Color backgroundColor = Color.BLUE;
 	public static Core instance;
 	public static float deltaTime = 1f/60f;
-	
+	public static int WIDTH = 640, HEIGHT = 480;
 	
 	@Override
 	public void create () {
 		instance = this;
 		Assets.fonts.put("empty", new BitmapFont());
-		setScreen(new PlayScreen(Registry.RACES.Orc, Registry.STYLES.Hunter, Registry.SKILLS.WarriorSheild, 
-				Registry.SKILLS.ShootArrow,Registry.SKILLS.VeryNormal, Registry.SKILLS.HumanSpirit));
+		setScreen(new SelectScreen());
 	}
 
 	@Override
@@ -50,6 +50,13 @@ public class Core extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 		
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		WIDTH = width;
+		HEIGHT = height;
+		super.resize(width, height);
 	}
 	
 	@Override

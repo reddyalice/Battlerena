@@ -15,6 +15,9 @@ public abstract class Style {
 	public int id;
 	public String name;
 	public TextureHolder texture;
+	public int width;
+	public int height;
+	
 
 	public int healthPercentMul;
 	public int energyPercentMul;
@@ -27,7 +30,7 @@ public abstract class Style {
 	
 	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 
-	public Style(int id, String name, TextureHolder texture,
+	public Style(int id, String name, TextureHolder texture,int width, int height,
 			int healthPercentMul, int energyPercentMul, int speedPercentMul, int strengthPercentMul, int armorPercentMul,
 			int visibilityPercentMul, int healthRegenPercentMul, int energyRegenPercentMul,
 			Skill... skills ) {
@@ -35,6 +38,9 @@ public abstract class Style {
 		this.id = id;
 		this.name = name;
 		this.texture = texture;
+		this.width = width;
+		this.height = height;
+		
 		this.healthPercentMul = healthPercentMul;
 		this.energyPercentMul = energyPercentMul;
 		this.speedPercentMul = speedPercentMul;

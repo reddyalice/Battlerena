@@ -46,8 +46,8 @@ public class RenderingSystem extends IteratingSystem {
 		
 
 		batch.setColor(c);
-		cc.race.texture.Draw(batch, pc.x, pc.y, 32, 48, cc.raceAnimationStep, cc.flip, 0);
-		cc.style.texture.Draw(batch, pc.x, pc.y, 32, 48, cc.styleAnimationStep, cc.flip, 0);
+		cc.race.texture.Draw(batch, pc.x, pc.y, cc.race.width, cc.race.height, cc.raceAnimationStep, cc.flip, false,  0);
+		cc.style.texture.Draw(batch, pc.x, pc.y, cc.style.width, cc.style.height, cc.styleAnimationStep, cc.flip, false, 0);
 
 		int i = 0;
 		for(Skill s : cc.skill) {

@@ -28,7 +28,8 @@ public abstract class Race {
 	public float baseHealthRegen;
 	public float baseEnergyRegen;
 
-	
+	public int width;
+	public int height;
 	
 	
 	
@@ -37,7 +38,7 @@ public abstract class Race {
 	
 	
 	
-	public Race(int id, String name, TextureHolder texture, float baseHealth,
+	public Race(int id, String name, TextureHolder texture, int width, int height, float baseHealth,
 			float baseEnergy, float baseSpeed,  float baseStrength, float baseArmor, float baseVisibility,
 			float baseHealthRegen, float baseEnergyRegen,
 			Skill... skills){
@@ -45,7 +46,8 @@ public abstract class Race {
 		this.id = id;
 		this.name = name;
 		this.texture = texture;
-		
+		this.width = width;
+		this.height = height;
 		
 		
 		

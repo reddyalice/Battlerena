@@ -44,9 +44,9 @@ public class UpdateCharactherSystem extends IteratingSystem {
 		cc.rotation = (float) Math.atan2(det, dot);
 		cc.rotation *= 180f / (float)(Math.PI);
 		
-		cc.coneLight.setPosition(pc.x  + 32f +  30f * cc.lookDir.x, pc.y+ 32f + 30f * cc.lookDir.y);
+		cc.coneLight.setPosition(pc.x  + cc.race.width / 2f +  30f * cc.lookDir.x, pc.y+ cc.race.height / 2f + 30f * cc.lookDir.y);
 		cc.coneLight.setDirection(180f + cc.rotation);
-		cc.pointLight.setPosition(pc.x + 32f, pc.y + 32);
+		cc.pointLight.setPosition(pc.x + cc.race.width / 2f, pc.y +  cc.race.height / 2f);
 		cc.pointLight.setDistance(70 * cc.visibility);
 		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
 		cc.style.StyleUpdate(cc, deltaTime, pc, vc);

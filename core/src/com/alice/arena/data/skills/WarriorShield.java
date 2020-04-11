@@ -51,15 +51,15 @@ public class WarriorShield extends Skill{
 	@Override
 	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
 		
-		float x = pc.x  + cc.lookDir.x * 40f;
-		float y = pc.y + cc.lookDir.y * 40f;
+		float x = pc.x - cc.race.width / 2f + cc.lookDir.x * 40f;
+		float y = pc.y - cc.race.height / 2f + cc.lookDir.y * 40f;
 		
 		if((boolean)(cc.var.get("renderSheild")))
 		{
 			
 			
 			
-			texture.Draw(batch, x, y, 64, 64, 0, false, cc.rotation);
+			texture.Draw(batch, x, y, 64, 64, 0, false, cc.lookDir.x > 0 ? true : false, cc.rotation);
 			
 			font.draw(batch, (cooldown - cc.progress[index]) + "",x + 64, y + 32f);			
 		}

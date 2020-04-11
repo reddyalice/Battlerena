@@ -3,6 +3,7 @@ package com.alice.arena.data;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class Skill {
 	
 	public String name;
-	public Texture texture;
+	public TextureHolder texture;
 	public Texture UITexture;
 	
 	
@@ -19,7 +20,7 @@ public abstract class Skill {
 	public String description;
 	
 	
-	public Skill(String name, Texture texture,  int level, int cooldown, String description) {
+	public Skill(String name, TextureHolder texture,  int level, int cooldown, String description) {
 		this.name = name;
 		this.texture = texture;
 		this.level = level;

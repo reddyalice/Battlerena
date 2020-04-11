@@ -23,8 +23,10 @@ public class CharactherComponent implements Component {
 	public PointLight pointLight;
 	
 	public boolean flip;
-	
-	
+	public int raceAnimationStep;
+	public int styleAnimationStep;
+	public float raceTimeHolder;
+	public float styleTimeHolder;
 	
 	
 	public float maxHealth;

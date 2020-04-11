@@ -5,6 +5,7 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,7 +17,7 @@ public class WarriorShield extends Skill{
 	
 	private BitmapFont font;
 	public WarriorShield() {
-		super("Warrior's Shield", Assets.GetTexture("warriorshield"), 1, 10, "Warrior's Trusted Shield");
+		super("Warrior's Shield", new TextureHolder(Assets.GetTexture("warriorshield")), 1, 10, "Warrior's Trusted Shield");
 		font = new BitmapFont();
 	}
 
@@ -55,8 +56,10 @@ public class WarriorShield extends Skill{
 		
 		if((boolean)(cc.var.get("renderSheild")))
 		{
-			batch.draw(texture, x, y, 32,32, 64, 64, 1, 1, cc.rotation, 0,0
-					,texture.getWidth(), texture.getHeight(), false, false);
+			
+			
+			
+			texture.Draw(batch, x, y, 64, 64, 0, false, cc.rotation);
 			
 			font.draw(batch, (cooldown - cc.progress[index]) + "",x + 64, y + 32f);			
 		}

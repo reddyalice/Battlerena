@@ -6,6 +6,7 @@ import java.util.HashSet;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -13,7 +14,7 @@ public abstract class Style {
 
 	public int id;
 	public String name;
-	public Texture styleTexture;
+	public TextureHolder texture;
 
 	public int healthPercentMul;
 	public int energyPercentMul;
@@ -26,14 +27,14 @@ public abstract class Style {
 	
 	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 
-	public Style(int id, String name, Texture texture,
+	public Style(int id, String name, TextureHolder texture,
 			int healthPercentMul, int energyPercentMul, int speedPercentMul, int strengthPercentMul, int armorPercentMul,
 			int visibilityPercentMul, int healthRegenPercentMul, int energyRegenPercentMul,
 			Skill... skills ) {
 		
 		this.id = id;
 		this.name = name;
-		this.styleTexture = texture;
+		this.texture = texture;
 		this.healthPercentMul = healthPercentMul;
 		this.energyPercentMul = energyPercentMul;
 		this.speedPercentMul = speedPercentMul;

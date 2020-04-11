@@ -7,13 +7,14 @@ import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Warrior extends Style {
 
 	public Warrior() {
-		super(0, "Warrior", Assets.GetTexture("warrior"), 5, 0, -10, 5, 5, 5, 10, -5,
+		super(0, "Warrior", new TextureHolder(Assets.GetTexture("warrior"), 16, 24), 5, 0, -10, 5, 5, 5, 10, -5,
 				Registry.SKILLS.WarriorSword,
 				Registry.SKILLS.WarriorSheild);
 	}

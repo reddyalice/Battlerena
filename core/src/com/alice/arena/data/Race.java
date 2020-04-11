@@ -1,5 +1,6 @@
 package com.alice.arena.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -14,7 +15,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class Race {
 	
 	public int id;
-	public Texture racialTexture;
+	public Texture body;
+	public ArrayList<Texture> arms = new ArrayList<Texture>();
+	public ArrayList<Texture> legFrames = new ArrayList<Texture>();
 	public String name;
 	
 	public float baseHealth;
@@ -35,14 +38,23 @@ public abstract class Race {
 	
 	
 	
-	public Race(int id, String name, Texture texture, float baseHealth,
+	public Race(int id, String name, Texture bodyTexture, Texture[] arms, Texture[] legframes, float baseHealth,
 			float baseEnergy, float baseSpeed,  float baseStrength, float baseArmor, float baseVisibility,
 			float baseHealthRegen, float baseEnergyRegen,
 			Skill... skills){
 		
 		this.id = id;
 		this.name = name;
-		this.racialTexture = texture;
+		this.body = bodyTexture;
+		
+		
+		for(Texture t : arms)
+			this.arms.add(t);
+		
+		for(Texture t : legframes)
+			this.legFrames.add(t);
+		
+		
 		this.baseHealth = baseHealth;
 		this.baseEnergy = baseEnergy;
 		this.baseSpeed = baseSpeed;
@@ -62,7 +74,7 @@ public abstract class Race {
 	
 	
 	public abstract void RacialInit(CharactherComponent cc);
-	public abstract void RacialUpdate(CharactherComponent cc,Engine en, float delta, PositionComponent pc, VelocityComponent vc);
-	
+	public abstract void RacialUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc);
+	public abstract void RacialDraw(SpriteBatch batch, CharactherComponent cc, float delta, PositionComponent pc);
 	
 }

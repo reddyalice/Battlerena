@@ -48,8 +48,8 @@ public class UpdateCharactherSystem extends IteratingSystem {
 		cc.coneLight.setDirection(180f + cc.rotation);
 		cc.pointLight.setPosition(pc.x + 32f, pc.y + 32);
 		cc.pointLight.setDistance(70 * cc.visibility);
-		cc.race.RacialUpdate(cc, engine, deltaTime, pc, vc);
-		cc.style.StyleUpdate(cc, engine, deltaTime, pc, vc);
+		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
+		cc.style.StyleUpdate(cc, deltaTime, pc, vc);
 		
 		int i = 0;
 		for(Skill s : cc.skill) {

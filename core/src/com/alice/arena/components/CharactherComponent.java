@@ -22,6 +22,11 @@ public class CharactherComponent implements Component {
 	public ConeLight coneLight;
 	public PointLight pointLight;
 	
+	public boolean flip;
+	
+	
+	
+	
 	public float maxHealth;
 	public float maxEnergy;
 	

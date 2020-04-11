@@ -36,12 +36,19 @@ public class RenderingSystem extends IteratingSystem {
 		Color c = new Color(Color.WHITE);
 		if(cc.visibility < 1f)
 		c.a *= cc.visibility;
+		
+		if(cc.lookDir.x < 0 )
+			cc.flip = true;
+		
+		if(cc.lookDir.x > 0 )
+			cc.flip = false;
+		
+		
 
 		batch.setColor(c);
-		batch.draw(cc.race.racialTexture, pc.x, pc.y, 32,32, 64, 64, 1, 1, 0, 0,0
-				,cc.race.racialTexture.getWidth(), cc.race.racialTexture.getHeight(), false, false);
+		cc.race.RacialDraw(batch, cc, deltaTime, pc);
 		batch.draw(cc.style.styleTexture, pc.x, pc.y,32,32, 64, 64, 1, 1,0, 0,0
-				,cc.style.styleTexture.getWidth(), cc.style.styleTexture.getHeight(), false, false);
+				,cc.style.styleTexture.getWidth(), cc.style.styleTexture.getHeight(), cc.flip, false);
 		int i = 0;
 		for(Skill s : cc.skill) {
 			s.SkillRender(batch, cc, pc, i);

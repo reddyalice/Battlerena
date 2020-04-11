@@ -25,7 +25,7 @@ public class Warrior extends Style {
 	}
 
 	@Override
-	public void StyleUpdate(CharactherComponent cc, Engine en, float deltaTime, PositionComponent pc, VelocityComponent vc) {
+	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
 		// TODO Auto-generated method stub
 		
 	}

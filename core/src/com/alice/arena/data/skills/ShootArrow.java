@@ -27,7 +27,7 @@ public class ShootArrow extends Skill {
 
 	
 	int range =  500;
-	float speed = 5f;
+	float speed = 5;
 	BitmapFont font;
 	
 	
@@ -66,8 +66,8 @@ public class ShootArrow extends Skill {
 						if(dist <= range) {
 							Vector2 p = body.getPosition();
 							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
-							pos.x = p.x - 29f / 2f;
-							pos.y = p.y - 12f;
+							pos.x = p.x - 15f - 3f;
+							pos.y = p.y - 6f - 9f;
 							cc.var.put("shootArrowRot" + k, (float)(body.getAngle() * 180f / Math.PI));
 							//light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
 						}else {
@@ -113,7 +113,7 @@ public class ShootArrow extends Skill {
 			if(cc.var.containsKey("shootArrow" + i)) {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
 				float rot = (float)cc.var.get("shootArrowRot" + i);
-				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot);
+				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot + 45f);
 								
 			}
 		}
@@ -137,10 +137,10 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
 					
-					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 29, 12, 29f / 2f,  6f, cc.team, true);
-					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)(cc.rotation * Math.PI / 180f));
+					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, cc.team, true);
+					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)((cc.rotation) * Math.PI / 180f));
 					PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
-					b.setLinearVelocity( cc.lookDir.x * speed * 200f,cc.lookDir.y * speed * 200f);
+					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);
 					b.setBullet(true);
 					l.attachToBody(b);
 					cc.var.put("shootArrawBody" + n, b);

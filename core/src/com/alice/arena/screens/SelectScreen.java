@@ -152,7 +152,6 @@ public class SelectScreen implements Screen {
 			s.iconTexture.Draw(batch, x, y, 32 * 2, 32 * 2, 0, false, false, 0);
 			
 			if(s.level > Core.account.level) {
-				batch.draw(selectionT, x,y, 64,64);
 				batch.draw(lock, x, y, 64, 64);
 			}
 			

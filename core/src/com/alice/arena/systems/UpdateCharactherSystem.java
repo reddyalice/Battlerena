@@ -60,6 +60,26 @@ public class UpdateCharactherSystem extends EntitySystem {
 		cc.pointLight.setDistance(vis >= 0.5f ? 70 * vis : 0);
 		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
 		cc.style.StyleUpdate(cc, deltaTime, pc, vc);
+		if(cc.energy < cc.maxEnergy) {
+			cc.energy += cc.energyRegen * deltaTime;
+		}
+		
+		if(cc.energy > cc.maxEnergy)
+			cc.energy = cc.maxEnergy;
+		
+		if(cc.energy < 0)
+			cc.energy = 0;
+		
+		if(cc.health < cc.healthRegen) {
+			cc.health += cc.healthRegen * deltaTime;
+		}
+		
+		if(cc.health > cc.maxHealth)
+			cc.health = cc.maxHealth;
+		
+		if(cc.health < 0)
+			cc.health = 0;
+
 		
 		int i = 0;
 		for(Skill s : cc.skill) {

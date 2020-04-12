@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class VeryNormal extends Skill {
 
 	public VeryNormal() {
-		super("Extremely Avarage",new TextureHolder(Assets.GetTexture("triangle")), 1, 1, "Less noticable");
+		super("Extremely Avarage",new TextureHolder(Assets.GetTexture("triangle")), 1, 1, 0, "Less noticable");
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class ShootArrow extends Skill {
 	
 	
 	public ShootArrow() {
-		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -107,9 +107,7 @@ public class ShootArrow extends Skill {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
 				float rot = (float)cc.var.get("shootArrowRot" + i);
 				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot);
-				
-				//shapeRenderer.rectLine(pos.x, pos.y, pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f - 10f, 5f);
-				
+								
 			}
 		}
 
@@ -118,7 +116,7 @@ public class ShootArrow extends Skill {
 	@Override
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		
-		if(cc.progress[index] <= 0) {
+		if(cc.progress[index] <= 0 && cc.energy >= energyCost) {
 			int n = 0;
 			boolean con = false; 
 			do {
@@ -139,6 +137,7 @@ public class ShootArrow extends Skill {
 			if(n > (int)cc.var.get("lastShootArrowN")) {
 				cc.var.put("lastShootArrowN", n);
 			}
+			cc.energy -= energyCost;
 		}
 	}
 

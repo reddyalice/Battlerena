@@ -18,7 +18,7 @@ public class WarriorShield extends Skill{
 	
 	private BitmapFont font;
 	public WarriorShield() {
-		super("Warrior's Shield", new TextureHolder(Assets.GetTexture("warriorshield")), 1, 10, "Warrior's Trusted Shield");
+		super("Warrior's Shield", new TextureHolder(Assets.GetTexture("warriorshield")), 1, 10, 40f, "Warrior's Trusted Shield");
 		font = new BitmapFont();
 	}
 
@@ -77,9 +77,10 @@ public class WarriorShield extends Skill{
 	@Override
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		if(!(boolean)(cc.var.get("renderSheild"))) {
-			if(cc.progress[index] == 0)
+			if(cc.progress[index] == 0 && cc.energy >= energyCost)
 			{
 				cc.var.put("renderSheild", true);
+				cc.energy -= energyCost;
 			}
 		}
 		

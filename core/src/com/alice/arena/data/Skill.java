@@ -17,15 +17,17 @@ public abstract class Skill {
 	
 	
 	public int level;
+	public float energyCost;
 	public float cooldown;
 	public String description;
 	
 	
-	public Skill(String name, TextureHolder texture,  int level, float cooldown, String description) {
+	public Skill(String name, TextureHolder texture,  int level, float cooldown, float energyCost, String description) {
 		this.name = name;
 		this.texture = texture;
 		this.level = level;
 		this.cooldown = cooldown;
+		this.energyCost = energyCost;
 		this.description = description;
 	}
 	

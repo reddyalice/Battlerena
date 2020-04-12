@@ -51,8 +51,8 @@ public class HumanSpirit extends Skill {
 
 	@Override
 	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
-		
-		shapeRenderer.circle(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f, 24, 100);
+		//shapeRenderer.set(ShapeType.Line);
+		//shapeRenderer.circle(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f, 24, 100);
 		
 
 	}

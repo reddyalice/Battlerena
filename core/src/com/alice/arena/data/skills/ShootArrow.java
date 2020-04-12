@@ -1,5 +1,7 @@
 package com.alice.arena.data.skills;
 
+import java.util.ArrayList;
+
 import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 import box2dLight.PointLight;
@@ -45,33 +48,50 @@ public class ShootArrow extends Skill {
 	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc,
 			int index) {
 		int lastN = (int)cc.var.get("lastShootArrowN");
-		
+		ArrayList<Thread> threads = new ArrayList<Thread>();
 		for(int i = 0; i <= lastN; i++) {
 			if(cc.var.containsKey("shootArrow" + i)) {
-				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
-				Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + i);
-				Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + i);
-				PointLight light = (PointLight)cc.var.get("shootArrowLight" + i);
-				float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
-				if(dist <= range) {
-					pos.x += lookDir.x * speed * 200f * delta;
-					pos.y += lookDir.y * speed * 200f * delta;
-					light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
-				}else {
-					cc.var.remove("shootArrow" + i);
-					cc.var.remove("shootArrowLook" + i);
-					cc.var.remove("shootArrowO" + i);
-					cc.var.remove("shootArrowRot" + i);
-					light.remove();
-					//light.dispose();
-					cc.var.remove("shootArrowLight" + i);
-					if(i == lastN) {
-						cc.var.put("lastShootArrowN", lastN - 1);
+				final int k = i;
+				Thread t = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Vector2 pos = (Vector2)cc.var.get("shootArrow" + k);
+						Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + k);
+						Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + k);
+						PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
+						float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
+						if(dist <= range) {
+							pos.x += lookDir.x * speed * 200f * delta;
+							pos.y += lookDir.y * speed * 200f * delta;
+							light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
+						}else {
+							cc.var.remove("shootArrow" + k);
+							cc.var.remove("shootArrowLook" + k);
+							cc.var.remove("shootArrowO" + k);
+							cc.var.remove("shootArrowRot" + k);
+							light.remove();
+							//light.dispose();
+							cc.var.remove("shootArrowLight" + k);
+							if(k == lastN) {
+								cc.var.put("lastShootArrowN", k - 1);
+								
+							}
+						}
 						
 					}
-				}
+				});
+				threads.add(t);
+				t.run();
 			}
 		}
+		
+		for(Thread t : threads)
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		if(cc.progress[index] > 0)
 			cc.progress[index] -= delta;
@@ -81,13 +101,15 @@ public class ShootArrow extends Skill {
 	@Override
 	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		int lastN = (int)cc.var.get("lastShootArrowN");
-
+		//shapeRenderer.set(ShapeType.Filled);
 		for(int i = 0; i <= lastN; i++) {
 			if(cc.var.containsKey("shootArrow" + i)) {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
 				float rot = (float)cc.var.get("shootArrowRot" + i);
 				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot);
-				shapeRenderer.rectLine(pos.x, pos.y, pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f - 10f, 0.1f);
+				
+				//shapeRenderer.rectLine(pos.x, pos.y, pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f - 10f, 5f);
+				
 			}
 		}
 

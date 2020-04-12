@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import box2dLight.RayHandler;
@@ -166,6 +167,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void dispose() {
 		UIDraws.Dispose();
+		shapeRenderer.dispose();
 		batch.dispose();
 		world.dispose();
 		rayHandler.dispose();

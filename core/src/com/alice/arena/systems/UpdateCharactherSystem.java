@@ -1,5 +1,7 @@
 package com.alice.arena.systems;
 
+import java.util.ArrayList;
+
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -8,15 +10,13 @@ import com.alice.arena.screens.PlayScreen;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 
-public class UpdateCharactherSystem extends IteratingSystem {
+public class UpdateCharactherSystem extends EntitySystem {
 
-	public UpdateCharactherSystem() {
-		super(Family.all(VelocityComponent.class, PositionComponent.class, CharactherComponent.class).get());
-		// TODO Auto-generated constructor stub
-	}
 
 
 
@@ -24,16 +24,16 @@ public class UpdateCharactherSystem extends IteratingSystem {
 	private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
 	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private Engine engine;
+	private ImmutableArray<Entity> entities;
+	
 	
 	@Override
 	public void addedToEngine(Engine engine) {
 		this.engine = engine;
-
-		super.addedToEngine(engine);
+		entities = engine.getEntitiesFor(Family.all(VelocityComponent.class, PositionComponent.class, CharactherComponent.class).get());
 	}
 	
 	
-	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		PositionComponent pc = pm.get(entity);
 		CharactherComponent cc = cm.get(entity);
@@ -65,5 +65,47 @@ public class UpdateCharactherSystem extends IteratingSystem {
 		}
 		
 	}
+	
+	
+	@Override
+	public void update(float deltaTime) {
+		ArrayList<Thread> threads = new ArrayList<Thread>();
+		for (int i = 0; i < entities.size(); ++i) {
+			Entity e = entities.get(i);
+			Thread t = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					processEntity(e, deltaTime);
+					
+				}
+			});
+			threads.add(t);
+			t.run();
+		}
+		
+		for(Thread t : threads)
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

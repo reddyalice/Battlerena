@@ -12,6 +12,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import box2dLight.PointLight;
@@ -76,7 +77,7 @@ public class ShootArrow extends Skill {
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
+	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		int lastN = (int)cc.var.get("lastShootArrowN");
 		for(int i = 0; i <= lastN; i++) {
 			if(cc.var.containsKey("shootArrow" + i)) {

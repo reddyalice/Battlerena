@@ -19,7 +19,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -42,7 +45,7 @@ public class PlayScreen implements Screen {
 	
 	private SpriteBatch batch;
 	private SpriteBatch UIBatch;
-	
+	private ShapeRenderer shapeRenderer;
 	
 	
 	public static World world;
@@ -59,6 +62,7 @@ public class PlayScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		UIBatch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
 	 	rayHandler.setAmbientLight(0.1f);
@@ -66,7 +70,7 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new MovementSystem());
-		engine.addSystem(new RenderingSystem(batch));
+		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
 		Player = Core.SpawnPlayerCharacther(rayHandler, 0, 0, selectedR, selectedS, selectedSS);
 		engine.addEntity(Player);
 		playerChar = Player.getComponent(CharactherComponent.class);

@@ -9,6 +9,7 @@ import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class VeryNormal extends Skill {
 
@@ -29,7 +30,7 @@ public class VeryNormal extends Skill {
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
+	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		// TODO Auto-generated method stub
 		
 	}

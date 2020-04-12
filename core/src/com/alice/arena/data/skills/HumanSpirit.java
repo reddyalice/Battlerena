@@ -1,5 +1,7 @@
 package com.alice.arena.data.skills;
 
+import java.util.logging.SocketHandler;
+
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -9,10 +11,12 @@ import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class HumanSpirit extends Skill {
 
-	
+	ShapeRenderer renderer;
 
 	
 	public HumanSpirit() {
@@ -22,6 +26,7 @@ public class HumanSpirit extends Skill {
 
 	@Override
 	public void SkillInit(CharactherComponent cc) {
+		renderer = new ShapeRenderer();
 	}
 
 	@Override
@@ -44,8 +49,10 @@ public class HumanSpirit extends Skill {
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
-		// TODO Auto-generated method stub
+	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
+		
+		
+		shapeRenderer.circle(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f, 24);
 		
 	}
 

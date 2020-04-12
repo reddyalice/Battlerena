@@ -11,16 +11,19 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class RenderingSystem extends IteratingSystem {
 
 	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
 	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private SpriteBatch batch;
+	private ShapeRenderer shapeRenderer;
 	
-	public RenderingSystem(SpriteBatch batch) {
+	public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
 		super(Family.all(PositionComponent.class, CharactherComponent.class).get());
 		this.batch = batch;
+		this.shapeRenderer = shapeRenderer;
 	}
 	
 	@Override
@@ -54,7 +57,7 @@ public class RenderingSystem extends IteratingSystem {
 
 		int i = 0;
 		for(Skill s : cc.skill) {
-			s.SkillRender(batch, cc, pc, i);
+			s.SkillRender(batch, shapeRenderer ,cc, pc, i);
 			i++;
 		}
 

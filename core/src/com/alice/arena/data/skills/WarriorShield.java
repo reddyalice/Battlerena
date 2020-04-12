@@ -10,6 +10,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class WarriorShield extends Skill{
 
@@ -50,7 +51,7 @@ public class WarriorShield extends Skill{
 	}
 
 	@Override
-	public void SkillRender(SpriteBatch batch, CharactherComponent cc, PositionComponent pc, int index) {
+	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		
 		float x = pc.x -32f + cc.race.width / 2f + cc.lookDir.x * 20f;
 		float y = pc.y -32f + cc.race.height / 2f - 10f + cc.lookDir.y * 20f;
@@ -83,7 +84,6 @@ public class WarriorShield extends Skill{
 		}
 		
 	}
-
 
 
 

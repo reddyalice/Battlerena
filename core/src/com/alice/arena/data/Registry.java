@@ -26,6 +26,7 @@ public class Registry {
 	public static class RACES{
 		public static final Race Human = new Human();
 		public static final Race Orc = new Orc();
+		public static final Race Glitch = new Glitch();
 	}
 	
 	public static class STYLES{

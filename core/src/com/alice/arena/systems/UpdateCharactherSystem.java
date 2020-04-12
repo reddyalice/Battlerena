@@ -3,6 +3,7 @@ package com.alice.arena.systems;
 import java.util.ArrayList;
 
 import com.alice.arena.components.CharactherComponent;
+import com.alice.arena.components.PhysicsComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
@@ -22,6 +23,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 
 	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
 	private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
+	private ComponentMapper<PhysicsComponent> phm = ComponentMapper.getFor(PhysicsComponent.class);
 	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private Engine engine;
 	private ImmutableArray<Entity> entities;
@@ -30,7 +32,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 	@Override
 	public void addedToEngine(Engine engine) {
 		this.engine = engine;
-		entities = engine.getEntitiesFor(Family.all(VelocityComponent.class, PositionComponent.class, CharactherComponent.class).get());
+		entities = engine.getEntitiesFor(Family.all(VelocityComponent.class, PositionComponent.class, PhysicsComponent.class, CharactherComponent.class).get());
 	}
 	
 	
@@ -38,6 +40,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 		PositionComponent pc = pm.get(entity);
 		CharactherComponent cc = cm.get(entity);
 		VelocityComponent vc = vm.get(entity);
+		PhysicsComponent phc = phm.get(entity);
 		cc.lookDir.nor();
 		float vis = (cc.visibility + PlayScreen.playerChar.vision) / 2f;
 		float dot = -cc.lookDir.x;

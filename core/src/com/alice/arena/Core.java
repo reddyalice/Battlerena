@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.MPComponent;
+import com.alice.arena.components.PhysicsComponent;
 import com.alice.arena.components.PlayerComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -23,6 +24,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import box2dLight.ConeLight;
 import box2dLight.PointLight;
@@ -33,12 +40,14 @@ public class Core extends Game {
 
 	public static Color backgroundColor = Color.BLUE;
 	public static Core instance;
+	public static Account account;
 	public static float deltaTime = 1f/60f;
 	public static int WIDTH = 640, HEIGHT = 480;
 	
 	@Override
 	public void create () {
 		instance = this;
+		account = new Account("Player");
 		Assets.fonts.put("empty", new BitmapFont());
 		setScreen(new SelectScreen());
 	}
@@ -65,7 +74,7 @@ public class Core extends Game {
 		super.dispose();
 	}
 	
-	private static Entity CreateCharactherEntity(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
+	private static Entity CreateCharactherEntity(RayHandler rh, float x, float y, Race race, Style style,String name, String team, Skill... skills ) {
 		
 		Entity e = new Entity();
 		CharactherComponent cc = new CharactherComponent();
@@ -100,9 +109,19 @@ public class Core extends Game {
 		cc.coneLight = CreateSpotLight(rh, x, y, c, 500, 1000,cc.rotation, 40f);
 		cc.pointLight = CreatePointLight(rh, x, y, b, 70f, 1000);
 		
+		cc.name = name;
+		cc.team = team;
+		
+		PhysicsComponent phc = new PhysicsComponent();
+		
+		phc.pivot = new Vector2(cc.race.width / 2f, cc.race.height / 4f);
+		phc.body = CreateASimpleBody(BodyType.KinematicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, cc.team, false);
+		phc.fixture = phc.body.getFixtureList().first();
+		
 		e.add(cc);
 		e.add(new PositionComponent(x,y));
 		e.add(new VelocityComponent());
+		e.add(phc);
 		cc.race.RacialInit(cc);
 		cc.style.StyleInit(cc);
 		for(Skill s : cc.skill)
@@ -116,28 +135,28 @@ public class Core extends Game {
 	}
 	
 	
-	public static Entity SpawnPlayerCharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
-		Entity e = CreateCharactherEntity(rh, x, y, race, style, skills);
+	public static Entity SpawnPlayerCharacther(RayHandler rh, float x, float y, Race race, Style style, String team, Skill... skills ) {
+		Entity e = CreateCharactherEntity(rh, x, y, race, style,account.name, team,  skills);
 		e.add(new PlayerComponent());
 		return e;
 	}
 	
 	
-	public static Entity SpawnAICharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills ) {
-		Entity e = CreateCharactherEntity(rh, x,y, race, style, skills);
+	public static Entity SpawnAICharacther(RayHandler rh, float x, float y, Race race, Style style,  String team, Skill... skills ) {
+		Entity e = CreateCharactherEntity(rh, x,y, race, style, "AI", team, skills);
 		e.add(new AIComponent());
 		return e;
 	}
 	
 	
-	public static Entity SpawnMPCharacther(RayHandler rh, float x, float y, Race race, Style style,Skill... skills )
+	public static Entity SpawnMPCharacther(RayHandler rh, float x, float y, Race race, Style style, String name, String team, Skill... skills )
 	{
-		Entity e = CreateCharactherEntity(rh, x, y, race, style, skills);
+		Entity e = CreateCharactherEntity(rh, x, y, race, style,name, team, skills);
 		e.add(new MPComponent());
 		return e;
 	}
 	
-	public static Entity SpawnRandomAICharacther(RayHandler rh, float x, float y, int level) {
+	public static Entity SpawnRandomAICharacther(RayHandler rh, float x, float y, int level, String team) {
 		int r = (int)(Math.random() * Registry.raceList.size());
 		int c = (int)(Math.random() * Registry.styleList.size());
 		ArrayList<Skill> rcs = new ArrayList<Skill>();
@@ -173,7 +192,7 @@ public class Core extends Game {
 			skills.add(scs.get(i));
 		}
 		
-		return SpawnAICharacther(rh, x, y, ra, sa, skills.toArray(new Skill[0]));
+		return SpawnAICharacther(rh, x, y, ra, sa, team, skills.toArray(new Skill[0]));
 		
 
 	}
@@ -189,22 +208,21 @@ public class Core extends Game {
 		 ConeLight light = new ConeLight(rayHandler, numberOfRays, lightColor, range, x, y, directionDegree, coneDegree);
 		 return light;
 	 }
-	 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static Body CreateASimpleBody(BodyType type, float x, float y,float width, float height, float pivotX, float pivotY, Object userDta, boolean trigger) {
+		
+		BodyDef def = new BodyDef();
+		PolygonShape shape = new PolygonShape();
+		FixtureDef fdef = new FixtureDef();
+		shape.setAsBox(width/2f, height/2f);
+		def.type = type;
+		def.position.set(x  + pivotX, y +pivotY );
+		fdef.shape = shape;
+		Body body = PlayScreen.world.createBody(def);
+		Fixture fixture =body.createFixture(fdef);
+		fixture.setUserData(userDta);
+		fixture.setSensor(trigger);
+		return body;
+	}
 	
 }

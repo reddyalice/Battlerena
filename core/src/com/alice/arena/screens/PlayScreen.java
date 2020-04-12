@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
@@ -43,11 +44,11 @@ public class PlayScreen implements Screen {
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
 	
 	
-	
 	private SpriteBatch batch;
 	private SpriteBatch UIBatch;
 	private ShapeRenderer shapeRenderer;
-	
+	private Box2DDebugRenderer debugRenderer;
+
 	
 	public static World world;
 	public static RayHandler rayHandler;
@@ -65,6 +66,7 @@ public class PlayScreen implements Screen {
 		UIBatch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
+		debugRenderer = new Box2DDebugRenderer(); 
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
 	 	rayHandler.setAmbientLight(0.1f);
@@ -73,7 +75,7 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
-		Player = Core.SpawnPlayerCharacther(rayHandler, 0, 0, selectedR, selectedS, selectedSS);
+		Player = Core.SpawnPlayerCharacther(rayHandler, 0, 0, selectedR, selectedS, "player", selectedSS);
 		engine.addEntity(Player);
 		playerChar = Player.getComponent(CharactherComponent.class);
 		
@@ -130,6 +132,9 @@ public class PlayScreen implements Screen {
 		batch.end();
 		rayHandler.render();
 		shapeRenderer.end();
+		debugRenderer.render(world, camera.combined);
+		
+		
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);
 		UIDraws.Broadcast(UIBatch);
@@ -171,6 +176,7 @@ public class PlayScreen implements Screen {
 		batch.dispose();
 		world.dispose();
 		rayHandler.dispose();
+		debugRenderer.dispose();
 	}
 
 }

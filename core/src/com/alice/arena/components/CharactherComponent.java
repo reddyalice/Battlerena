@@ -7,6 +7,8 @@ import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 
 import box2dLight.ConeLight;
 import box2dLight.Light;
@@ -18,9 +20,15 @@ public class CharactherComponent implements Component {
 	public Style style;
 	public Vector2 lookDir;
 	public float rotation;
+	public String name;
+	public String team;
+	
+	
 	
 	public ConeLight coneLight;
 	public PointLight pointLight;
+	
+
 	
 	public boolean flip;
 	public int raceAnimationStep;

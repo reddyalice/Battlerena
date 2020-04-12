@@ -71,7 +71,7 @@ public class SelectScreen implements Screen {
 			
 			if(ms.x <= x + 32 * 3f && ms.x >= x 
 					&& ms.y >= y && ms.y <= y + 48 * 3)
-				if(Gdx.input.isButtonPressed(0))
+				if(Gdx.input.isButtonJustPressed(0))
 				{
 					selectedRace = k;
 					selectedSkills.clear();
@@ -98,7 +98,7 @@ public class SelectScreen implements Screen {
 			
 			if(ms.x <= x + 32 * 3f && ms.x >= x 
 					&& ms.y >= y && ms.y <= y + 48 * 3)
-				if(Gdx.input.isButtonPressed(0))
+				if(Gdx.input.isButtonJustPressed(0))
 				{
 					selectedStyle = k;
 					selectedSkills.clear();
@@ -124,7 +124,7 @@ public class SelectScreen implements Screen {
 			
 			if(ms.x <= x + 32 * 2f && ms.x >= x 
 					&& ms.y >= y && ms.y <= y + 32 * 2)
-				if(Gdx.input.isButtonPressed(0))
+				if(Gdx.input.isButtonJustPressed(0))
 					
 					if(selectedSkills.contains(s))
 					{

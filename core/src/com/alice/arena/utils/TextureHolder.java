@@ -26,6 +26,10 @@ public class TextureHolder {
 		batch.draw(textureRegions[regionPointer], flipX ? x+width : x, flipY ? y+height : y,  width/2f ,  flipY ? -height / 2f : height / 2f , flipX ? -width : width, flipY ? -height : height, 1f,1f, rotation);
 	}
 	
+	public void Draw(SpriteBatch batch, float x, float y, float originX, float originY, int width, int height, int regionPointer, boolean flipX, boolean flipY, float rotation) {
+		batch.draw(textureRegions[regionPointer], flipX ? x+width : x, flipY ? y+height : y, originX , flipY ? -originY : originY , flipX ? -width : width, flipY ? -height : height, 1f,1f, rotation);
+	}
+	
 	
 
 }

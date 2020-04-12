@@ -30,7 +30,7 @@ public class ShootArrow extends Skill {
 	
 	
 	public ShootArrow() {
-		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("shootarrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
 		// TODO Auto-generated constructor stub
 	}
 

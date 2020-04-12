@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class WarriorSword extends Skill {
 
 	public WarriorSword() {
-		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("triangle")), 1, 1, 10f, "A Warrior's Trustworthy Sword");
+		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("triangle")), null, 1, 1, 10f, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
 	}
 

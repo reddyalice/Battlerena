@@ -13,6 +13,7 @@ public abstract class Skill {
 	
 	public String name;
 	public TextureHolder texture;
+	public TextureHolder iconTexture;
 	public Texture UITexture;
 	
 	
@@ -22,8 +23,9 @@ public abstract class Skill {
 	public String description;
 	
 	
-	public Skill(String name, TextureHolder texture,  int level, float cooldown, float energyCost, String description) {
+	public Skill(String name, TextureHolder iconTexture, TextureHolder texture,  int level, float cooldown, float energyCost, String description) {
 		this.name = name;
+		this.iconTexture = iconTexture;
 		this.texture = texture;
 		this.level = level;
 		this.cooldown = cooldown;

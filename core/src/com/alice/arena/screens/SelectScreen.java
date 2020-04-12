@@ -140,7 +140,7 @@ public class SelectScreen implements Screen {
 				batch.draw(selectionT, x,y, 32 * 2, 32 * 2);
 
 			font.draw(batch, s.name , x , y + 32f * 2f + 20f);
-			s.texture.Draw(batch, x, y, 32 * 2, 32 * 2, 0, false, false, 0);
+			s.iconTexture.Draw(batch, x, y, 32 * 2, 32 * 2, 0, false, false, 0);
 			i++;
 			
 			

@@ -21,7 +21,7 @@ public class HumanSpirit extends Skill {
 
 	
 	public HumanSpirit() {
-		super("Human's Spirit", new TextureHolder(Assets.GetTexture("triangle")), 1, 20, 0, "Human's Stubborness");
+		super("Human's Spirit", new TextureHolder(Assets.GetTexture("triangle")), null, 1, 20, 0, "Human's Stubborness");
 		// TODO Auto-generated constructor stub
 	}
 

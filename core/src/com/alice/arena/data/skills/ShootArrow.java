@@ -36,7 +36,7 @@ public class ShootArrow extends Skill {
 
 	@Override
 	public void SkillInit(CharactherComponent cc) {
-		font = new BitmapFont();
+		font = Assets.GetFont("empty"); 
 		cc.var.put("lastShootArrowN", -1);
 		PlayScreen.UIDraws.Add("arrow", x -> {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);

@@ -19,7 +19,7 @@ public class WarriorShield extends Skill{
 	private BitmapFont font;
 	public WarriorShield() {
 		super("Warrior's Shield",  new TextureHolder(Assets.GetTexture("warriorshield")), new TextureHolder(Assets.GetTexture("warriorshield")), 1, 10, 40f, "Warrior's Trusted Shield");
-		font = new BitmapFont();
+		font = Assets.GetFont("empty"); 
 	}
 
 	@Override

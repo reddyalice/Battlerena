@@ -26,6 +26,7 @@ public class SelectScreen implements Screen {
 	public int selectedStyle;
 	int regionPointer = 0;
 	public Texture selectionT;
+	public Texture lock;
 	public ArrayList<Skill> selectedSkills = new ArrayList<Skill>();
 	
 	ExtendViewport viewport;
@@ -39,13 +40,14 @@ public class SelectScreen implements Screen {
 		System.out.println(Registry.RACES.Human);
 		System.out.println(Registry.STYLES.Warrior);
 		selectionT = Assets.GetTexture("selectionBox");
+		lock = Assets.GetTexture("lock");
 	}
 	
 	
 	@Override
 	public void show() {
 		batch = new SpriteBatch();
-		font = new BitmapFont(); 
+		font = Assets.GetFont("empty"); 
 		
 		camera = new OrthographicCamera();
 		viewport =  new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
@@ -123,12 +125,14 @@ public class SelectScreen implements Screen {
 			if(ms.x <= x + 32 * 2f && ms.x >= x 
 					&& ms.y >= y && ms.y <= y + 32 * 2)
 				if(Gdx.input.isButtonPressed(0))
+					
 					if(selectedSkills.contains(s))
 					{
 						selectedSkills.remove(s);
 						n++;
 					}else
 					{
+						if(s.level <= Core.account.level)
 						if(n > 0) {
 							selectedSkills.add(s);
 							n--;
@@ -137,11 +141,22 @@ public class SelectScreen implements Screen {
 			
 			
 			if(selectedSkills.contains(s))
-				batch.draw(selectionT, x,y, 32 * 2, 32 * 2);
-
+				batch.setColor(Color.GREEN);
+			else
+				batch.setColor(Color.WHITE);
+			
+	
+			
 			font.draw(batch, s.name , x , y + 32f * 2f + 20f);
 			s.iconTexture.Draw(batch, x, y, 32 * 2, 32 * 2, 0, false, false, 0);
+			
+			if(s.level > Core.account.level) {
+				batch.draw(selectionT, x,y, 64,64);
+				batch.draw(lock, x, y, 64, 64);
+			}
+			
 			i++;
+			
 			
 			
 			
@@ -149,7 +164,7 @@ public class SelectScreen implements Screen {
 		
 		
 		
-		
+		batch.setColor(Color.WHITE);
 		
 		
 		

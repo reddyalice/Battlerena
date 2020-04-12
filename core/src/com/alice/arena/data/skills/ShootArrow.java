@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import box2dLight.PointLight;
 
@@ -59,18 +61,23 @@ public class ShootArrow extends Skill {
 						Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + k);
 						Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + k);
 						PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
+						Body body = (Body) cc.var.get("shootArrawBody" + k);
 						float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
 						if(dist <= range) {
-							pos.x += lookDir.x * speed * 200f * delta;
-							pos.y += lookDir.y * speed * 200f * delta;
-							light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
+							Vector2 p = body.getPosition();
+							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
+							pos.x = p.x - 29f / 2f;
+							pos.y = p.y - 12f;
+							cc.var.put("shootArrowRot" + k, (float)(body.getAngle() * 180f / Math.PI));
+							//light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
 						}else {
 							cc.var.remove("shootArrow" + k);
 							cc.var.remove("shootArrowLook" + k);
 							cc.var.remove("shootArrowO" + k);
 							cc.var.remove("shootArrowRot" + k);
 							light.remove();
-							//light.dispose();
+							PlayScreen.world.destroyBody(body);
+							cc.var.remove("shootArrawBody" + k);
 							cc.var.remove("shootArrowLight" + k);
 							if(k == lastN) {
 								cc.var.put("lastShootArrowN", k - 1);
@@ -129,7 +136,15 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f, pc.y + cc.race.height / 2f - 16f - 10f));
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
-					cc.var.put("shootArrowLight" + n, Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5));
+					
+					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 29, 12, 29f / 2f,  6f, cc.team, true);
+					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)(cc.rotation * Math.PI / 180f));
+					PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
+					b.setLinearVelocity( cc.lookDir.x * speed * 200f,cc.lookDir.y * speed * 200f);
+					b.setBullet(true);
+					l.attachToBody(b);
+					cc.var.put("shootArrawBody" + n, b);
+					cc.var.put("shootArrowLight" + n,l);
 					cc.progress[index] = cooldown;
 				}
 			}

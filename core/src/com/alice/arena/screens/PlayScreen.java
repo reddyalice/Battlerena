@@ -42,7 +42,7 @@ public class PlayScreen implements Screen {
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
-	
+	private int numberOfSteps = 3;
 	
 	private SpriteBatch batch;
 	private SpriteBatch UIBatch;
@@ -117,13 +117,28 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		Thread[] worldSteps = new Thread[numberOfSteps];
+		for(int i = 0; i < numberOfSteps; i++) {
+		Thread worldT = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				world.step(delta, 12, 6);
+				world.step(delta, 12, 6);
+				
+			}
+		});
+		worldSteps[i] = worldT;
+			worldT.run();
 		
+		}
+
 		camera.update();
+		
 		batch.begin();
 		shapeRenderer.begin();
 		batch.setProjectionMatrix(camera.combined);
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		world.step(delta, 8, 3);
 		rayHandler.update();
 		
 		engine.update(delta);
@@ -140,7 +155,13 @@ public class PlayScreen implements Screen {
 		UIDraws.Broadcast(UIBatch);
 		UIBatch.end();
 		
-		
+		for(Thread worldT : worldSteps)
+		try {
+			worldT.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -22,12 +22,14 @@ public class Registry {
 		public static final Skill HumanSpirit = new HumanSpirit();
 		public static final Skill OrcRage = new OrcRage();
 		public static final Skill ShootArrow = new ShootArrow();
+		public static final Skill NatureSpirit = new NatureSpirit();
 	}
 	
 	public static class RACES{
 		public static final Race Human = new Human();
 		public static final Race Orc = new Orc();
 		public static final Race Glitch = new Glitch();
+		public static final Race Elf = new Elf();
 	}
 	
 	public static class STYLES{

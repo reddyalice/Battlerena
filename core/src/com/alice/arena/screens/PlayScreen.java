@@ -63,6 +63,7 @@ public class PlayScreen implements Screen {
 		batch = new SpriteBatch();
 		UIBatch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setAutoShapeType(true);
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
 	 	rayHandler.setAmbientLight(0.1f);
@@ -116,7 +117,9 @@ public class PlayScreen implements Screen {
 		
 		camera.update();
 		batch.begin();
+		shapeRenderer.begin();
 		batch.setProjectionMatrix(camera.combined);
+		shapeRenderer.setProjectionMatrix(camera.combined);
 		world.step(delta, 8, 3);
 		rayHandler.update();
 		
@@ -125,7 +128,7 @@ public class PlayScreen implements Screen {
 		
 		batch.end();
 		rayHandler.render();
-		
+		shapeRenderer.end();
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);
 		UIDraws.Broadcast(UIBatch);

@@ -9,6 +9,7 @@ import com.alice.arena.screens.PlayScreen;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +45,7 @@ public class ShootArrow extends Skill {
 	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc,
 			int index) {
 		int lastN = (int)cc.var.get("lastShootArrowN");
+		
 		for(int i = 0; i <= lastN; i++) {
 			if(cc.var.containsKey("shootArrow" + i)) {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
@@ -79,11 +81,13 @@ public class ShootArrow extends Skill {
 	@Override
 	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		int lastN = (int)cc.var.get("lastShootArrowN");
+
 		for(int i = 0; i <= lastN; i++) {
 			if(cc.var.containsKey("shootArrow" + i)) {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
 				float rot = (float)cc.var.get("shootArrowRot" + i);
 				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot);
+				shapeRenderer.rectLine(pos.x, pos.y, pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f - 10f, 0.1f);
 			}
 		}
 

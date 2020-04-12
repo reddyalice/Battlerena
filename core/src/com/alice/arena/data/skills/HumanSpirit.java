@@ -9,6 +9,7 @@ import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -51,9 +52,9 @@ public class HumanSpirit extends Skill {
 	@Override
 	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		
+		shapeRenderer.circle(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f, 24, 100);
 		
-		shapeRenderer.circle(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f, 24);
-		
+
 	}
 
 	@Override

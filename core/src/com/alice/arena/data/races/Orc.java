@@ -15,7 +15,7 @@ public class Orc extends Race {
 	public Orc() {
 		super(1, "Orc", new TextureHolder(Assets.GetTexture("orc"),16,24), 32, 48, 
 				200, 100, 0.9f, 3, 3, 2,
-				1, 3, 10, Registry.SKILLS.HumanSpirit);
+				1, 3, 10, Registry.SKILLS.OrcRage);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -20,6 +20,7 @@ public class Registry {
 		public static final Skill WarriorSword = new WarriorSword();
 		public static final Skill WarriorSheild = new WarriorShield();
 		public static final Skill HumanSpirit = new HumanSpirit();
+		public static final Skill OrcRage = new OrcRage();
 		public static final Skill ShootArrow = new ShootArrow();
 	}
 	

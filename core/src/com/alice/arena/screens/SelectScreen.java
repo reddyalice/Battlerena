@@ -33,7 +33,7 @@ public class SelectScreen implements Screen {
 	OrthographicCamera camera;
 	BitmapFont font;
 	int n = 4;
-	
+	int kn = 4;
 	float timeHolder;
 	
 	public SelectScreen() {
@@ -75,7 +75,7 @@ public class SelectScreen implements Screen {
 				{
 					selectedRace = k;
 					selectedSkills.clear();
-
+					n = kn;
 				}
 			
 			
@@ -102,6 +102,7 @@ public class SelectScreen implements Screen {
 				{
 					selectedStyle = k;
 					selectedSkills.clear();
+					n = kn;
 				}
 			
 			

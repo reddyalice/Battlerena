@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 public class WarriorSword extends Skill {
 
 	int rotationLimit = 90;
-	float rotSpeed = 250;
+	float rotSpeed = 900;
 	public WarriorSword() {
 		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 5f, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
@@ -43,8 +43,8 @@ public class WarriorSword extends Skill {
 				cc.var.put("swingSword", false);
 			}
 			
-			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 64f);
-			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 8f);
+			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 32f);
+			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 16f);
 			
 		}else {
 
@@ -67,7 +67,7 @@ public class WarriorSword extends Skill {
 		
 		if(swing)
 		{
-			texture.Draw(batch, x, y, 64,0, 64, 64, 0, false, false,  cc.rotation + rot );
+			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,  cc.rotation + rot );
 		}
 		else {
 			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false, cc.flip ?  180 : 90 );

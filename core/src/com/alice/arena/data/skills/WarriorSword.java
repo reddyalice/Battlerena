@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WarriorSword extends Skill {
 
-	int rotationLimit = 90;
+	float rotationLimit = 90;
 	float rotSpeed = 900;
 	public WarriorSword() {
 		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 5f, "A Warrior's Trustworthy Sword");
@@ -26,7 +26,7 @@ public class WarriorSword extends Skill {
 		cc.var.put("swingSword", false);
 		cc.var.put("swordPosX", 0f);
 		cc.var.put("swordPosY", 0f);
-		cc.var.put("swordRot", 0f);
+		cc.var.put("swordRot", rotationLimit);
 	}
 
 	@Override
@@ -35,11 +35,11 @@ public class WarriorSword extends Skill {
 		float rot = (float)cc.var.get("swordRot");
 		if(swing)
 		{
-			if(rot <= rotationLimit) {
-				rot += delta * rotSpeed;
+			if(rot >= 0) {
+				rot -= delta * rotSpeed;
 				cc.var.put("swordRot", rot);
 			}else {
-				cc.var.put("swordRot", 0f);
+				cc.var.put("swordRot", rotationLimit);
 				cc.var.put("swingSword", false);
 			}
 			

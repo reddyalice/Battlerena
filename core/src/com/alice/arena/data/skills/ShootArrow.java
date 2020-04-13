@@ -60,7 +60,7 @@ public class ShootArrow extends Skill {
 						Vector2 pos = (Vector2)cc.var.get("shootArrow" + k);
 						Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + k);
 						Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + k);
-						PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
+						//PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
 						Body body = (Body) cc.var.get("shootArrawBody" + k);
 						float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
 						if(dist <= range) {
@@ -75,10 +75,10 @@ public class ShootArrow extends Skill {
 							cc.var.remove("shootArrowLook" + k);
 							cc.var.remove("shootArrowO" + k);
 							cc.var.remove("shootArrowRot" + k);
-							light.remove();
+							//light.remove();
 							PlayScreen.world.destroyBody(body);
 							cc.var.remove("shootArrawBody" + k);
-							cc.var.remove("shootArrowLight" + k);
+							//cc.var.remove("shootArrowLight" + k);
 							if(k == lastN) {
 								cc.var.put("lastShootArrowN", k - 1);
 								
@@ -139,12 +139,12 @@ public class ShootArrow extends Skill {
 					
 					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, "projectile/" + cc.team, true);
 					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)((cc.rotation) * Math.PI / 180f));
-					PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
+					//PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
 					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);
 					b.setBullet(true);
-					l.attachToBody(b);
+					//l.attachToBody(b);
 					cc.var.put("shootArrawBody" + n, b);
-					cc.var.put("shootArrowLight" + n,l);
+					//cc.var.put("shootArrowLight" + n,l);
 					cc.progress[index] = cooldown;
 				}
 			}

@@ -14,8 +14,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WarriorSword extends Skill {
 
+	int rotationLimit = 90;
+	float rotSpeed = 250;
 	public WarriorSword() {
-		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 10f, "A Warrior's Trustworthy Sword");
+		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 5f, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -30,9 +32,16 @@ public class WarriorSword extends Skill {
 	@Override
 	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc, int index) {
 		boolean swing = (boolean)cc.var.get("swingSword");
-		
+		float rot = (float)cc.var.get("swordRot");
 		if(swing)
 		{
+			if(rot <= rotationLimit) {
+				rot += delta * rotSpeed;
+				cc.var.put("swordRot", rot);
+			}else {
+				cc.var.put("swordRot", 0f);
+				cc.var.put("swingSword", false);
+			}
 			
 			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 64f);
 			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 8f);
@@ -43,8 +52,8 @@ public class WarriorSword extends Skill {
 			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 30f + 20f);
 		}
 		
-		if(cc.progress[index] > cooldown)
-			cc.progress[index]--;
+		if(cc.progress[index] > 0)
+			cc.progress[index] -= delta;
 		
 	}
 
@@ -58,7 +67,7 @@ public class WarriorSword extends Skill {
 		
 		if(swing)
 		{
-			texture.Draw(batch, x, y, 64,0, 64, 64, 0, false, false,  cc.rotation + rot + 45f + rot);
+			texture.Draw(batch, x, y, 64,0, 64, 64, 0, false, false,  cc.rotation + rot );
 		}
 		else {
 			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false, cc.flip ?  180 : 90 );
@@ -68,12 +77,13 @@ public class WarriorSword extends Skill {
 
 	@Override
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
+		boolean swing = (boolean)cc.var.get("swingSword"); 
 		
-		
-		if(cc.progress[index] <= 0) {
+		if(cc.progress[index] <= 0 && !swing) {
 			
 			cc.var.put("swingSword", true);
 			cc.progress[index] = cooldown;
+			cc.energy -= energyCost;
 		}
 		
 	}

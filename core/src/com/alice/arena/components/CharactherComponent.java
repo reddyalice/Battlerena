@@ -35,7 +35,7 @@ public class CharactherComponent implements Component {
 	public int styleAnimationStep;
 	public float raceTimeHolder;
 	public float styleTimeHolder;
-	
+	public float idleTime = 3f;
 	
 	public float maxHealth;
 	public float maxEnergy;

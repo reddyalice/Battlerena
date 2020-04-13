@@ -49,10 +49,18 @@ public class UpdateCharactherSystem extends EntitySystem {
 		cc.rotation *= 180f / (float)(Math.PI);
 		
 		
-		if(vc.speed2 != 0)
+		if(vc.speed2 != 0) {
 			cc.visibility = cc.noMoveVisibility * 125f / 100f;
+			if(cc.idleTime > 0)
+				cc.idleTime -= deltaTime;
+			if(cc.idleTime < 0)
+				cc.idleTime = 0;
+		}
 		else
+		{
 			cc.visibility = cc.noMoveVisibility;
+			cc.idleTime = 3f;
+		}
 		
 		cc.coneLight.setPosition(pc.x  + cc.race.width / 2f +  30f * cc.lookDir.x, pc.y + cc.race.height / 2f - 10f  + 30f * cc.lookDir.y);
 		cc.coneLight.setDirection(180f + cc.rotation);

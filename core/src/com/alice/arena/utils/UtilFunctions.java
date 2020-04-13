@@ -11,7 +11,16 @@ public class UtilFunctions {
 			cc.raceAnimationStep =  15 + (int)(cc.raceTimeHolder ) % 3;
 		}else
 		{
-			cc.raceAnimationStep = 0;
+			
+			if(cc.idleTime > 0) {
+				cc.raceAnimationStep = 0;
+			
+			}else {
+				cc.raceTimeHolder	+= deltaTime * 10f;
+				cc.raceAnimationStep =  8 + (int)(cc.raceTimeHolder ) % 3;
+			
+			}
+			
 		}
 	}
 	
@@ -19,9 +28,20 @@ public class UtilFunctions {
 			if(vc.speed2 != 0) {
 				cc.styleTimeHolder	+= deltaTime * 10f;
 				cc.styleAnimationStep =  15 + (int)(cc.styleTimeHolder ) % 3;
+				
 			}else
 			{
-				cc.styleAnimationStep = 0;
+				if(cc.idleTime > 0) {
+					cc.styleAnimationStep = 0;
+			
+				}
+				else{
+					
+					cc.styleTimeHolder	+= deltaTime * 10f;
+					cc.styleAnimationStep =  8 + (int)(cc.styleTimeHolder ) % 3;
+					
+				}
+				
 			}
 	}
 

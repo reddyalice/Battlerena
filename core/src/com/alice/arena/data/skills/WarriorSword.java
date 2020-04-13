@@ -24,6 +24,7 @@ public class WarriorSword extends Skill {
 		cc.var.put("swingSword", false);
 		cc.var.put("swordPosX", 0f);
 		cc.var.put("swordPosY", 0f);
+		cc.var.put("swordRot", 0f);
 	}
 
 	@Override
@@ -33,13 +34,17 @@ public class WarriorSword extends Skill {
 		if(swing)
 		{
 			
-			
+			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 64f);
+			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 8f);
 			
 		}else {
 
 			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 16f);
-			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 30f + 16f);
+			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 30f + 20f);
 		}
+		
+		if(cc.progress[index] > cooldown)
+			cc.progress[index]--;
 		
 	}
 
@@ -49,20 +54,27 @@ public class WarriorSword extends Skill {
 		float x = (float)cc.var.get("swordPosX");
 		float y = (float)cc.var.get("swordPosY");		
 		boolean swing = (boolean)cc.var.get("swingSword");
+		float rot = (float)cc.var.get("swordRot");
 		
 		if(swing)
 		{
-			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,  cc.flip ? 45f :  180f + 45f);
+			texture.Draw(batch, x, y, 64,0, 64, 64, 0, false, false,  cc.rotation + rot + 45f + rot);
 		}
 		else {
-			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false,  cc.flip ? 45f :  180f + 45f);
+			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false, cc.flip ?  180 : 90 );
 		}
 		
 	}
 
 	@Override
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
-		// TODO Auto-generated method stub
+		
+		
+		if(cc.progress[index] <= 0) {
+			
+			cc.var.put("swingSword", true);
+			cc.progress[index] = cooldown;
+		}
 		
 	}
 

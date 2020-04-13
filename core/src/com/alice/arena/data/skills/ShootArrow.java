@@ -137,7 +137,7 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
 					
-					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, cc.team, true);
+					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, "projectile/" + cc.team, true);
 					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)((cc.rotation) * Math.PI / 180f));
 					PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
 					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);

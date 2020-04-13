@@ -107,7 +107,7 @@ public class Core extends Game {
 		Color b = new Color(Color.WHITE);
 		b.mul(0.75f);
 		cc.coneLight = CreateSpotLight(rh, x, y, c, 500, 1000,cc.rotation, 40f);
-		cc.pointLight = CreatePointLight(rh, x, y, b, 70f, 1000);
+		cc.pointLight = CreatePointLight(rh, x, y, b, 70f, 100);
 		
 		cc.name = name;
 		cc.team = team;
@@ -115,7 +115,7 @@ public class Core extends Game {
 		PhysicsComponent phc = new PhysicsComponent();
 		
 		phc.pivot = new Vector2(cc.race.width / 2f, cc.race.height / 4f);
-		phc.body = CreateASimpleBody(BodyType.KinematicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, cc.team, false);
+		phc.body = CreateASimpleBody(BodyType.DynamicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, cc.team, false);
 		phc.fixture = phc.body.getFixtureList().first();
 		cc.pointLight.attachToBody(phc.body);
 		

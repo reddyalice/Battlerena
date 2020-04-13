@@ -16,13 +16,25 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
@@ -48,13 +60,18 @@ public class PlayScreen implements Screen {
 	private SpriteBatch UIBatch;
 	private ShapeRenderer shapeRenderer;
 	private Box2DDebugRenderer debugRenderer;
-
+	private OrthogonalTiledMapRenderer mapRenderer;
+	private float mapScale = 3f;
+	
 	
 	public static World world;
 	public static RayHandler rayHandler;
 	
 	public PlayScreen(Race selectedR, Style selectedS, Skill... selectedSS) {
-	
+		
+		Core.backgroundColor = Color.BLACK;
+		
+		
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(640, 480, camera);
 		viewport.apply(true);
@@ -64,18 +81,61 @@ public class PlayScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		UIBatch = new SpriteBatch();
+		TiledMap map = Assets.GetMap("dungeon");
+		mapRenderer = new OrthogonalTiledMapRenderer(map, mapScale, batch);
+
 		shapeRenderer = new ShapeRenderer();
+		
+		
 		shapeRenderer.setAutoShapeType(true);
-		debugRenderer = new Box2DDebugRenderer(); 
+		debugRenderer = new Box2DDebugRenderer();
+		
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
 	 	rayHandler.setAmbientLight(0.1f);
+		
+		BodyDef def = new BodyDef();
+		PolygonShape shape = new PolygonShape();
+		FixtureDef fdef = new FixtureDef();
+		Body b;
+		
+		for(RectangleMapObject mObject : map.getLayers().get("walls").getObjects().getByType(RectangleMapObject.class)) {
+ 			Rectangle rect = mObject.getRectangle();
+		
+			shape.setAsBox(rect.width / 2f * mapScale, rect.height / 2f * mapScale );
+			def.type = BodyType.StaticBody;
+			def.position.set(rect.getX() * mapScale + rect.width / 2f *mapScale, rect.getY() * mapScale + rect.height / 2f * mapScale);
+			fdef.shape = shape;
+			b = world.createBody(def);
+			b.createFixture(fdef);
+			
+		
+		}
+	
+		RectangleMapObject playerSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("playerSpawn");
+		
+
+		
+		
+		
+		
+		
+
+		
+		
+		 
+		
+		
+		
+		
+		
 		engine = new Engine();
+		Player = Core.SpawnPlayerCharacther(rayHandler,playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale, selectedR, selectedS, "player", selectedSS);
+
 		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
-		Player = Core.SpawnPlayerCharacther(rayHandler, 0, 0, selectedR, selectedS, "player", selectedSS);
 		engine.addEntity(Player);
 		playerChar = Player.getComponent(CharactherComponent.class);
 		
@@ -117,7 +177,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
-		Thread[] worldSteps = new Thread[numberOfSteps];
+		Thread[] worldSteps = new Thread[numberOfSteps + 1];
 		for(int i = 0; i < numberOfSteps; i++) {
 		Thread worldT = new Thread(new Runnable() {
 			
@@ -129,17 +189,36 @@ public class PlayScreen implements Screen {
 			}
 		});
 		worldSteps[i] = worldT;
-			worldT.run();
+
+		worldT.run();
 		
+			
 		}
+		
+		Thread rayH = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				rayHandler.update();
+				
+			}
+		});
+		worldSteps[numberOfSteps] = rayH;
+		rayH.run();
+		
+		
 
 		camera.update();
-		
+		mapRenderer.setView(camera);
+		mapRenderer.render();
 		batch.begin();
 		shapeRenderer.begin();
+		
 		batch.setProjectionMatrix(camera.combined);
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		rayHandler.update();
+		
+		
+		
 		
 		engine.update(delta);
 		rayHandler.setCombinedMatrix(camera);
@@ -147,7 +226,7 @@ public class PlayScreen implements Screen {
 		batch.end();
 		rayHandler.render();
 		shapeRenderer.end();
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		
 		
 		UIBatch.begin();
@@ -198,6 +277,7 @@ public class PlayScreen implements Screen {
 		world.dispose();
 		rayHandler.dispose();
 		debugRenderer.dispose();
+		mapRenderer.dispose();
 	}
 
 }

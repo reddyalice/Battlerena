@@ -8,6 +8,7 @@ import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
+import com.alice.arena.utils.UtilFunctions;
 
 public class Glitch extends Race {
 
@@ -26,6 +27,7 @@ public class Glitch extends Race {
 	@Override
 	public void RacialUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc) {
 		// TODO Auto-generated method stub
+		UtilFunctions.StandartRaceAnim(cc, vc, delta);
 
 	}
 

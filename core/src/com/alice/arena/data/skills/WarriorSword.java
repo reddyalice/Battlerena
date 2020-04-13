@@ -14,8 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WarriorSword extends Skill {
 
-	float rotationLimit = 90;
-	float rotSpeed = 900;
+	int rotationLimit = 90;
+	float rotSpeed = 450;
 	public WarriorSword() {
 		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 5f, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
@@ -26,7 +26,7 @@ public class WarriorSword extends Skill {
 		cc.var.put("swingSword", false);
 		cc.var.put("swordPosX", 0f);
 		cc.var.put("swordPosY", 0f);
-		cc.var.put("swordRot", rotationLimit);
+		cc.var.put("swordRot", 0f);
 	}
 
 	@Override
@@ -35,11 +35,11 @@ public class WarriorSword extends Skill {
 		float rot = (float)cc.var.get("swordRot");
 		if(swing)
 		{
-			if(rot >= 0) {
-				rot -= delta * rotSpeed;
+			if(rot <= rotationLimit) {
+				rot += delta * rotSpeed;
 				cc.var.put("swordRot", rot);
 			}else {
-				cc.var.put("swordRot", rotationLimit);
+				cc.var.put("swordRot", 0f);
 				cc.var.put("swingSword", false);
 			}
 			
@@ -67,7 +67,7 @@ public class WarriorSword extends Skill {
 		
 		if(swing)
 		{
-			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,  cc.rotation + rot );
+			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,   cc.rotation + (cc.flip ? rot  :  180f-rot ));
 		}
 		else {
 			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false, cc.flip ?  180 : 90 );

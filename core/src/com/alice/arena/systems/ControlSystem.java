@@ -87,7 +87,7 @@ public class ControlSystem extends EntitySystem {
 			
 		vc.x = m.x * cc.speed * 25f;
 		vc.y = m.y * cc.speed * 25f;
-		//viewport.getCamera().position.set(pc.x, pc.y, 0);
+		viewport.getCamera().position.set(pc.x, pc.y, 0);
 		cc.lookDir = diff;
 			
 			

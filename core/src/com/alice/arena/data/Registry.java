@@ -35,6 +35,8 @@ public class Registry {
 	public static class STYLES{
 		public static final Style Warrior = new Warrior();
 		public static final Style Hunter = new Hunter();
+		public static final Style Mage = new Mage();
+		public static final Style Commander = new Commander();
 	}
 	
 	public static class ITEMS{

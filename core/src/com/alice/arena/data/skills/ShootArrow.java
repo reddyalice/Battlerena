@@ -171,7 +171,7 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
 					
-					Body b = Core.CreateASimpleBody(BodyType.KinematicBody, 
+					Body b = Core.CreateASimpleBody(BodyType.DynamicBody, 
 							pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size,
 							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "arrow/" + cc.team + "/" + n, true);
 					

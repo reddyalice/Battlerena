@@ -281,7 +281,7 @@ public class PlayScreen implements Screen {
 		batch.end();
 		rayHandler.render();
 		shapeRenderer.end();
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		
 		
 		UIBatch.begin();

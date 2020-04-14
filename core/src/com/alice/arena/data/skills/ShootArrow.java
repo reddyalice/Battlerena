@@ -26,10 +26,16 @@ import box2dLight.PointLight;
 public class ShootArrow extends Skill {
 
 	
-	final int range =  500;
-	final float speed = 5;
-	BitmapFont font;
-	final float size = 0.5f;  
+	private final int range =  500;
+	private final float speed = 5;
+	private BitmapFont font;
+	private final float size = 0.5f;  
+	
+	
+	
+	
+	
+	
 	
 	public ShootArrow() {
 		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
@@ -47,30 +53,55 @@ public class ShootArrow extends Skill {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();
 	
-			if(fA.startsWith("arrow"))
+			if(fA.startsWith("projectile"))
 			{
 				String[] p = fA.split("/");
 				String projectileTeam = p[1];
-				int n = Integer.parseInt(p[2]);
+				String projectileType = p[2];
+				if(projectileType.contains("arrow")) {
+					int n = Integer.parseInt(p[3]);
+					if(fB == "wall") {
+						c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+					}else if(fB.startsWith("char")) {
+					
+					}
 				
-
-				if(fB == "wall") {
-					c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+				
 				}
 				
 				
 				
 				
 			}
-			if(fB.startsWith("arrow"))
+			if(fB.startsWith("projectile"))
 			{
 				String[] p = fB.split("/");
 				String projectileTeam = p[1];
-				int n = Integer.parseInt(p[2]);
+				String projectileType = p[2];
+				System.out.println(projectileType);
 				
-				if(fA == "wall") {
-					c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
+				if(projectileType.contains("arrow")) {
+					int n = Integer.parseInt(p[3]);
+					System.out.println(fA);
+					if(fA == "wall") {
+						c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
+					}
+					
+					if(fA.startsWith("char")) {
+						String[] ct = fA.split("/");
+						String charTeam = ct[1];
+						if(charTeam != cc.team)
+						{
+							
+						}
+						
+					}
+				
+				
 				}
+				
+				
+				
 			}
 			
 			
@@ -173,7 +204,7 @@ public class ShootArrow extends Skill {
 					
 					Body b = Core.CreateASimpleBody(BodyType.DynamicBody, 
 							pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size,
-							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "arrow/" + cc.team + "/" + n, true);
+							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile/" + cc.team + "/" + "arrow" + "/" + n, true);
 					
 					//b.setFixedRotation(false);
 					b.setTransform(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size, (float)((cc.rotation) * Math.PI / 180f));

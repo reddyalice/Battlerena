@@ -61,13 +61,13 @@ public class WarriorSword extends Skill {
 	public void SkillRender(SpriteBatch batch, ShapeRenderer shapeRenderer, CharactherComponent cc, PositionComponent pc, int index) {
 		
 		float x = (float)cc.var.get("swordPosX");
-		float y = (float)cc.var.get("swordPosY");		
+		float y = (float)cc.var.get("swordPosY");	
 		boolean swing = (boolean)cc.var.get("swingSword");
 		float rot = (float)cc.var.get("swordRot");
 		
 		if(swing)
 		{
-			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,   cc.rotation + (cc.flip ? rot  :  180f-rot ));
+			texture.Draw(batch, x, y, 32,0, 32, 32, 0, false, false,   cc.rotation + (cc.flip ? rot  :  180f-rot - 90f ));
 		}
 		else {
 			texture.Draw(batch, x, y, 16,0, 16, 16, 0, false, false, cc.flip ?  180 : 90 );

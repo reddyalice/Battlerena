@@ -23,7 +23,6 @@ public class Commander extends Style {
 
 	@Override
 	public void StyleInit(CharactherComponent cc) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -61,7 +61,7 @@ public class PlayScreen implements Screen {
 	private ShapeRenderer shapeRenderer;
 	private Box2DDebugRenderer debugRenderer;
 	private OrthogonalTiledMapRenderer mapRenderer;
-	private float mapScale = 3f;
+	private float mapScale = 2;
 	
 	
 	public static World world;
@@ -92,7 +92,7 @@ public class PlayScreen implements Screen {
 		
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
-	 	rayHandler.setAmbientLight(0.1f);
+	 	rayHandler.setAmbientLight(0.5f);
 		
 		BodyDef def = new BodyDef();
 		PolygonShape shape = new PolygonShape();
@@ -114,16 +114,13 @@ public class PlayScreen implements Screen {
 	
 		RectangleMapObject playerSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("playerSpawn");
 		
-
 		
+		Entity[] ais = new Entity[4];
 		
-		
-		
-		
-
-		
-		
-		 
+		for(int i = 0; i < 4; i++) {
+			RectangleMapObject aiSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("ai" + (i + 1));
+			ais[i] = Core.SpawnRandomAICharacther(rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, "test");
+		}
 		
 		
 		
@@ -137,6 +134,8 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
 		engine.addEntity(Player);
+		for(Entity en : ais)
+			engine.addEntity(en);
 		playerChar = Player.getComponent(CharactherComponent.class);
 		
 		

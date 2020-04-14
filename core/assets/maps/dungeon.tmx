@@ -77,16 +77,16 @@
   <object id="20" name="playerSpawn" x="198.667" y="185.333">
    <point/>
   </object>
-  <object id="21" name="ai" x="342.667" y="76">
+  <object id="21" name="ai4" x="342.667" y="76">
    <point/>
   </object>
-  <object id="22" name="ai" x="60.6667" y="77.3333">
+  <object id="22" name="ai3" x="60.6667" y="77.3333">
    <point/>
   </object>
-  <object id="23" name="ai" x="55.3333" y="338.667">
+  <object id="23" name="ai2" x="55.3333" y="338.667">
    <point/>
   </object>
-  <object id="24" name="ai" x="346" y="333.333">
+  <object id="24" name="ai1" x="346" y="333.333">
    <point/>
   </object>
  </objectgroup>

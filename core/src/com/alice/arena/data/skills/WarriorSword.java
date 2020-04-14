@@ -17,7 +17,7 @@ public class WarriorSword extends Skill {
 	int rotationLimit = 90;
 	float rotSpeed = 450;
 	public WarriorSword() {
-		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 1, 5f, "A Warrior's Trustworthy Sword");
+		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 0.5f, 5f, "A Warrior's Trustworthy Sword");
 		// TODO Auto-generated constructor stub
 	}
 

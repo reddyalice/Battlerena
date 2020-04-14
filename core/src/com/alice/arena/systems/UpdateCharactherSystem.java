@@ -85,8 +85,10 @@ public class UpdateCharactherSystem extends EntitySystem {
 		if(cc.health > cc.maxHealth)
 			cc.health = cc.maxHealth;
 		
-		if(cc.health < 0)
+		if(cc.health < 0) {
 			cc.health = 0;
+			this.engine.removeEntity(entity);
+		}
 
 		
 		int i = 0;

@@ -23,6 +23,7 @@ public class Registry {
 		public static final Skill OrcRage = new OrcRage();
 		public static final Skill ShootArrow = new ShootArrow();
 		public static final Skill NatureSpirit = new NatureSpirit();
+		public static final Skill RaiseDead = new RaiseDead();
 	}
 	
 	public static class RACES{
@@ -37,6 +38,7 @@ public class Registry {
 		public static final Style Hunter = new Hunter();
 		public static final Style Mage = new Mage();
 		public static final Style Commander = new Commander();
+		public static final Style Necromancer = new Necromancer();
 	}
 	
 	public static class ITEMS{

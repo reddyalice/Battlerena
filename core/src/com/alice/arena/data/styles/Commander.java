@@ -17,7 +17,8 @@ public class Commander extends Style {
 				0, 0, 0, 0,
 				30, 50, 10, 20, 10,
 				Registry.SKILLS.ShootArrow,
-				Registry.SKILLS.WarriorSword);
+				Registry.SKILLS.WarriorSword,
+				Registry.SKILLS.CallAid);
 		// TODO Auto-generated constructor stub
 	}
 

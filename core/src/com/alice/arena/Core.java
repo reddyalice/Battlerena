@@ -212,7 +212,7 @@ public class Core extends Game {
 		 return light;
 	 }
 	
-	public static Body CreateASimpleBody(BodyType type, float x, float y,float width, float height, float pivotX, float pivotY, String userDta, boolean trigger) {
+	public static Body CreateASimpleBody(BodyType type, float x, float y,float width, float height, float pivotX, float pivotY, String userData, boolean trigger) {
 		
 		BodyDef def = new BodyDef();
 		PolygonShape shape = new PolygonShape();
@@ -223,7 +223,7 @@ public class Core extends Game {
 		fdef.shape = shape;
 		Body body = PlayScreen.world.createBody(def);
 		Fixture fixture =body.createFixture(fdef);
-		fixture.setUserData(userDta);
+		fixture.setUserData(userData);
 		fixture.setSensor(trigger);
 		return body;
 	}

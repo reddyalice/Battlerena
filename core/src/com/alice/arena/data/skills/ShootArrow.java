@@ -26,13 +26,13 @@ import box2dLight.PointLight;
 public class ShootArrow extends Skill {
 
 	
-	int range =  500;
-	float speed = 5;
+	final int range =  500;
+	final float speed = 5;
 	BitmapFont font;
-	
+	final float size = 0.5f;  
 	
 	public ShootArrow() {
-		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("shootarrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -47,7 +47,7 @@ public class ShootArrow extends Skill {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();
 	
-			if(fA.startsWith("projectile"))
+			if(fA.startsWith("arrow"))
 			{
 				String[] p = fA.split("/");
 				String projectileTeam = p[1];
@@ -62,7 +62,7 @@ public class ShootArrow extends Skill {
 				
 				
 			}
-			if(fB.startsWith("projectile"))
+			if(fB.startsWith("arrow"))
 			{
 				String[] p = fB.split("/");
 				String projectileTeam = p[1];
@@ -99,8 +99,8 @@ public class ShootArrow extends Skill {
 						if(dist <= range) {
 							Vector2 p = body.getPosition();
 							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
-							pos.x = p.x - 15f - 3f;
-							pos.y = p.y - 6f - 9f;
+							pos.x = p.x - 16 * size;
+							pos.y = p.y - 9f * size - 5f * size;
 
 							cc.var.put("shootArrowRot" + k, (float)(body.getAngle() * 180f / Math.PI));
 							//light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
@@ -147,7 +147,7 @@ public class ShootArrow extends Skill {
 			if(cc.var.containsKey("shootArrow" + i)) {
 				Vector2 pos = (Vector2)cc.var.get("shootArrow" + i);
 				float rot = (float)cc.var.get("shootArrowRot" + i);
-				texture.Draw(batch, pos.x, pos.y, 32, 32, 0, false, false, rot + 45f);
+				texture.Draw(batch, pos.x, pos.y, (int)(32 * size), (int)(32 * size), 0, false, false, rot);
 								
 			}
 		}
@@ -166,14 +166,17 @@ public class ShootArrow extends Skill {
 					n++;
 				}else {
 					con = false;
-					cc.var.put("shootArrow" + n, new Vector2(pc.x + cc.race.width / 2f - 16f, pc.y + cc.race.height / 2f - 16f - 10f));
-					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f, pc.y + cc.race.height / 2f - 16f - 10f));
+					cc.var.put("shootArrow" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
+					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
 					
-					Body b = Core.CreateASimpleBody(BodyType.DynamicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, "projectile/" + cc.team + "/" + n, true);
+					Body b = Core.CreateASimpleBody(BodyType.KinematicBody, 
+							pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size,
+							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "arrow/" + cc.team + "/" + n, true);
+					
 					//b.setFixedRotation(false);
-					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)((cc.rotation) * Math.PI / 180f));
+					b.setTransform(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size, (float)((cc.rotation) * Math.PI / 180f));
 					//PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
 					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);
 					b.setBullet(true);

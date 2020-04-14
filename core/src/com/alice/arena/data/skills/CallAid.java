@@ -44,4 +44,11 @@ public class CallAid extends Skill {
 
 	}
 
+	@Override
+	public void SkillAIUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc,
+			VelocityComponent vc, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

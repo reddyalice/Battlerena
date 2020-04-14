@@ -75,7 +75,7 @@ public abstract class Race {
 	
 	public abstract void RacialInit(CharactherComponent cc);
 	public abstract void RacialUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc);
-
+	public abstract void RacialAIUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc);
 	
 	
 }

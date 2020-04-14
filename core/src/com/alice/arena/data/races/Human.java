@@ -35,6 +35,12 @@ public class Human extends Race {
 		UtilFunctions.StandartRaceAnim(cc, vc, delta);
 	}
 
+	@Override
+	public void RacialAIUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

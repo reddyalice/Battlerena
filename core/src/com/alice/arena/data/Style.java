@@ -67,7 +67,7 @@ public abstract class Style {
 	
 	public abstract void StyleInit(CharactherComponent cc);
 	public abstract void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc);
-	
+	public abstract void StyleAIUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc);
 	
 	
 }

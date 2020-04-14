@@ -35,6 +35,12 @@ public class Warrior extends Style {
 
 	}
 
+	@Override
+	public void StyleAIUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	
 

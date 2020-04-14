@@ -33,4 +33,10 @@ public class Commander extends Style {
 		UtilFunctions.StandartStyleAnim(cc, vc, deltaTime);
 	}
 
+	@Override
+	public void StyleAIUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

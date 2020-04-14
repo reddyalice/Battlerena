@@ -63,9 +63,9 @@ public class Builder {
 		c.mul(0.5f);
 		Color b = new Color(Color.WHITE);
 		b.mul(0.75f);
-		cc.coneLight = CreateSpotLight(rh, x, y, c, 500, 1000,cc.rotation, 40f);
-		cc.pointLight = CreatePointLight(rh, x, y, b, 70f, 100);
-		
+		//cc.coneLight = CreateSpotLight(rh, x, y, c, 250, 1000,cc.rotation, 40f);
+		cc.pointLight = CreatePointLight(rh, x, y, b, 50f, 100);
+		cc.pointLight.setSoft(true);
 		cc.name = name;
 		cc.team = team;
 		
@@ -87,7 +87,7 @@ public class Builder {
 		for(Skill s : cc.skill)
 			s.SkillInit(cc);
 		
-		Registry.chars.put(id, cc);
+		Registry.chars.put(id, e);
 		return e;
 		
 		

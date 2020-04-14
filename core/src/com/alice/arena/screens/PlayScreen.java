@@ -5,9 +5,9 @@ import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
+import com.alice.arena.systems.CharactherRenderingSystem;
 import com.alice.arena.systems.ControlSystem;
 import com.alice.arena.systems.MovementSystem;
-import com.alice.arena.systems.RenderingSystem;
 import com.alice.arena.systems.UpdateCharactherSystem;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.Builder;
@@ -189,7 +189,7 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new MovementSystem());
-		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
+		engine.addSystem(new CharactherRenderingSystem(batch, shapeRenderer));
 		
 		for(Entity en : ais)
 			engine.addEntity(en);

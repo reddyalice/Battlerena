@@ -4,6 +4,8 @@ import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.screens.PlayScreen;
+import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -14,15 +16,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class RenderingSystem extends IteratingSystem {
+public class CharactherRenderingSystem extends IteratingSystem {
 
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
+	private TextureHolder circle;
 	
-	public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
+	
+	public CharactherRenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
 		super(Family.all(PositionComponent.class, CharactherComponent.class).get());
 		this.batch = batch;
 		this.shapeRenderer = shapeRenderer;
+		circle = new TextureHolder(Assets.GetTexture("circle"));
 	}
 	
 	@Override
@@ -48,6 +53,12 @@ public class RenderingSystem extends IteratingSystem {
 		batch.setColor(c);
 		cc.race.texture.Draw(batch, pc.x, pc.y, cc.race.width, cc.race.height, cc.raceAnimationStep, cc.flip, false,  0);
 		cc.style.texture.Draw(batch, pc.x, pc.y, cc.style.width, cc.style.height, cc.styleAnimationStep, cc.flip, false, 0);
+		
+		
+	
+		
+		
+		
 		shapeRenderer.set(ShapeType.Filled);
 		shapeRenderer.setColor(Color.BLACK);
 		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 12.5f,  pc.x + cc.race.width, pc.y + cc.race.height + 12.5f, 10f);
@@ -57,7 +68,7 @@ public class RenderingSystem extends IteratingSystem {
 		
 		shapeRenderer.setColor(Color.CYAN);
 		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 10f,  pc.x + cc.race.width * (cc.energy / cc.maxEnergy), pc.y + cc.race.height + 10f, 5f);
-
+		
 		
 		
 		int i = 0;
@@ -65,6 +76,9 @@ public class RenderingSystem extends IteratingSystem {
 			s.SkillRender(batch, shapeRenderer ,cc, pc, i);
 			i++;
 		}
+		c.a = 0.5f;
+		batch.setColor(c);
+		circle.Draw(batch,  pc.x - 16f, pc.y - 16f, 32, 32, 64, 64,0, false, false, cc.rotation);
 
 		
 	}

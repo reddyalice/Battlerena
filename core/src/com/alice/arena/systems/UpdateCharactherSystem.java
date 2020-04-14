@@ -61,10 +61,10 @@ public class UpdateCharactherSystem extends EntitySystem {
 			cc.idleTime = 3f;
 		}
 		
-		cc.coneLight.setPosition(pc.x  + cc.race.width / 2f +  30f * cc.lookDir.x, pc.y + cc.race.height / 2f - 10f  + 30f * cc.lookDir.y);
-		cc.coneLight.setDirection(180f + cc.rotation);
+		//cc.coneLight.setPosition(pc.x  + cc.race.width / 2f +  30f * cc.lookDir.x, pc.y + cc.race.height / 2f - 10f  + 30f * cc.lookDir.y);
+		//cc.coneLight.setDirection(180f + cc.rotation);
 		//cc.pointLight.setPosition(pc.x + cc.race.width / 2f, pc.y +  cc.race.height / 2f);
-		//cc.pointLight.setDistance(vis >= 0.5f ? 70 * vis : 0);
+		//cc.pointLight.setDistance(vis >= 0.5f ? 50 * vis : 0);
 		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
 		cc.style.StyleUpdate(cc, deltaTime, pc, vc);
 		

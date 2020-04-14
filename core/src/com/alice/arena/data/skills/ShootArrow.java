@@ -76,7 +76,7 @@ public class ShootArrow extends Skill {
 						if(!charTeam.contentEquals(cc.team))
 						{
 							
-							Registry.chars.get(id).health -= damage;
+							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 							c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
 							cc.var.put("shootArrowKill" + n, true);
 						}
@@ -111,7 +111,7 @@ public class ShootArrow extends Skill {
 						if(!charTeam.contentEquals(cc.team))
 						{
 						
-							Registry.chars.get(id).health -= damage;
+							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 							c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
 							cc.var.put("shootArrowKill" + n, true);
 						}
@@ -234,7 +234,7 @@ public class ShootArrow extends Skill {
 					n++;
 				}else {
 					con = false;
-					Vector2 pos = new Vector2(pc.x + cc.race.width / 2f - 16f * size + cc.lookDir.x * 10f, pc.y + cc.race.height / 2f - 16f * size + cc.lookDir.y * 10f);
+					Vector2 pos = new Vector2(pc.x + cc.race.width / 2f  + cc.lookDir.x * 10f, pc.y + cc.race.height / 2f - 16f * size + cc.lookDir.y * 10f);
 					cc.var.put("shootArrowKill" + n, false);
 					cc.var.put("shootArrowKillC" + n, 0f);
 					cc.var.put("shootArrow" + n, new Vector2(pos.x - 16 * size, pos.y - 9f * size - 5f * size ));

@@ -15,7 +15,7 @@ public class Registry {
 	public static HashMap<Integer, Race> raceList = new HashMap<Integer, Race>();
 	public static HashMap<Integer, Style> styleList = new HashMap<Integer, Style>();
 	public static HashMap<Integer, Item> itemList = new HashMap<Integer, Item>();
-	public static HashMap<Integer,  CharactherComponent> chars = new HashMap<Integer, CharactherComponent>();
+	public static HashMap<Integer,  Entity> chars = new HashMap<Integer, Entity>();
 	
 	public static class SKILLS{
 		public static final Skill VeryNormal = new VeryNormal();

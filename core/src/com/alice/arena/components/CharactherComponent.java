@@ -27,7 +27,7 @@ public class CharactherComponent implements Component {
 	public int id;
 	
 	
-	public ConeLight coneLight;
+	//public ConeLight coneLight;
 	public PointLight pointLight;
 	
 

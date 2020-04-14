@@ -6,6 +6,8 @@ import com.alice.arena.data.Race;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -57,7 +59,7 @@ public class CharactherComponent implements Component {
 	public Skill[] skill;
 	public float[] progress;
 
-	
+
 	
 	
 }

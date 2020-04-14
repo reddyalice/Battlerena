@@ -2,6 +2,7 @@ package com.alice.arena.systems;
 
 import java.util.ArrayList;
 
+import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PhysicsComponent;
 import com.alice.arena.components.PositionComponent;
@@ -85,10 +86,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 		if(cc.health > cc.maxHealth)
 			cc.health = cc.maxHealth;
 		
-		if(cc.health < 0) {
-			cc.health = 0;
-			this.engine.removeEntity(entity);
-		}
+		
 
 		
 		int i = 0;
@@ -96,6 +94,12 @@ public class UpdateCharactherSystem extends EntitySystem {
 			s.SkillUpdate(cc, engine, deltaTime, pc, vc, i);
 			i++;
 		}
+		
+		if(cc.health < 0) {
+			cc.health = 0;
+			Core.KillCharacther(this.engine, entity, cc, phc);
+		}
+		
 		
 	}
 	

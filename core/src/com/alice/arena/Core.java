@@ -74,6 +74,16 @@ public class Core extends Game {
 		super.dispose();
 	}
 	
+	public static void KillCharacther(Engine e, Entity en, CharactherComponent cc, PhysicsComponent phc) {
+		
+		cc.coneLight.remove();
+		cc.pointLight.remove();
+		PlayScreen.world.destroyBody(phc.body);
+		cc.var.clear();
+		e.removeEntity(en);
+		
+	}
+	
 	private static Entity CreateCharactherEntity(RayHandler rh, float x, float y, Race race, Style style,String name, String team, Skill... skills ) {
 		
 		Entity e = new Entity();

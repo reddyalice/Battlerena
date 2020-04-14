@@ -10,6 +10,7 @@ import com.alice.arena.systems.MovementSystem;
 import com.alice.arena.systems.RenderingSystem;
 import com.alice.arena.systems.UpdateCharactherSystem;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.Builder;
 import com.alice.arena.utils.EvE;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -175,7 +176,7 @@ public class PlayScreen implements Screen {
 		
 		for(int i = 0; i < 4; i++) {
 			RectangleMapObject aiSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("ai" + (i + 1));
-			ais[i] = Core.SpawnRandomAICharacther(rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, "test");
+			ais[i] = Builder.SpawnRandomAICharacther(rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, "test");
 		}
 		
 		
@@ -183,7 +184,7 @@ public class PlayScreen implements Screen {
 		
 		
 		engine = new Engine();
-		Player = Core.SpawnPlayerCharacther(rayHandler,playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale, selectedR, selectedS, "player", selectedSS);
+		Player = Builder.SpawnPlayerCharacther(rayHandler,playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale, selectedR, selectedS, "player", selectedSS);
 
 		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new ControlSystem(viewport));

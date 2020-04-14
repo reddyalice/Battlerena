@@ -10,6 +10,7 @@ import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.screens.PlayScreen;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.Builder;
 import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
@@ -236,17 +237,18 @@ public class ShootArrow extends Skill {
 					Vector2 pos = new Vector2(pc.x + cc.race.width / 2f - 16f * size + cc.lookDir.x * 10f, pc.y + cc.race.height / 2f - 16f * size + cc.lookDir.y * 10f);
 					cc.var.put("shootArrowKill" + n, false);
 					cc.var.put("shootArrowKillC" + n, 0f);
-					cc.var.put("shootArrow" + n, new Vector2(pos));
-					cc.var.put("shootArrowO" + n, new Vector2(pos));
+					cc.var.put("shootArrow" + n, new Vector2(pos.x - 16 * size, pos.y - 9f * size - 5f * size ));
+					cc.var.put("shootArrowO" + n, new Vector2(pos.x - 16 * size, pos.y - 9f * size - 5f * size ));
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
-					
-					Body b = Core.CreateASimpleBody(BodyType.DynamicBody, 
+	
+					Body b = Builder.CreateASimpleBody(BodyType.DynamicBody, 
 							pos.x, pos.y,
 							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile/" + cc.team + "/" + "arrow" + "/" + n, true);
 					
 					//b.setFixedRotation(false);
 					b.setTransform(pos.x, pos.y, (float)((cc.rotation) * Math.PI / 180f));
+				
 					//PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
 					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);
 					b.setBullet(true);

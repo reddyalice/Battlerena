@@ -57,8 +57,7 @@ public class RenderingSystem extends IteratingSystem {
 		cc.style.texture.Draw(batch, pc.x, pc.y, cc.style.width, cc.style.height, cc.styleAnimationStep, cc.flip, false, 0);
 		shapeRenderer.set(ShapeType.Filled);
 		shapeRenderer.setColor(Color.BLACK);
-		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width, pc.y + cc.race.height + 15f, 5f);
-		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 10f,  pc.x + cc.race.width, pc.y + cc.race.height + 10f, 5f);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 12.5f,  pc.x + cc.race.width, pc.y + cc.race.height + 12.5f, 10f);
 		
 		shapeRenderer.setColor(Color.GREEN);
 		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width * (cc.health / cc.maxHealth), pc.y + cc.race.height + 15f, 5f);

@@ -9,6 +9,7 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.screens.PlayScreen;
+import com.alice.arena.utils.Actions;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -103,7 +104,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 		
 		if(cc.health < 0) {
 			cc.health = 0;
-			Core.KillCharacther(this.engine, entity, cc, phc);
+			Actions.KillCharacther(this.engine, entity, cc, phc);
 		}
 		
 		

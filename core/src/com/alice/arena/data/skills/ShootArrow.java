@@ -43,6 +43,39 @@ public class ShootArrow extends Skill {
 		PlayScreen.UIDraws.Add("arrow", x -> {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
+		PlayScreen.beginContantCalls.Add("arrowContact", c -> {
+			String fA = (String)c.getFixtureA().getUserData();
+			String fB = (String)c.getFixtureB().getUserData();
+	
+			if(fA.startsWith("projectile"))
+			{
+				String[] p = fA.split("/");
+				String projectileTeam = p[1];
+				int n = Integer.parseInt(p[2]);
+				
+
+				if(fB == "wall") {
+					c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+				}
+				
+				
+				
+				
+			}
+			if(fB.startsWith("projectile"))
+			{
+				String[] p = fB.split("/");
+				String projectileTeam = p[1];
+				int n = Integer.parseInt(p[2]);
+				
+				if(fA == "wall") {
+					c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
+				}
+			}
+			
+			
+		});
+		
 
 	}
 
@@ -68,6 +101,7 @@ public class ShootArrow extends Skill {
 							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
 							pos.x = p.x - 15f - 3f;
 							pos.y = p.y - 6f - 9f;
+
 							cc.var.put("shootArrowRot" + k, (float)(body.getAngle() * 180f / Math.PI));
 							//light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
 						}else {
@@ -137,7 +171,8 @@ public class ShootArrow extends Skill {
 					cc.var.put("shootArrowRot" + n, cc.rotation);
 					cc.var.put("shootArrowLook" + n, cc.lookDir);
 					
-					Body b = Core.CreateASimpleBody(BodyType.KinematicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, "projectile/" + cc.team, true);
+					Body b = Core.CreateASimpleBody(BodyType.DynamicBody,pc.x + cc.race.width / 2f - 16f + 2.5f + 29/2f,  pc.y + cc.race.height / 2f - 16f + 6f , 32f, 6f, 15f,  3f, "projectile/" + cc.team + "/" + n, true);
+					//b.setFixedRotation(false);
 					b.setTransform(pc.x + cc.race.width / 2f - 16f + 2.5f,  pc.y + cc.race.height / 2f - 16f, (float)((cc.rotation) * Math.PI / 180f));
 					//PointLight l =  Core.CreatePointLight(PlayScreen.rayHandler, pc.x + cc.race.width / 2f + 16f, pc.y + cc.race.height / 2f + 16f - 10f, Color.WHITE, 128, 5);
 					b.setLinearVelocity( cc.lookDir.x * speed * 50f,cc.lookDir.y * speed * 50f);

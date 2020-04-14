@@ -33,7 +33,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -53,7 +58,11 @@ public class PlayScreen implements Screen {
 	private Engine engine;
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
+	
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
+	public static EvE<Contact> beginContantCalls = new EvE<Contact>();
+	public static EvE<Contact> endContantCalls = new EvE<Contact>();
+	
 	private int numberOfSteps = 3;
 	
 	private SpriteBatch batch;
@@ -93,6 +102,35 @@ public class PlayScreen implements Screen {
 		world = new World(new Vector2(0,0), false);
 		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
 	 	rayHandler.setAmbientLight(0.5f);
+	 	
+	 	world.setContactListener(new ContactListener() {
+			
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void endContact(Contact contact) {
+				endContantCalls.Broadcast(contact);
+				
+			}
+			
+			@Override
+			public void beginContact(Contact contact) {
+				beginContantCalls.Broadcast(contact);
+				
+			}
+		});
+	 	
+	 	
 		
 		BodyDef def = new BodyDef();
 		PolygonShape shape = new PolygonShape();
@@ -106,9 +144,27 @@ public class PlayScreen implements Screen {
 			def.type = BodyType.StaticBody;
 			def.position.set(rect.getX() * mapScale + rect.width / 2f *mapScale, rect.getY() * mapScale + rect.height / 2f * mapScale);
 			fdef.shape = shape;
-			b = world.createBody(def);
-			b.createFixture(fdef);
 			
+			b = world.createBody(def);
+			Fixture f = b.createFixture(fdef);
+			f.setUserData("wall");
+
+		
+		}
+		
+		
+		for(RectangleMapObject mObject : map.getLayers().get("pits").getObjects().getByType(RectangleMapObject.class)) {
+ 			Rectangle rect = mObject.getRectangle();
+		
+			shape.setAsBox(rect.width / 2f * mapScale, rect.height / 2f * mapScale );
+			def.type = BodyType.StaticBody;
+			def.position.set(rect.getX() * mapScale + rect.width / 2f *mapScale, rect.getY() * mapScale + rect.height / 2f * mapScale);
+			fdef.shape = shape;
+			
+			b = world.createBody(def);
+			Fixture f = b.createFixture(fdef);
+			f.setUserData("pit");
+
 		
 		}
 	

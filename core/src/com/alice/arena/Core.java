@@ -212,7 +212,7 @@ public class Core extends Game {
 		 return light;
 	 }
 	
-	public static Body CreateASimpleBody(BodyType type, float x, float y,float width, float height, float pivotX, float pivotY, Object userDta, boolean trigger) {
+	public static Body CreateASimpleBody(BodyType type, float x, float y,float width, float height, float pivotX, float pivotY, String userDta, boolean trigger) {
 		
 		BodyDef def = new BodyDef();
 		PolygonShape shape = new PolygonShape();

@@ -64,6 +64,7 @@ public class ShootArrow extends Skill {
 					int n = Integer.parseInt(p[3]);
 					if(fB.contentEquals("wall")) {
 						c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+						cc.var.put("shootArrowKill" + n, true);
 					}
 					
 					if(fB.startsWith("char")) {
@@ -75,6 +76,7 @@ public class ShootArrow extends Skill {
 							
 							Registry.chars.get(id).health -= damage;
 							c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+							cc.var.put("shootArrowKill" + n, true);
 						}
 						
 					}
@@ -98,6 +100,7 @@ public class ShootArrow extends Skill {
 					System.out.println(fA);
 					if(fA.contentEquals("wall")) {
 						c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
+						cc.var.put("shootArrowKill" + n, true);
 					}
 					
 					if(fA.startsWith("char")) {
@@ -109,7 +112,7 @@ public class ShootArrow extends Skill {
 						
 							Registry.chars.get(id).health -= damage;
 							c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
-								
+							cc.var.put("shootArrowKill" + n, true);
 						}
 						
 					}
@@ -141,10 +144,11 @@ public class ShootArrow extends Skill {
 						Vector2 pos = (Vector2)cc.var.get("shootArrow" + k);
 						Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + k);
 						Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + k);
+						boolean kill = (boolean) cc.var.get("shootArrowKill" + k);
 						//PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
 						Body body = (Body) cc.var.get("shootArrawBody" + k);
 						float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
-						if(dist <= range) {
+						if(dist <= range && !kill) {
 							Vector2 p = body.getPosition();
 							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
 							pos.x = p.x - 16 * size;

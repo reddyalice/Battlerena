@@ -16,8 +16,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class RenderingSystem extends IteratingSystem {
 
-	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	
@@ -35,20 +33,15 @@ public class RenderingSystem extends IteratingSystem {
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		
-		PositionComponent pc = pm.get(entity);
-		CharactherComponent cc = cm.get(entity);
+		PositionComponent pc = entity.getComponent(PositionComponent.class);
+		CharactherComponent cc = entity.getComponent(CharactherComponent.class);
 		
 		Color c = new Color(Color.WHITE);
 		float vis = (cc.visibility +  PlayScreen.playerChar.vision) / 2f;
-		
 		if(vis < 1f && vis >= 0.5f)
 			c.a *= vis;
 		
-		if(cc.lookDir.x < 0 )
-			cc.flip = true;
 		
-		if(cc.lookDir.x > 0 )
-			cc.flip = false;
 		
 		
 

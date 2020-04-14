@@ -19,9 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class ControlSystem extends EntitySystem {
 
 	private ImmutableArray<Entity> entities;
-	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-	private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
-	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
+
 	private Viewport viewport;
 	
 	
@@ -42,9 +40,9 @@ public class ControlSystem extends EntitySystem {
 		
 		Vector2 diff = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		Entity en = PlayScreen.Player;
-		VelocityComponent vc = vm.get(en);
-		CharactherComponent cc = cm.get(en);
-		PositionComponent pc = pm.get(en);
+		VelocityComponent vc = en.getComponent(VelocityComponent.class);
+		CharactherComponent cc = en.getComponent(CharactherComponent.class);
+		PositionComponent pc = en.getComponent(PositionComponent.class);
 		diff.sub(pc.x + 16f, pc.y + 16f);
 		diff.nor();
 		Vector2 m = new Vector2(0,0);

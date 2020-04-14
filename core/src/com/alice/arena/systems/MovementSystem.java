@@ -17,9 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MovementSystem extends EntitySystem {
 
-	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-	private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
-	private ComponentMapper<PhysicsComponent> phm = ComponentMapper.getFor(PhysicsComponent.class);
+
 
 	private ImmutableArray<Entity> entities;
 	
@@ -33,11 +31,11 @@ public class MovementSystem extends EntitySystem {
 		entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class, PhysicsComponent.class).get());
 	}
 
-	protected void processEntity(Entity entity, float deltaTime) {
+	private void processEntity(Entity entity, float deltaTime) {
 		
-		PhysicsComponent phc = phm.get(entity);
-		PositionComponent pc = pm.get(entity);
-		VelocityComponent vc = vm.get(entity);
+		PhysicsComponent phc = entity.getComponent(PhysicsComponent.class);
+		PositionComponent pc = entity.getComponent(PositionComponent.class);
+		VelocityComponent vc = entity.getComponent(VelocityComponent.class);
 		
 		phc.body.setLinearVelocity(vc.x, vc.y);
 		Vector2  velL =  phc.body.getLinearVelocity();
@@ -56,7 +54,7 @@ public class MovementSystem extends EntitySystem {
 	
 	@Override
 	public void update(float deltaTime) {
-		ArrayList<Thread> threads = new ArrayList<Thread>();
+		Thread[] threads = new Thread[entities.size()];
 		for (int i = 0; i < entities.size(); ++i) {
 			Entity e = this.entities.get(i);
 			Thread t = new Thread(new Runnable() {
@@ -67,7 +65,7 @@ public class MovementSystem extends EntitySystem {
 					
 				}
 			});
-			threads.add(t);
+			threads[i] = t;
 			t.run();
 		}
 		

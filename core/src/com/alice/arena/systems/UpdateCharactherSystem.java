@@ -17,16 +17,13 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 
 public class UpdateCharactherSystem extends EntitySystem {
 
 
 
 
-	private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-	private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
-	private ComponentMapper<PhysicsComponent> phm = ComponentMapper.getFor(PhysicsComponent.class);
-	private ComponentMapper<CharactherComponent> cm = ComponentMapper.getFor(CharactherComponent.class);
 	private Engine engine;
 	private ImmutableArray<Entity> entities;
 	
@@ -38,11 +35,11 @@ public class UpdateCharactherSystem extends EntitySystem {
 	}
 	
 	
-	protected void processEntity(Entity entity, float deltaTime) {
-		PositionComponent pc = pm.get(entity);
-		CharactherComponent cc = cm.get(entity);
-		VelocityComponent vc = vm.get(entity);
-		PhysicsComponent phc = phm.get(entity);
+	private void processEntity(Entity entity, float deltaTime) {
+		PositionComponent pc =  entity.getComponent(PositionComponent.class);
+		CharactherComponent cc = entity.getComponent(CharactherComponent.class);
+		VelocityComponent vc =  entity.getComponent(VelocityComponent.class);
+		PhysicsComponent phc = entity.getComponent(PhysicsComponent.class);
 		cc.lookDir.nor();
 		float vis = (cc.visibility + PlayScreen.playerChar.vision) / 2f;
 		float dot = -cc.lookDir.x;
@@ -70,6 +67,12 @@ public class UpdateCharactherSystem extends EntitySystem {
 		//cc.pointLight.setDistance(vis >= 0.5f ? 70 * vis : 0);
 		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
 		cc.style.StyleUpdate(cc, deltaTime, pc, vc);
+		
+		if(cc.lookDir.x < 0 )
+			cc.flip = true;
+		
+		if(cc.lookDir.x > 0 )
+			cc.flip = false;
 
 		
 		if(cc.energy < cc.maxEnergy) {
@@ -94,13 +97,33 @@ public class UpdateCharactherSystem extends EntitySystem {
 			cc.health = cc.maxHealth;
 		
 		
-
 		
+		Thread[] skillThreads = new Thread[cc.skill.length];
 		int i = 0;
 		for(Skill s : cc.skill) {
-			s.SkillUpdate(cc, engine, deltaTime, pc, vc, i);
+			
+			int k = i;
+			skillThreads[i] = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					s.SkillUpdate(cc, engine, deltaTime, pc, vc, k);
+					
+				}
+			});
+			skillThreads[i].run();
 			i++;
 		}
+		
+		
+		for(Thread t : skillThreads)
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
 		
 		if(cc.health < 0) {
 			cc.health = 0;

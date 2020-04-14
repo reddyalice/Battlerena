@@ -65,9 +65,9 @@
 </data>
  </layer>
  <objectgroup id="4" name="walls">
-  <object id="1" x="0.666667" y="-1.33333" width="15.3333" height="402"/>
-  <object id="2" x="0" y="0" width="399.333" height="26"/>
-  <object id="3" x="384.121" y="0" width="17.2121" height="400"/>
+  <object id="1" x="0.666667" y="12.1667" width="15.3333" height="371.625"/>
+  <object id="2" x="0" y="11.875" width="399.333" height="14.125"/>
+  <object id="3" x="384.121" y="11.875" width="17.2121" height="372"/>
  </objectgroup>
  <objectgroup id="12" name="pits">
   <object id="29" x="79.9772" y="143.992" width="48.0455" height="48.1364"/>

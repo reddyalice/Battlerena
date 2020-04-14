@@ -81,6 +81,7 @@ public class Core extends Game {
 		PlayScreen.world.destroyBody(phc.body);
 		cc.var.clear();
 		e.removeEntity(en);
+		Registry.chars.remove(cc.id);
 		
 	}
 	
@@ -92,7 +93,7 @@ public class Core extends Game {
 
 		
 		
-		
+		cc.id = id;
 		cc.race = race;
 		cc.style = style;
 		cc.skill = skills;
@@ -124,8 +125,8 @@ public class Core extends Game {
 		
 		PhysicsComponent phc = new PhysicsComponent();
 		
-		phc.pivot = new Vector2(cc.race.width / 2f, cc.race.height / 4f);
-		phc.body = CreateASimpleBody(BodyType.DynamicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, "char/" + cc.team + "/" + id, false);
+		phc.pivot = new Vector2(cc.race.width / 2f, cc.race.height / 2.75f);
+		phc.body = CreateASimpleBody(BodyType.DynamicBody, x, y, cc.race.width / 2, cc.race.height / 2.5f, phc.pivot.x,  phc.pivot.y, "char/" + cc.team + "/" + id, false);
 		phc.fixture = phc.body.getFixtureList().first();
 		cc.pointLight.attachToBody(phc.body);
 		

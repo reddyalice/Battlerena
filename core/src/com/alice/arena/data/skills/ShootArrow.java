@@ -39,7 +39,7 @@ public class ShootArrow extends Skill {
 	
 	
 	public ShootArrow() {
-		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 10f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 5f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -65,6 +65,7 @@ public class ShootArrow extends Skill {
 					if(fB.contentEquals("wall")) {
 						c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
 						cc.var.put("shootArrowKill" + n, true);
+						cc.var.put("shootArrowKillC" + n, 1f);
 					}
 					
 					if(fB.startsWith("char")) {
@@ -93,14 +94,13 @@ public class ShootArrow extends Skill {
 				String[] p = fB.split("/");
 				String projectileTeam = p[1];
 				String projectileType = p[2];
-				System.out.println(projectileType);
 				
 				if(projectileType.contentEquals("arrow")) {
 					int n = Integer.parseInt(p[3]);
-					System.out.println(fA);
 					if(fA.contentEquals("wall")) {
 						c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
 						cc.var.put("shootArrowKill" + n, true);
+						cc.var.put("shootArrowKillC" + n, 1f);
 					}
 					
 					if(fA.startsWith("char")) {
@@ -145,10 +145,18 @@ public class ShootArrow extends Skill {
 						Vector2 lookDir = (Vector2)cc.var.get("shootArrowLook" + k);
 						Vector2 Opos = (Vector2)cc.var.get("shootArrowO" + k);
 						boolean kill = (boolean) cc.var.get("shootArrowKill" + k);
-						//PointLight light = (PointLight)cc.var.get("shootArrowLight" + k);
+						float kCount = (float)cc.var.get("shootArrowKillC" + k);
+						
+						if(kill && kCount > 0)
+							cc.var.put("shootArrowKillC" + k, (kCount - delta));
+						
+						
 						Body body = (Body) cc.var.get("shootArrawBody" + k);
 						float dist = Vector2.dst(pos.x, pos.y, Opos.x, Opos.y);
-						if(dist <= range && !kill) {
+						
+						
+						
+						if(dist <= range && !(kill && kCount <= 0)) {
 							Vector2 p = body.getPosition();
 							//body.setLinearVelocity( lookDir.x * speed * 200f,lookDir.y * speed * 200f);
 							pos.x = p.x - 16 * size;
@@ -157,6 +165,8 @@ public class ShootArrow extends Skill {
 							cc.var.put("shootArrowRot" + k, (float)(body.getAngle() * 180f / Math.PI));
 							//light.setPosition(pos.x + lookDir.x * 32f, pos.y + lookDir.y * 32f + 10f);
 						}else {
+							cc.var.remove("shootArrowKill" + k);
+							cc.var.remove("shootArrowKillC" + k);
 							cc.var.remove("shootArrow" + k);
 							cc.var.remove("shootArrowLook" + k);
 							cc.var.remove("shootArrowO" + k);
@@ -170,6 +180,11 @@ public class ShootArrow extends Skill {
 								
 							}
 						}
+						
+						
+							
+						
+						
 						
 					}
 				});
@@ -219,6 +234,7 @@ public class ShootArrow extends Skill {
 				}else {
 					con = false;
 					cc.var.put("shootArrowKill" + n, false);
+					cc.var.put("shootArrowKillC" + n, 0f);
 					cc.var.put("shootArrow" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
 					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
 					cc.var.put("shootArrowRot" + n, cc.rotation);

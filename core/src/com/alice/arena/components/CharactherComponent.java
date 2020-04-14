@@ -24,7 +24,7 @@ public class CharactherComponent implements Component {
 	public float rotation;
 	public String name;
 	public String team;
-	
+	public int id;
 	
 	
 	public ConeLight coneLight;

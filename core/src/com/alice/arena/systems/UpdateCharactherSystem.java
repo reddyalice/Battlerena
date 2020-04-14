@@ -69,9 +69,13 @@ public class UpdateCharactherSystem extends EntitySystem {
 		//cc.pointLight.setDistance(vis >= 0.5f ? 70 * vis : 0);
 		cc.race.RacialUpdate(cc, deltaTime, pc, vc);
 		cc.style.StyleUpdate(cc, deltaTime, pc, vc);
+
+		
 		if(cc.energy < cc.maxEnergy) {
 			cc.energy += cc.energyRegen * deltaTime;
 		}
+		
+		
 		
 		if(cc.energy > cc.maxEnergy)
 			cc.energy = cc.maxEnergy;
@@ -79,7 +83,9 @@ public class UpdateCharactherSystem extends EntitySystem {
 		if(cc.energy < 0)
 			cc.energy = 0;
 		
-		if(cc.health < cc.healthRegen) {
+		
+		
+		if(cc.health < cc.maxHealth) {
 			cc.health += cc.healthRegen * deltaTime;
 		}
 		
@@ -125,7 +131,6 @@ public class UpdateCharactherSystem extends EntitySystem {
 			try {
 				t.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		

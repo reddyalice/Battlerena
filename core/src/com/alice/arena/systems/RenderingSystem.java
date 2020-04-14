@@ -12,6 +12,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class RenderingSystem extends IteratingSystem {
 
@@ -54,7 +55,19 @@ public class RenderingSystem extends IteratingSystem {
 		batch.setColor(c);
 		cc.race.texture.Draw(batch, pc.x, pc.y, cc.race.width, cc.race.height, cc.raceAnimationStep, cc.flip, false,  0);
 		cc.style.texture.Draw(batch, pc.x, pc.y, cc.style.width, cc.style.height, cc.styleAnimationStep, cc.flip, false, 0);
+		shapeRenderer.set(ShapeType.Filled);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width, pc.y + cc.race.height + 15f, 5f);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 10f,  pc.x + cc.race.width, pc.y + cc.race.height + 10f, 5f);
+		
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width * (cc.health / cc.maxHealth), pc.y + cc.race.height + 15f, 5f);
+		
+		shapeRenderer.setColor(Color.CYAN);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 10f,  pc.x + cc.race.width * (cc.energy / cc.maxEnergy), pc.y + cc.race.height + 10f, 5f);
 
+		
+		
 		int i = 0;
 		for(Skill s : cc.skill) {
 			s.SkillRender(batch, shapeRenderer ,cc, pc, i);

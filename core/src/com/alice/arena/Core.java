@@ -78,7 +78,7 @@ public class Core extends Game {
 		
 		Entity e = new Entity();
 		CharactherComponent cc = new CharactherComponent();
-		
+		int id = Registry.chars.size();
 
 		
 		
@@ -115,7 +115,7 @@ public class Core extends Game {
 		PhysicsComponent phc = new PhysicsComponent();
 		
 		phc.pivot = new Vector2(cc.race.width / 2f, cc.race.height / 4f);
-		phc.body = CreateASimpleBody(BodyType.DynamicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, "char/" + cc.team, false);
+		phc.body = CreateASimpleBody(BodyType.DynamicBody, x, y, cc.race.width, cc.race.height / 2f, phc.pivot.x,  phc.pivot.y, "char/" + cc.team + "/" + id, false);
 		phc.fixture = phc.body.getFixtureList().first();
 		cc.pointLight.attachToBody(phc.body);
 		
@@ -130,7 +130,7 @@ public class Core extends Game {
 		for(Skill s : cc.skill)
 			s.SkillInit(cc);
 		
-		
+		Registry.chars.put(id, cc);
 		return e;
 		
 		
@@ -227,5 +227,6 @@ public class Core extends Game {
 		fixture.setSensor(trigger);
 		return body;
 	}
+	
 	
 }

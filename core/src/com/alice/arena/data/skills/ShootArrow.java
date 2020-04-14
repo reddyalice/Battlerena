@@ -6,6 +6,7 @@ import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.screens.PlayScreen;
 import com.alice.arena.utils.Assets;
@@ -30,7 +31,7 @@ public class ShootArrow extends Skill {
 	private final float speed = 5;
 	private BitmapFont font;
 	private final float size = 0.5f;  
-	
+	private float damage = 10f;
 	
 	
 	
@@ -46,6 +47,7 @@ public class ShootArrow extends Skill {
 	public void SkillInit(CharactherComponent cc) {
 		font = Assets.GetFont("empty"); 
 		cc.var.put("lastShootArrowN", -1);
+		
 		PlayScreen.UIDraws.Add("arrow", x -> {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
@@ -58,12 +60,23 @@ public class ShootArrow extends Skill {
 				String[] p = fA.split("/");
 				String projectileTeam = p[1];
 				String projectileType = p[2];
-				if(projectileType.contains("arrow")) {
+				if(projectileType.contentEquals("arrow")) {
 					int n = Integer.parseInt(p[3]);
-					if(fB == "wall") {
+					if(fB.contentEquals("wall")) {
 						c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
-					}else if(fB.startsWith("char")) {
+					}
 					
+					if(fB.startsWith("char")) {
+						String[] ct = fB.split("/");
+						String charTeam = ct[1];
+						int id = Integer.parseInt(ct[2]);
+						if(!charTeam.contentEquals(cc.team))
+						{
+							
+							Registry.chars.get(id).health -= damage;
+							c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
+						}
+						
 					}
 				
 				
@@ -80,19 +93,23 @@ public class ShootArrow extends Skill {
 				String projectileType = p[2];
 				System.out.println(projectileType);
 				
-				if(projectileType.contains("arrow")) {
+				if(projectileType.contentEquals("arrow")) {
 					int n = Integer.parseInt(p[3]);
 					System.out.println(fA);
-					if(fA == "wall") {
+					if(fA.contentEquals("wall")) {
 						c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
 					}
 					
 					if(fA.startsWith("char")) {
 						String[] ct = fA.split("/");
 						String charTeam = ct[1];
-						if(charTeam != cc.team)
+						int id = Integer.parseInt(ct[2]);
+						if(!charTeam.contentEquals(cc.team))
 						{
-							
+						
+							Registry.chars.get(id).health -= damage;
+							c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
+								
 						}
 						
 					}
@@ -197,6 +214,7 @@ public class ShootArrow extends Skill {
 					n++;
 				}else {
 					con = false;
+					cc.var.put("shootArrowKill" + n, false);
 					cc.var.put("shootArrow" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
 					cc.var.put("shootArrowO" + n, new Vector2(pc.x + cc.race.width / 2f - 16f * size, pc.y + cc.race.height / 2f - 16f * size - 10f * size));
 					cc.var.put("shootArrowRot" + n, cc.rotation);

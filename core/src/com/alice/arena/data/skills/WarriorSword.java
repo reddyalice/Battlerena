@@ -5,17 +5,20 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
+import com.alice.arena.utils.Builder;
 import com.alice.arena.utils.TextureHolder;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class WarriorSword extends Skill {
 
 	private int rotationLimit = 90;
-	private float rotSpeed = 450;
+	private float rotSpeed = 10;
 	private float damage = 10f;
 	
 	public WarriorSword() {
@@ -29,19 +32,29 @@ public class WarriorSword extends Skill {
 		cc.var.put("swordPosX", 0f);
 		cc.var.put("swordPosY", 0f);
 		cc.var.put("swordRot", 0f);
+		cc.var.put("swordBody", Builder.CreateASimpleBody(BodyType.DynamicBody, 0f, 0f, 33, 6, 0, 0, "sword", true));
 	}
 
 	@Override
 	public void SkillUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc, VelocityComponent vc, int index) {
 		boolean swing = (boolean)cc.var.get("swingSword");
 		float rot = (float)cc.var.get("swordRot");
+		Body body = (Body)cc.var.get("swordBody");
 		if(swing)
 		{
+			body.setActive(true);
+
 			if(rot <= rotationLimit) {
 				rot += delta * rotSpeed;
+				
 				cc.var.put("swordRot", rot);
+				rot -= 45f;
+				body.setTransform(pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f -16f, (float)((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f) );
+			
+				
 			}else {
 				cc.var.put("swordRot", 0f);
+				body.setTransform(pc.x + cc.race.width / 2f, pc.y + cc.race.height / 2f - 16f, 0 );
 				cc.var.put("swingSword", false);
 			}
 			
@@ -49,9 +62,12 @@ public class WarriorSword extends Skill {
 			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 16f);
 			
 		}else {
+			body.setActive(false);
 
 			cc.var.put("swordPosX", pc.x + cc.race.width / 2f - 16f);
 			cc.var.put("swordPosY", pc.y + cc.race.height / 2f - 30f + 20f);
+
+			body.setTransform( (pc.x + cc.race.width / 2f - 16f) + 16f,(pc.y + cc.race.height / 2f - 30f + 20f), (float)((cc.flip ?  Math.PI : Math.PI / 2f) - Math.PI / 4f));
 		}
 		
 		if(cc.progress[index] > 0)

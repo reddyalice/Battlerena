@@ -215,7 +215,7 @@ public class PlayScreen implements Screen {
 			@Override
 			public boolean scrolled(int amount) {
 				camera.zoom += amount * Core.deltaTime * 3f;
-				camera.zoom = Math.max(0.8f, Math.min(3.6f, camera.zoom));
+				camera.zoom = Math.max(0.5f, Math.min(3.6f, camera.zoom));
 				return super.scrolled(amount);
 			}
 			

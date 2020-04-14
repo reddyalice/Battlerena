@@ -133,12 +133,12 @@ public class PlayScreen implements Screen {
 		engine.addSystem(new ControlSystem(viewport));
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new RenderingSystem(batch, shapeRenderer));
-		engine.addEntity(Player);
+		
 		for(Entity en : ais)
 			engine.addEntity(en);
 		playerChar = Player.getComponent(CharactherComponent.class);
 		
-		
+		engine.addEntity(Player);
 		UIDraws.Add("FPS", x -> {
 			BitmapFont f = Assets.GetFont("empty");
 			f.draw(x, "FPS : " + Gdx.graphics.getFramesPerSecond(), 30, 480 - 10);

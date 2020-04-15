@@ -24,8 +24,9 @@ public class WarriorSword extends Skill {
 	private float damage = 10f;
 	
 	public WarriorSword() {
-		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  new TextureHolder(Assets.GetTexture("sword")), 1, 0.5f, 5f, "A Warrior's Trustworthy Sword");
-		// TODO Auto-generated constructor stub
+		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  
+				new TextureHolder(Assets.GetTexture("sword")), 1, 0.5f, 5f, "A Warrior's Trustworthy Sword");
+		
 	}
 
 	@Override

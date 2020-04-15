@@ -3,6 +3,7 @@ package com.alice.arena.data.skills;
 import java.util.ArrayList;
 
 import com.alice.arena.Core;
+import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -266,7 +267,7 @@ public class ShootArrow extends Skill {
 	}
 
 	@Override
-	public void SkillAIUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc,
+	public void SkillAIUpdate(CharactherComponent cc, AIComponent aic, Engine en, float delta, PositionComponent pc,
 			VelocityComponent vc, int index) {
 		// TODO Auto-generated method stub
 		

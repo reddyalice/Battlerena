@@ -1,5 +1,6 @@
 package com.alice.arena.data.races;
 
+import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -33,7 +34,7 @@ public class Elf extends Race {
 	}
 
 	@Override
-	public void RacialAIUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc) {
+	public void RacialAIUpdate(CharactherComponent cc, AIComponent aic, float delta, PositionComponent pc, VelocityComponent vc) {
 		// TODO Auto-generated method stub
 		
 	}

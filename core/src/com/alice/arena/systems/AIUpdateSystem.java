@@ -35,8 +35,8 @@ public class AIUpdateSystem extends EntitySystem {
 		AIComponent aic = entity.getComponent(AIComponent.class);
 		
 		
-		cc.race.RacialAIUpdate(cc, deltaTime, pc, vc);
-		cc.style.StyleAIUpdate(cc, deltaTime, pc, vc);
+		cc.race.RacialAIUpdate(cc, aic, deltaTime, pc, vc);
+		cc.style.StyleAIUpdate(cc, aic, deltaTime, pc, vc);
 		Thread[] skillThreads = new Thread[cc.skill.length];
 		int i = 0;
 		for(Skill s : cc.skill) {
@@ -44,7 +44,7 @@ public class AIUpdateSystem extends EntitySystem {
 			skillThreads[i] = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					s.SkillAIUpdate(cc, engine, deltaTime, pc, vc, k);
+					s.SkillAIUpdate(cc, aic, engine, deltaTime, pc, vc, k);
 					
 				}
 			});

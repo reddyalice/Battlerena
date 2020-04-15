@@ -1,5 +1,6 @@
 package com.alice.arena.data.styles;
 
+import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -36,7 +37,7 @@ public class Warrior extends Style {
 	}
 
 	@Override
-	public void StyleAIUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
+	public void StyleAIUpdate(CharactherComponent cc, AIComponent aic, float deltaTime, PositionComponent pc, VelocityComponent vc) {
 		// TODO Auto-generated method stub
 		
 	}

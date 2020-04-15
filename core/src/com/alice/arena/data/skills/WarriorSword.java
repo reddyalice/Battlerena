@@ -1,5 +1,6 @@
 package com.alice.arena.data.skills;
 
+import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
@@ -153,7 +154,7 @@ public class WarriorSword extends Skill {
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		boolean swing = (boolean)cc.var.get("swingSword"); 
 		
-		if(cc.progress[index] <= 0 && !swing) {
+		if(cc.progress[index] <= 0 && !swing && cc.energy >= energyCost) {
 			
 			cc.var.put("swingSword", true);
 			cc.progress[index] = cooldown;
@@ -163,7 +164,7 @@ public class WarriorSword extends Skill {
 	}
 
 	@Override
-	public void SkillAIUpdate(CharactherComponent cc, Engine en, float delta, PositionComponent pc,
+	public void SkillAIUpdate(CharactherComponent cc, AIComponent aic, Engine en, float delta, PositionComponent pc,
 			VelocityComponent vc, int index) {
 		// TODO Auto-generated method stub
 		

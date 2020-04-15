@@ -3,7 +3,9 @@ package com.alice.arena.data.skills;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
+import com.alice.arena.screens.PlayScreen;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.Builder;
 import com.alice.arena.utils.TextureHolder;
@@ -32,7 +34,58 @@ public class WarriorSword extends Skill {
 		cc.var.put("swordPosX", 0f);
 		cc.var.put("swordPosY", 0f);
 		cc.var.put("swordRot", 0f);
-		cc.var.put("swordBody", Builder.CreateASimpleBody(BodyType.DynamicBody, 0f, 0f, 33, 6, 0, 0, "sword", true));
+		Body b =  Builder.CreateASimpleBody(BodyType.DynamicBody, 0f, 0f, 33, 6, 0, 0, "sword" +  "/" + cc.team, true);
+		b.setBullet(true);
+		cc.var.put("swordBody",b);
+		if(!PlayScreen.beginContantCalls.consumers.containsKey("swordHit"))
+			PlayScreen.beginContantCalls.Add("swordHit", x -> {
+				String fA = (String) x.getFixtureA().getUserData();
+				String fB = (String) x.getFixtureB().getUserData();
+				
+				
+				if(fA.startsWith("sword")) {
+					
+					String[] p = fA.split("/");
+					String team = p[1];
+					
+					if(fB.startsWith("char")) {
+						String[] ct = fB.split("/");
+						String charTeam = ct[1];
+						int id = Integer.parseInt(ct[2]);
+						if(!charTeam.contentEquals(team))
+						{
+							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
+						}
+						
+					}
+					
+					
+				}
+				
+				if(fB.startsWith("sword")) {
+					
+					String[] p = fB.split("/");
+					String team = p[1];
+					
+					if(fA.startsWith("char")) {
+						String[] ct = fA.split("/");
+						String charTeam = ct[1];
+						int id = Integer.parseInt(ct[2]);
+						if(!charTeam.contentEquals(team))
+						{
+							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
+						}
+						
+					}
+				}
+				
+				
+				
+				
+			});
+		
+		
+		
 	}
 
 	@Override

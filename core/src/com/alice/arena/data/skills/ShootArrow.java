@@ -52,6 +52,8 @@ public class ShootArrow extends Skill {
 		PlayScreen.UIDraws.Add("arrow", x -> {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
+		
+		if(!PlayScreen.beginContantCalls.consumers.containsKey("arrowContact"))
 		PlayScreen.beginContantCalls.Add("arrowContact", c -> {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();
@@ -73,7 +75,7 @@ public class ShootArrow extends Skill {
 						String[] ct = fB.split("/");
 						String charTeam = ct[1];
 						int id = Integer.parseInt(ct[2]);
-						if(!charTeam.contentEquals(cc.team))
+						if(!charTeam.contentEquals(projectileTeam))
 						{
 							
 							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
@@ -108,7 +110,7 @@ public class ShootArrow extends Skill {
 						String[] ct = fA.split("/");
 						String charTeam = ct[1];
 						int id = Integer.parseInt(ct[2]);
-						if(!charTeam.contentEquals(cc.team))
+						if(!charTeam.contentEquals(projectileTeam))
 						{
 						
 							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
@@ -244,7 +246,7 @@ public class ShootArrow extends Skill {
 	
 					Body b = Builder.CreateASimpleBody(BodyType.DynamicBody, 
 							pos.x, pos.y,
-							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile/" + cc.team + "/" + "arrow" + "/" + n, true);
+							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile" + "/" + cc.team + "/" + "arrow" + "/" + n, true);
 					
 					//b.setFixedRotation(false);
 					b.setTransform(pos.x, pos.y, (float)((cc.rotation) * Math.PI / 180f));

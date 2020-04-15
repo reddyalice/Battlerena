@@ -20,7 +20,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 public class WarriorSword extends Skill {
 
 	private int rotationLimit = 90;
-	private float rotSpeed = 450;
+	private float rotSpeed = 900;
 	private float damage = 10f;
 	
 	public WarriorSword() {

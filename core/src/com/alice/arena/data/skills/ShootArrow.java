@@ -32,7 +32,7 @@ public class ShootArrow extends Skill {
 	private final float speed = 5;
 	private BitmapFont font;
 	private final float size = 0.5f;  
-	private float damage = 1f;
+	private float damage = 10f;
 	
 	
 	
@@ -40,7 +40,9 @@ public class ShootArrow extends Skill {
 	
 	
 	public ShootArrow() {
-		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), new TextureHolder(Assets.GetTexture("shootarrow")), 1, 0.1f, 5f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
+		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), 
+				new TextureHolder(Assets.GetTexture("shootarrow")), 
+				1, 0.8f, 5f, "Shoot magnificent powerfull arrows while there is nothing else to do..");
 		// TODO Auto-generated constructor stub
 	}
 

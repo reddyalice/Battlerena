@@ -34,6 +34,7 @@ public class Registry {
 		public static final Race Orc = new Orc();
 		public static final Race Glitch = new Glitch();
 		public static final Race Elf = new Elf();
+		public static final Race Ghost = new Ghost();
 	}
 	
 	public static class STYLES{
@@ -42,6 +43,7 @@ public class Registry {
 		public static final Style Mage = new Mage();
 		public static final Style Commander = new Commander();
 		public static final Style Necromancer = new Necromancer();
+		public static final Style Assassin = new Assassin();
 	}
 	
 	public static class ITEMS{

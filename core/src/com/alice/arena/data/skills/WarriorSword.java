@@ -43,16 +43,14 @@ public class WarriorSword extends Skill {
 		if(swing)
 		{
 			body.setActive(true);
-			Vector2 angleToVec;
+			Vector2 angleTov;
 			if(rot <= rotationLimit) {
 				rot += delta * rotSpeed;
 				
 				cc.var.put("swordRot", rot);
 				rot -= 45f;
-				angleToVec = new Vector2(-(float)Math.sin(((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f)), (float)Math.cos(((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f)));
-				
-				
-				body.setTransform(pc.x + cc.race.width / 2f + angleToVec.x * 16f + 32f , pc.y + cc.race.height / 2f + 32f + angleToVec.y * 16f, (float)((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f) );
+				angleTov = new Vector2(-(float)(Math.cos((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f )), (float)(Math.sin((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f)));
+				body.setTransform(pc.x + cc.race.width / 2f + angleTov.x * 24f * (cc.flip ? 1 : -1), pc.y + cc.race.height / 2f - 16f + (angleTov.y * 24f) * (cc.flip ? - 1 : 1), (float)((cc.rotation + (cc.flip ? rot  :  180f-rot) ) * Math.PI / 180f) );
 			
 				
 			}else {

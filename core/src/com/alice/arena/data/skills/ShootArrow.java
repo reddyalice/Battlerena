@@ -34,11 +34,6 @@ public class ShootArrow extends Skill {
 	private final float size = 0.5f;  
 	private float damage = 10f;
 	
-	
-	
-	
-	
-	
 	public ShootArrow() {
 		super("Shoot Arrow", new TextureHolder(Assets.GetTexture("icon_shootArrow")), 
 				new TextureHolder(Assets.GetTexture("shootarrow")), 

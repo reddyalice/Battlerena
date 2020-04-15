@@ -61,14 +61,29 @@ public class CharactherRenderingSystem extends IteratingSystem {
 		
 		shapeRenderer.set(ShapeType.Filled);
 		shapeRenderer.setColor(Color.BLACK);
-		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 12.5f,  pc.x + cc.race.width, pc.y + cc.race.height + 12.5f, 10f);
+		
+		
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width, pc.y + cc.race.height + 15f, 10f);
 		
 		shapeRenderer.setColor(Color.GREEN);
 		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width * (cc.health / cc.maxHealth), pc.y + cc.race.height + 15f, 5f);
 		
 		shapeRenderer.setColor(Color.CYAN);
-		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 10f,  pc.x + cc.race.width * (cc.energy / cc.maxEnergy), pc.y + cc.race.height + 10f, 5f);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 11.25f,  pc.x + cc.race.width * (cc.energy / cc.maxEnergy), pc.y + cc.race.height + 11.25f, 2.5f);
 		
+		shapeRenderer.setColor(0, 75f/255f, 0, 1f);
+		for(int i = 1; i < cc.maxHealth / 20f; i++)
+		{	
+			float x = (pc.x + cc.race.width * ((20f * i)) / cc.maxHealth);
+			shapeRenderer.rectLine(x, pc.y + cc.race.height + 17.5f,x, pc.y + cc.race.height + 15f, 1f);
+		}
+		
+		shapeRenderer.setColor(Color.BLUE);
+		for(int i = 1; i < cc.maxEnergy / 20f; i++)
+		{	
+			float x = (pc.x + cc.race.width * ((20f * i)) / cc.maxEnergy);
+			shapeRenderer.rectLine(x, pc.y + cc.race.height + 11.25f,x, pc.y + cc.race.height + 10f, 1f);
+		}
 		
 		
 		int i = 0;

@@ -37,6 +37,7 @@ public class WarriorSword extends Skill {
 		Body b =  Builder.CreateASimpleBody(BodyType.DynamicBody, 0f, 0f, 33, 6, 0, 0, "sword" +  "/" + cc.team, true);
 		b.setBullet(true);
 		cc.var.put("swordBody",b);
+		
 		if(!PlayScreen.beginContantCalls.consumers.containsKey("swordHit"))
 			PlayScreen.beginContantCalls.Add("swordHit", x -> {
 				String fA = (String) x.getFixtureA().getUserData();

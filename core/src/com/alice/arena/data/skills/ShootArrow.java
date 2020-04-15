@@ -53,7 +53,6 @@ public class ShootArrow extends Skill {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
 		
-		if(!PlayScreen.beginContantCalls.consumers.containsKey("arrowContact"))
 		PlayScreen.beginContantCalls.Add("arrowContact", c -> {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();

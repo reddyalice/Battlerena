@@ -63,7 +63,7 @@ public class CharactherRenderingSystem extends IteratingSystem {
 		shapeRenderer.setColor(Color.BLACK);
 		
 		
-		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width, pc.y + cc.race.height + 15f, 10f);
+		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 13.75f,  pc.x + cc.race.width, pc.y + cc.race.height + 13.75f, 7.5f);
 		
 		shapeRenderer.setColor(Color.GREEN);
 		shapeRenderer.rectLine( pc.x, pc.y + cc.race.height + 15f,  pc.x + cc.race.width * (cc.health / cc.maxHealth), pc.y + cc.race.height + 15f, 5f);

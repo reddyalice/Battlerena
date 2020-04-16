@@ -17,6 +17,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.ashley.utils.ImmutableArray;
@@ -99,6 +100,21 @@ public class AIUpdateSystem extends EntitySystem {
 				PositionComponent epc = aic.target.getComponent(PositionComponent.class);
 				Vector2 diff = new Vector2(epc.x - pc.x, epc.y - pc.y);
 				
+				RayCastCallback callBack = new RayCastCallback() {
+					
+					@Override
+					public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+						
+						if(fixture.getBody().getType() == BodyType.StaticBody || 
+								fixture.getBody().getType() == BodyType.KinematicBody)
+						{
+							aic.tempPos = point;
+						}
+						
+						return 0;
+					}
+				};
+			
 				
 				if(diff.len() > 60f) {
 					cc.lookDir = diff.nor();

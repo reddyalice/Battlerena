@@ -5,6 +5,7 @@ import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
+import com.alice.arena.systems.AIUpdateSystem;
 import com.alice.arena.systems.CharactherRenderingSystem;
 import com.alice.arena.systems.ControlSystem;
 import com.alice.arena.systems.MovementSystem;
@@ -186,8 +187,10 @@ public class PlayScreen implements Screen {
 		engine = new Engine();
 		Player = Builder.SpawnPlayerCharacther(rayHandler,playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale, selectedR, selectedS, "player", selectedSS);
 
-		engine.addSystem(new UpdateCharactherSystem());
+		
 		engine.addSystem(new ControlSystem(viewport));
+		engine.addSystem(new AIUpdateSystem());
+		engine.addSystem(new UpdateCharactherSystem());
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new CharactherRenderingSystem(batch, shapeRenderer));
 		
@@ -282,7 +285,7 @@ public class PlayScreen implements Screen {
 		batch.end();
 		rayHandler.render();
 		shapeRenderer.end();
-		//debugRenderer.render(world, camera.combined);
+		debugRenderer.render(world, camera.combined);
 		
 		
 		UIBatch.begin();

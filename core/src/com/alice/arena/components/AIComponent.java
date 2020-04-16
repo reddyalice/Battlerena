@@ -2,7 +2,10 @@ package com.alice.arena.components;
 
 import com.alice.arena.utils.AIState;
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public class AIComponent implements Component {
-	AIState state;
+	public AIState state = AIState.LookAround;
+	public Entity target;
 }

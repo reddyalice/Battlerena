@@ -46,89 +46,12 @@ public class AIUpdateSystem extends EntitySystem {
 		
 		
 		if(aic.state == AIState.LookAround) {
-			Vector2 ls = new Vector2(cc.lookDir);
-			ls.rotate(-90f);
-			ArrayList<Entity> seen = new ArrayList<Entity>();
-			RayCastCallback callback = new RayCastCallback() {
 			
-			@Override
-			public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-				String f = (String)fixture.getUserData();
-				if(f.startsWith("char")) {
-					String[] p = f.split("/");
-					String team = p[1];
-					int id = Integer.parseInt(p[2]);
-					if(!team.contentEquals(cc.team)) {
-						seen.add(Registry.chars.get(id));
-						return -1;
-					}
-				}
-				
-				return 0;
-				}
-			};
-			
-			for(int i = 0; i < 30; i++) {
-			PlayScreen.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 500f,  pc.y + cc.race.height / 2f + ls.y * 500f);
-			ls.rotate(6f);
-			}
-			
-			Entity closest = null;
-			for(Entity e : seen) {
-				if(closest == null) {
-					closest = e;
-					
-				}else {
-					PositionComponent epc = e.getComponent(PositionComponent.class);
-					PositionComponent lpc = closest.getComponent(PositionComponent.class);
-					Vector2 ldiff = new Vector2(lpc.x - pc.x, lpc.y - pc.y);
-					Vector2 diff = new Vector2(epc.x - pc.x, epc.y - pc.y);
-					if(diff.len() < ldiff.len())
-						closest = e;
-				}
-			}
-			
-			aic.target = closest;
-			if(aic.target != null)
-				aic.state = AIState.Follow;
 			
 		}
 		
 		if(aic.state == AIState.Follow) {
 			
-			if(aic.target != null) {
-				PositionComponent epc = aic.target.getComponent(PositionComponent.class);
-				Vector2 diff = new Vector2(epc.x - pc.x, epc.y - pc.y);
-				
-				RayCastCallback callBack = new RayCastCallback() {
-					
-					@Override
-					public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-						
-						if(fixture.getBody().getType() == BodyType.StaticBody || 
-								fixture.getBody().getType() == BodyType.KinematicBody)
-						{
-							aic.tempPos = point;
-						}
-						
-						return 0;
-					}
-				};
-			
-				
-				if(diff.len() > 60f) {
-					cc.lookDir = diff.nor();
-					vc.x = cc.lookDir .x * cc.speed * 25f;
-					vc.y = cc.lookDir .y * cc.speed * 25f;
-				}else {
-					cc.lookDir = diff.nor();
-					vc.x = -cc.lookDir .y * cc.speed * 25f;
-					vc.y = cc.lookDir .x * cc.speed * 25f;
-				}
-			}else
-			{
-				aic.state = AIState.LookAround;
-			}
 		}
 		
 		

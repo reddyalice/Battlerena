@@ -104,7 +104,11 @@ public class Builder {
 	
 	public static Entity SpawnAICharacther(RayHandler rh, float x, float y, Race race, Style style,  String team, Skill... skills ) {
 		Entity e = CreateCharactherEntity(rh, x,y, race, style, "AI", team, skills);
-		e.add(new AIComponent());
+		AIComponent aic = new AIComponent();
+		aic.state = AIState.LookAround;
+		aic.homePos = new Vector2(x,y);
+		aic.tempPos = aic.homePos;
+		e.add(aic);
 		return e;
 	}
 	

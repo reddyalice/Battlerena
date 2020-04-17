@@ -2,6 +2,10 @@ package com.alice.arena.systems;
 
 import java.util.ArrayList;
 
+import com.alice.arena.ai.AIState;
+import com.alice.arena.ai.AnyHeuristic;
+import com.alice.arena.ai.Direction;
+import com.alice.arena.ai.InGraph;
 import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PhysicsComponent;
@@ -10,7 +14,6 @@ import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.screens.PlayScreen;
-import com.alice.arena.utils.AIState;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -18,9 +21,19 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.ai.pfa.Heuristic;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedHierarchicalGraph;
+import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
+import com.badlogic.gdx.ai.utils.Collision;
+import com.badlogic.gdx.ai.utils.Ray;
+import com.badlogic.gdx.ai.utils.RaycastCollisionDetector;
 import com.badlogic.gdx.math.Vector2;
 
 public class AIUpdateSystem extends EntitySystem {
@@ -35,7 +48,9 @@ public class AIUpdateSystem extends EntitySystem {
 	}
 	
 	
-	
+
+	InGraph graph = new InGraph();
+	AnyHeuristic heuristic = new AnyHeuristic(graph);
 	
 	private void processEntity(Entity entity, float deltaTime) {
 		PositionComponent pc =  entity.getComponent(PositionComponent.class);
@@ -44,15 +59,95 @@ public class AIUpdateSystem extends EntitySystem {
 		PhysicsComponent phc = entity.getComponent(PhysicsComponent.class);
 		AIComponent aic = entity.getComponent(AIComponent.class);
 		
-		
+
 		if(aic.state == AIState.LookAround) {
+			Vector2 ls = new Vector2(cc.lookDir);
+			ls.rotate(-90f);
+			ArrayList<Entity> seen = new ArrayList<Entity>();
+			RayCastCallback callback = new RayCastCallback() {
+
+					@Override
+			public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+					String f = (String)fixture.getUserData();
+					if(f.startsWith("char")) {
+						String[] p = f.split("/");
+						String team = p[1];
+						int id = Integer.parseInt(p[2]);
+						if(!team.contentEquals(cc.team)) {
+							seen.add(Registry.chars.get(id));
+							return 0;
+						}
+					}
+
+					return 1;
+				}
+			};
+
+			for(int i = 0; i < 30; i++) {
+				PlayScreen.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 500f,  pc.y + cc.race.height / 2f + ls.y * 500f);
+				ls.rotate(6f);
+			}
 			
 			
-		}
-		
-		if(aic.state == AIState.Follow) {
+			Entity closest = null;
+				for(Entity e : seen) {
+					if(closest == null) {
+						closest = e;
+						}else {
+						PositionComponent epc = e.getComponent(PositionComponent.class);
+						PositionComponent lpc = closest.getComponent(PositionComponent.class);
+						Vector2 ldiff = new Vector2(lpc.x - pc.x, lpc.y - pc.y);
+						Vector2 diff = new Vector2(epc.x - pc.x, epc.y - pc.y);
+						if(diff.len() < ldiff.len())
+							closest = e;
+						}
+					}
+
+					aic.target = closest;
+					if(aic.target != null) {
+							aic.state = AIState.Follow;
+					}
+			}
+				
+			if(aic.state == AIState.Follow) {
+				if(aic.target != null) {
+					System.out.println("Calculating");
+					PositionComponent epc = aic.target.getComponent(PositionComponent.class);
+					CharactherComponent ecc = aic.target.getComponent(CharactherComponent.class);
+					Vector2 origin = new Vector2((int)(pc.x + cc.race.width / 2f), (int)(pc.y + cc.race.height / 2f));
+					Vector2 end = new Vector2((int)(epc.x + ecc.race.width / 2f), (int)(epc.y + ecc.race.height / 2f));
+					Connection<Vector2> lessCostly = null;
+					Array<Connection<Vector2>> gra = graph.getConnections(origin);
+				
+					
+					for(Connection<Vector2> d :  gra) {
+						if(lessCostly == null)
+							lessCostly = d;
+						else {
+							if(heuristic.estimate(d.getToNode(), end) < heuristic.estimate(lessCostly.getToNode(), end))
+								lessCostly = d;
+						}
+					}
+					
+					
+					Vector2 dir = new Vector2(((Direction)lessCostly).direction);
+					dir.nor();
+					System.out.println(dir);
+					vc.x = dir.x * cc.speed *25; 
+					vc.y = dir.y * cc.speed *25;
+					cc.lookDir = new Vector2(dir);
+					
+					
+
+				
+				}else
+					aic.state = AIState.LookAround;
+				
+			}
+				
 			
-		}
+	
+	
 		
 		
 		
@@ -86,7 +181,7 @@ public class AIUpdateSystem extends EntitySystem {
 		
 		
 		
-		
+
 		
 	}
 	

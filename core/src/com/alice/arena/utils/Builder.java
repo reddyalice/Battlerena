@@ -16,6 +16,11 @@ import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.screens.PlayScreen;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.ai.steer.SteerableAdapter;
+import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -105,9 +110,60 @@ public class Builder {
 	public static Entity SpawnAICharacther(RayHandler rh, float x, float y, Race race, Style style,  String team, Skill... skills ) {
 		Entity e = CreateCharactherEntity(rh, x,y, race, style, "AI", team, skills);
 		AIComponent aic = new AIComponent();
-		aic.state = AIState.LookAround;
-		aic.homePos = new Vector2(x,y);
-		aic.tempPos = aic.homePos;
+		/*PhysicsComponent phc = e.getComponent(PhysicsComponent.class);
+		CharactherComponent cc = e.getComponent(CharactherComponent.class);
+		SteerableAdapter sd;
+		aic.steerable = new Steerable<Vector2>() {
+			private static final SteeringAcceleration<Vector2> steeringOutput = 
+					new SteeringAcceleration<Vector2>(new Vector2());
+
+				Vector2 position;
+				float orientation;
+				Vector2 linearVelocity;
+				float angularVelocity;
+				float maxSpeed;
+				boolean independentFacing;
+				SteeringBehavior<Vector2> steeringBehavior;
+
+				/* Here you should implement missing methods inherited from Steerable */
+
+				// Actual implementation depends on your coordinate system.
+				// Here we assume the y-axis is pointing upwards.
+			/*	@Override
+				public float vectorToAngle (Vector2 vector) {
+					return (float)Math.atan2(-vector.x, vector.y);
+				}
+
+				// Actual implementation depends on your coordinate system.
+				// Here we assume the y-axis is pointing upwards.
+				@Override
+				public Vector2 angleToVector (Vector2 outVector, float angle) {
+					outVector.x = -(float)Math.sin(angle);
+					outVector.y = (float)Math.cos(angle);
+					return outVector;
+				}
+				
+				private void applySteering (SteeringAcceleration<Vector2> steering, float time) {
+					// Update position and linear velocity. Velocity is trimmed to maximum speed
+					this.position.mulAdd(linearVelocity, time);
+					this.linearVelocity.mulAdd(steering.linear, time).limit(this.getMaxLinearSpeed());
+
+					// Update orientation and angular velocity
+					if (independentFacing) {
+						this.orientation += angularVelocity * time;
+						this.angularVelocity += steering.angular * time;
+					} else {
+						// For non-independent facing we have to align orientation to linear velocity
+						float newOrientation = calculateOrientationFromLinearVelocity(this);
+						if (newOrientation != this.orientation) {
+							this.angularVelocity = (newOrientation - this.orientation) * time;
+							this.orientation = newOrientation;
+						}
+					}
+				}
+
+			
+		};*/
 		e.add(aic);
 		return e;
 	}

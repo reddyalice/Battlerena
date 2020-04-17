@@ -1,4 +1,4 @@
-package com.alice.arena.utils;
+package com.alice.arena.ai;
 
 public enum AIState {
 	

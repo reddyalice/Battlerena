@@ -275,7 +275,11 @@ public class ShootArrow extends Skill {
 		
 		if(aic.rangeAttack)
 		{
-			ActiveCall(cc, pc, index);
+			if(cc.progress[index] <= 0 && cc.energy >= energyCost) {
+				double r = Math.random();
+				if(r < 0.3d)
+					ActiveCall(cc, pc, index);
+			}
 		}
 		
 		

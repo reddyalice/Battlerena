@@ -27,6 +27,8 @@ public class Registry {
 		public static final Skill NatureSpirit = new NatureSpirit();
 		public static final Skill RaiseDead = new RaiseDead();
 		public static final Skill CallAid = new CallAid();
+		public static final Skill Stab = new Stab();
+		public static final Skill Undying = new Undying();
 	}
 	
 	public static class RACES{

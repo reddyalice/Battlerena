@@ -17,7 +17,7 @@ public class Undead extends Race {
 		super(5, "Undead", new TextureHolder(Assets.GetTexture("skeleton"), 16, 24), 32, 48, 
 				200, 80, 0.9f, 6, 1,
 				1, 0.9f, 5, 5, 
-				Registry.SKILLS.RaiseDead);
+				Registry.SKILLS.Undying);
 		// TODO Auto-generated constructor stub
 	}
 

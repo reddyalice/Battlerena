@@ -37,8 +37,7 @@ public class SelectScreen implements Screen {
 	float timeHolder;
 	
 	public SelectScreen() {
-		System.out.println(Registry.RACES.Human);
-		System.out.println(Registry.STYLES.Warrior);
+		Core.backgroundColor = Color.BLUE;
 		selectionT = Assets.GetTexture("selectionBox");
 		lock = Assets.GetTexture("lock");
 	}
@@ -50,7 +49,7 @@ public class SelectScreen implements Screen {
 		font = Assets.GetFont("empty"); 
 		
 		camera = new OrthographicCamera();
-		viewport =  new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
+		viewport =  new ExtendViewport(640, 480, camera);
 		viewport.apply(true);
 	}
 

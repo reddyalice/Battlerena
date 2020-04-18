@@ -22,7 +22,7 @@ public class WarriorSword extends Skill {
 
 	private int rotationLimit = 90;
 	private float rotSpeed = 900;
-	private float damage = 10f;
+	private float damage = 50f;
 	
 	public WarriorSword() {
 		super("Warrior's Sword", new TextureHolder(Assets.GetTexture("sword")),  
@@ -62,6 +62,25 @@ public class WarriorSword extends Skill {
 						
 					}
 					
+					if(fB.startsWith("projectile")) {
+						String[] p1 = fB.split("/");
+						String pteam = p1[1];
+						int oid = Integer.parseInt(p1[2]);
+						String pType = p1[3];
+						if(!pteam.contentEquals(team)) {
+							if(pType.contentEquals("arrow")) {
+								int n = Integer.parseInt(p1[4]);
+								CharactherComponent chc = Registry.chars.get(oid).getComponent(CharactherComponent.class);
+								Vector2 look = (Vector2) chc.var.get("shootArrowLook" + n);
+								chc.var.put("shootArrowLook", look.scl(-1));
+								x.getFixtureB().setUserData((fB.replace(pteam, cc.team)));
+								System.out.println("Reversed");
+
+							}
+						}
+						
+					}
+					
 					
 				}
 				
@@ -80,6 +99,26 @@ public class WarriorSword extends Skill {
 						}
 						
 					}
+					
+					if(fA.startsWith("projectile")) {
+						String[] p1 = fA.split("/");
+						String pteam = p1[1];
+						int oid = Integer.parseInt(p1[2]);
+						String pType = p1[3];
+						if(!pteam.contentEquals(team)) {
+							if(pType.contentEquals("arrow")) {
+								int n = Integer.parseInt(p1[4]);
+								CharactherComponent chc = Registry.chars.get(oid).getComponent(CharactherComponent.class);
+								Vector2 look = (Vector2) chc.var.get("shootArrowLook" + n);
+								chc.var.put("shootArrowLook", look.scl(-1));
+								x.getFixtureA().setUserData((fA.replace(pteam, cc.team)));
+								System.out.println("Reversed");
+							}
+						}
+						
+					}
+					
+					
 				}
 				
 				

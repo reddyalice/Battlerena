@@ -49,6 +49,8 @@ public class Core extends Game {
 		instance = this;
 		account = new Account("Player");
 		Assets.fonts.put("empty", new BitmapFont());
+		System.out.println(Registry.RACES.Human);
+		System.out.println(Registry.STYLES.Warrior);
 		setScreen(new SelectScreen());
 	}
 

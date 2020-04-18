@@ -64,6 +64,9 @@ public class PlayScreen implements Screen {
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
 	public static EvE<Contact> beginContantCalls = new EvE<Contact>();
 	public static EvE<Contact> endContantCalls = new EvE<Contact>();
+	public static PlayScreen screen;
+	
+	public boolean change = false;
 	
 	private int numberOfSteps = 3;
 	
@@ -79,7 +82,7 @@ public class PlayScreen implements Screen {
 	public static RayHandler rayHandler;
 	
 	public PlayScreen(Race selectedR, Style selectedS, Skill... selectedSS) {
-		
+		screen = this;
 		Core.backgroundColor = Color.BLACK;
 		
 		
@@ -285,7 +288,7 @@ public class PlayScreen implements Screen {
 		batch.end();
 		rayHandler.render();
 		shapeRenderer.end();
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		
 		
 		UIBatch.begin();
@@ -300,6 +303,12 @@ public class PlayScreen implements Screen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if(change) {
+			this.dispose();
+			Core.instance.setScreen(new SelectScreen());
+		}
+		
 		
 	}
 

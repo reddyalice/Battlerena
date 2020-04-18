@@ -61,9 +61,9 @@ public class ShootArrow extends Skill {
 			{
 				String[] p = fA.split("/");
 				String projectileTeam = p[1];
-				String projectileType = p[2];
+				String projectileType = p[3];
 				if(projectileType.contentEquals("arrow")) {
-					int n = Integer.parseInt(p[3]);
+					int n = Integer.parseInt(p[4]);
 					if(fB.contentEquals("wall")) {
 						c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
 						cc.var.put("shootArrowKill" + n, true);
@@ -97,10 +97,10 @@ public class ShootArrow extends Skill {
 			{
 				String[] p = fB.split("/");
 				String projectileTeam = p[1];
-				String projectileType = p[2];
+				String projectileType = p[3];
 				
 				if(projectileType.contentEquals("arrow")) {
-					int n = Integer.parseInt(p[3]);
+					int n = Integer.parseInt(p[4]);
 					if(fA.contentEquals("wall")) {
 						c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
 						cc.var.put("shootArrowKill" + n, true);
@@ -247,7 +247,7 @@ public class ShootArrow extends Skill {
 	
 					Body b = Builder.CreateASimpleBody(BodyType.DynamicBody, 
 							pos.x, pos.y,
-							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile" + "/" + cc.team + "/" + "arrow" + "/" + n, true);
+							32f * size,4.5f * size, (16f * size), 4.5f * size / 2f, "projectile" + "/" + cc.team + "/" + cc.id + "/" + "arrow" + "/" + n, true);
 					
 					//b.setFixedRotation(false);
 					b.setTransform(pos.x, pos.y, (float)((cc.rotation) * Math.PI / 180f));

@@ -116,7 +116,7 @@ public class AIUpdateSystem extends EntitySystem {
 					CharactherComponent ecc = aic.target.getComponent(CharactherComponent.class);
 					PhysicsComponent ephc = aic.target.getComponent(PhysicsComponent.class); 
 					
-					aic.agent.update(deltaTime, new Location<Vector2>() {
+					Location<Vector2> loc = new Location<Vector2>() {
 						
 						@Override
 						public float vectorToAngle (Vector2 vector) {
@@ -138,7 +138,7 @@ public class AIUpdateSystem extends EntitySystem {
 						@Override
 						public Vector2 getPosition() {
 							Vector2 a = new Vector2(ephc.body.getPosition());
-							return (new Vector2(a).sub(cc.lookDir.x * 60f - cc.lookDir.y * 30f , cc.lookDir.y * 60f - cc.lookDir.x * 30f));
+							return (new Vector2(a).sub(cc.lookDir.x * 30f, cc.lookDir.y * 30f));
 						}
 						
 						@Override
@@ -153,9 +153,15 @@ public class AIUpdateSystem extends EntitySystem {
 							outVector.y = (float)Math.cos(angle);
 							return outVector;
 						}
-					});
-
-				
+					};
+					if((new Vector2(aic.agent.getPosition()).sub( loc.getPosition() )).len() > 30)
+						aic.agent.update(deltaTime, loc);
+					else
+					{
+						vc.x = -cc.lookDir.y * 25f * cc.speed;
+						vc.y = cc.lookDir.x * 25f * cc.speed;
+						cc.lookDir = new Vector2(ephc.body.getPosition()).sub(  aic.agent.getPosition()).nor();
+					}
 				}else
 					aic.state = AIState.LookAround;
 				

@@ -32,6 +32,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedHierarchicalGraph;
 import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
 import com.badlogic.gdx.ai.utils.Collision;
+import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.ai.utils.RaycastCollisionDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -111,46 +112,54 @@ public class AIUpdateSystem extends EntitySystem {
 				
 			if(aic.state == AIState.Follow) {
 				if(aic.target != null) {
-					System.out.println("Calculating");
-					PositionComponent epc = aic.target.getComponent(PositionComponent.class);
+					
 					CharactherComponent ecc = aic.target.getComponent(CharactherComponent.class);
-					Vector2 origin = new Vector2((int)(pc.x + cc.race.width / 2f), (int)(pc.y + cc.race.height / 2f));
-					Vector2 end = new Vector2((int)(epc.x + ecc.race.width / 2f), (int)(epc.y + ecc.race.height / 2f));
-					Connection<Vector2> lessCostly = null;
-					Array<Connection<Vector2>> gra = graph.getConnections(origin);
-				
+					PhysicsComponent ephc = aic.target.getComponent(PhysicsComponent.class); 
 					
-					for(Connection<Vector2> d :  gra) {
-						if(lessCostly == null)
-							lessCostly = d;
-						else {
-							if(heuristic.estimate(d.getToNode(), end) < heuristic.estimate(lessCostly.getToNode(), end))
-								lessCostly = d;
+					aic.agent.update(deltaTime, new Location<Vector2>() {
+						
+						@Override
+						public float vectorToAngle (Vector2 vector) {
+							return (float)Math.atan2(-vector.x, vector.y);
 						}
-					}
-					
-					
-					Vector2 dir = new Vector2(((Direction)lessCostly).direction);
-					dir.nor();
-					System.out.println(dir);
-					vc.x = dir.x * cc.speed *25; 
-					vc.y = dir.y * cc.speed *25;
-					cc.lookDir = new Vector2(dir);
-					
-					
+						
+						@Override
+						public void setOrientation(float orientation) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public Location<Vector2> newLocation() {
+							// TODO Auto-generated method stub
+							return null;
+						}
+						
+						@Override
+						public Vector2 getPosition() {
+							Vector2 a = new Vector2(ephc.body.getPosition());
+							return (new Vector2(a).sub(cc.lookDir.x * 60f - cc.lookDir.y * 30f , cc.lookDir.y * 60f - cc.lookDir.x * 30f));
+						}
+						
+						@Override
+						public float getOrientation() {
+							// TODO Auto-generated method stub
+							return vectorToAngle(ecc.lookDir);
+						}
+						
+						@Override
+						public Vector2 angleToVector (Vector2 outVector, float angle) {
+							outVector.x = -(float)Math.sin(angle);
+							outVector.y = (float)Math.cos(angle);
+							return outVector;
+						}
+					});
 
 				
 				}else
 					aic.state = AIState.LookAround;
 				
 			}
-				
-			
-	
-	
-		
-		
-		
 		
 		
 		cc.race.RacialAIUpdate(cc, aic, deltaTime, pc, vc);

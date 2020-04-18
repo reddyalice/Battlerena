@@ -15,7 +15,7 @@ public class InGraph implements IndexedGraph<Vector2> {
 	public Array<Connection<Vector2>> getConnections(Vector2 fromNode) {
 		Array<Connection<Vector2>> connections = new Array<Connection<Vector2>>(8);
 		connections.add(new Direction(fromNode, new Vector2(-1f, 0f)));
-		connections.add(new Direction(fromNode, new Vector2(-1f, -10f)));
+		connections.add(new Direction(fromNode, new Vector2(-1f, -1f)));
 		connections.add(new Direction(fromNode, new Vector2(0, -1f)));
 		connections.add(new Direction(fromNode, new Vector2(1f, -1f)));
 		connections.add(new Direction(fromNode, new Vector2(1f, 0f)));

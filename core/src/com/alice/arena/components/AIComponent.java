@@ -16,4 +16,7 @@ public class AIComponent implements Component {
 	public AIState state = AIState.LookAround;
 	public Entity target;
 	public SteeringAgent agent;
+	public Vector2 home;
+	public boolean meleeAttack;
+	public boolean rangeAttack;
 }

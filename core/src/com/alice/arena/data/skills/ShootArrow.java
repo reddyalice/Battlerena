@@ -3,6 +3,7 @@ package com.alice.arena.data.skills;
 import java.util.ArrayList;
 
 import com.alice.arena.Core;
+import com.alice.arena.ai.AIState;
 import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
@@ -79,6 +80,8 @@ public class ShootArrow extends Skill {
 							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 							c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
 							cc.var.put("shootArrowKill" + n, true);
+							cc.var.put("shootArrowKillC" + n, 0.1f);
+
 						}
 						
 					}
@@ -269,7 +272,13 @@ public class ShootArrow extends Skill {
 	@Override
 	public void SkillAIUpdate(CharactherComponent cc, AIComponent aic, Engine en, float delta, PositionComponent pc,
 			VelocityComponent vc, int index) {
-		// TODO Auto-generated method stub
+		
+		if(aic.rangeAttack)
+		{
+			ActiveCall(cc, pc, index);
+		}
+		
+		
 		
 	}
 

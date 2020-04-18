@@ -105,8 +105,57 @@ public class AIUpdateSystem extends EntitySystem {
 					}
 
 					aic.target = closest;
+					aic.meleeAttack = false;
+					aic.rangeAttack = false;
+
 					if(aic.target != null) {
 							aic.state = AIState.Follow;
+					}else {
+						Location<Vector2> loc = new Location<Vector2>() {
+							
+							@Override
+							public float vectorToAngle (Vector2 vector) {
+								return (float)Math.atan2(-vector.x, vector.y);
+							}
+							
+							@Override
+							public void setOrientation(float orientation) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public Location<Vector2> newLocation() {
+								// TODO Auto-generated method stub
+								return null;
+							}
+							
+							@Override
+							public Vector2 getPosition() {
+								
+								return aic.home;
+							}
+							
+							@Override
+							public float getOrientation() {
+								// TODO Auto-generated method stub
+								return 0;
+							}
+							
+							@Override
+							public Vector2 angleToVector (Vector2 outVector, float angle) {
+								outVector.x = -(float)Math.sin(angle);
+								outVector.y = (float)Math.cos(angle);
+								return outVector;
+							}
+						};
+						if((new Vector2(aic.agent.getPosition()).sub( loc.getPosition() )).len() > 10) {
+							aic.agent.update(deltaTime, loc);
+						}else
+						{
+							vc.x = 0;
+							vc.y = 0;
+						}
 					}
 			}
 				
@@ -154,17 +203,24 @@ public class AIUpdateSystem extends EntitySystem {
 							return outVector;
 						}
 					};
-					if((new Vector2(aic.agent.getPosition()).sub( loc.getPosition() )).len() > 30)
+					if((new Vector2(aic.agent.getPosition()).sub( loc.getPosition() )).len() > 30) {
 						aic.agent.update(deltaTime, loc);
+						aic.meleeAttack = false;
+						aic.rangeAttack = true;
+					}					
 					else
 					{
-						vc.x = -cc.lookDir.y * 25f * cc.speed;
-						vc.y = cc.lookDir.x * 25f * cc.speed;
+						vc.x = 0;
+						vc.y = 0;
 						cc.lookDir = new Vector2(ephc.body.getPosition()).sub(  aic.agent.getPosition()).nor();
+						aic.meleeAttack = true;
+						aic.rangeAttack = true;
 					}
-				}else
+				}else {
+					aic.meleeAttack = false;
+					aic.rangeAttack = false;
 					aic.state = AIState.LookAround;
-				
+				}
 			}
 		
 		

@@ -116,7 +116,7 @@ public class Builder {
 	
 		
 		aic.agent = new SteeringAgent(e);
-		
+		aic.home = new Vector2(x,y);
 		e.add(aic);
 		return e;
 	}

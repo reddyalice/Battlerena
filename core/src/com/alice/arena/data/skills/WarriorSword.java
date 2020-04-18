@@ -166,7 +166,10 @@ public class WarriorSword extends Skill {
 	@Override
 	public void SkillAIUpdate(CharactherComponent cc, AIComponent aic, Engine en, float delta, PositionComponent pc,
 			VelocityComponent vc, int index) {
-		// TODO Auto-generated method stub
+		
+		if(aic.meleeAttack) {
+			ActiveCall(cc, pc, index);
+		}
 		
 	}
 

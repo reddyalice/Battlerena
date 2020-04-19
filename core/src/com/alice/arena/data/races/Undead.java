@@ -15,7 +15,7 @@ import com.alice.arena.utils.UtilFunctions;
 public class Undead extends StandartRaceAdapter {
 
 	public Undead() {
-		super(5, "Undead", new TextureHolder(Assets.GetTexture("zombie"), 16, 24), 32, 48, 
+		super(5, "Undead", new TextureHolder(Assets.GetTexture("zombie2"), 16, 24), 32, 48, 
 				200, 80, 0.9f, 6, 1,
 				1, 0.9f, 5, 5, 
 				Registry.SKILLS.Undying);

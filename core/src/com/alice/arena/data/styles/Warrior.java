@@ -23,8 +23,4 @@ public class Warrior extends StandartStyleAdapter {
 				Registry.SKILLS.WarriorSword,
 				Registry.SKILLS.WarriorSheild);
 	}
-
-
-	
-
 }

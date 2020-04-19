@@ -47,6 +47,7 @@ public class Registry {
 		public static final Style Commander = new Commander();
 		public static final Style Necromancer = new Necromancer();
 		public static final Style Assassin = new Assassin();
+		public static final Style Summoner = new Summoner();
 	}
 	
 	public static class ITEMS{

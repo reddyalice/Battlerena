@@ -58,8 +58,10 @@ public class PlayScreen implements Screen {
 	private ExtendViewport viewport;
 	private ExtendViewport UIViewport;
 	private Engine engine;
+	
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
+	public static Vector2 playerSpawnPoint;
 	
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
 	public static EvE<Contact> beginContantCalls = new EvE<Contact>();
@@ -185,10 +187,10 @@ public class PlayScreen implements Screen {
 		
 		
 		
-		
+		playerSpawnPoint = new Vector2(playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale);
 		
 		engine = new Engine();
-		Player = Builder.SpawnPlayerCharacther(rayHandler,playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale, selectedR, selectedS, "player", selectedSS);
+		Player = Builder.SpawnPlayerCharacther(rayHandler,playerSpawnPoint.x, playerSpawnPoint.y, selectedR, selectedS, "player", selectedSS);
 
 		
 		engine.addSystem(new ControlSystem(viewport));

@@ -6,6 +6,7 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Registry;
+import com.alice.arena.data.StandartRaceAdapter;
 import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
@@ -14,7 +15,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Human extends Race {
+public class Human extends StandartRaceAdapter {
 
 	public Human() {
 		super(0, "Human", new TextureHolder(Assets.GetTexture("human"), 16, 24), 32, 48,
@@ -23,28 +24,5 @@ public class Human extends Race {
 				Registry.SKILLS.VeryNormal,
 				Registry.SKILLS.HumanSpirit);
 	}
-
-	@Override
-	public void RacialInit(CharactherComponent cc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void RacialUpdate(CharactherComponent cc, float delta, PositionComponent pc, VelocityComponent vc) {
-		
-		UtilFunctions.StandartRaceAnim(cc, vc, delta);
-	}
-
-	@Override
-	public void RacialAIUpdate(CharactherComponent cc,AIComponent aic, float delta, PositionComponent pc, VelocityComponent vc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-
 
 }

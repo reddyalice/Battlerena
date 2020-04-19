@@ -6,12 +6,13 @@ import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
+import com.alice.arena.data.StandartStyleAdapter;
 import com.alice.arena.data.Style;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
 import com.alice.arena.utils.UtilFunctions;
 
-public class Assassin extends Style {
+public class Assassin extends StandartStyleAdapter {
 
 	public Assassin() {
 		super(5, "Assassin", new TextureHolder(Assets.GetTexture("assassin"), 16, 24), 32, 48, 
@@ -21,24 +22,6 @@ public class Assassin extends Style {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void StyleInit(CharactherComponent cc) {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
-		// TODO Auto-generated method stub
-		UtilFunctions.StandartStyleAnim(cc, vc, deltaTime);
-
-	}
-
-	@Override
-	public void StyleAIUpdate(CharactherComponent cc, AIComponent aic, float deltaTime, PositionComponent pc,
-			VelocityComponent vc) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

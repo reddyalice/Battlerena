@@ -30,6 +30,10 @@ public abstract class Race {
 	public float baseHealthRegen;
 	public float baseEnergyRegen;
 	
+	public boolean show = true;
+	
+	
+	
 	
 	
 	public int width;

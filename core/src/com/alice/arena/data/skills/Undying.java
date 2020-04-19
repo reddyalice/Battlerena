@@ -16,7 +16,7 @@ public class Undying extends Skill {
 	public Undying() {
 		super("Undying", new TextureHolder(Assets.GetTexture("icon_undying")), null, 
 				1, 0, 0, "You will reborn as skeleton once you are dead.");
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -50,6 +50,12 @@ public class Undying extends Skill {
 	public void ActiveCall(CharactherComponent cc, PositionComponent pc, int index) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public boolean SkillDeadCall(CharactherComponent cc) {
+		// TODO Auto-generated method stub
+		return super.SkillDeadCall(cc);
 	}
 
 }

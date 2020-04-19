@@ -127,7 +127,10 @@ public class UpdateCharactherSystem extends EntitySystem {
 		
 		if(cc.health < 0) {
 			cc.health = 0;
-			Actions.KillCharacther(this.engine, entity, cc, phc);
+			boolean t = true;
+			for(Skill s : cc.skill)
+				t &= s.SkillDeadCall(cc);
+			if(t) Actions.KillCharacther(this.engine, entity, cc, phc);
 		}
 		
 		

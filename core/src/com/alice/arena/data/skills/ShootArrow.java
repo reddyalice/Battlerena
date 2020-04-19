@@ -53,7 +53,7 @@ public class ShootArrow extends Skill {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
 		
-		PlayScreen.beginContantCalls.Add("arrowContact", c -> {
+		PlayScreen.beginContantCalls.Add("arrowContact"+ cc.team, c -> {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();
 	
@@ -80,7 +80,7 @@ public class ShootArrow extends Skill {
 							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 							c.getFixtureA().getBody().setLinearVelocity(new Vector2(0,0));
 							cc.var.put("shootArrowKill" + n, true);
-							cc.var.put("shootArrowKillC" + n, 0.1f);
+							cc.var.put("shootArrowKillC" + n, 0.01f);
 
 						}
 						
@@ -117,6 +117,8 @@ public class ShootArrow extends Skill {
 							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 							c.getFixtureB().getBody().setLinearVelocity(new Vector2(0,0));
 							cc.var.put("shootArrowKill" + n, true);
+							cc.var.put("shootArrowKillC" + n, 0.01f);
+
 						}
 						
 					}
@@ -284,6 +286,12 @@ public class ShootArrow extends Skill {
 		
 		
 		
+	}
+
+	@Override
+	public boolean SkillDeadCall(CharactherComponent cc) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

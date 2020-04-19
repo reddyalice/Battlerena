@@ -31,6 +31,8 @@ public abstract class Style {
 	public int energyRegenPercentMul;
 	
 	
+	public boolean show = true;
+	
 	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 
 	public Style(int id, String name, TextureHolder texture,int width, int height,

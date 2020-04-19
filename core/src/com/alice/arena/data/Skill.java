@@ -41,7 +41,9 @@ public abstract class Skill {
 	public abstract void SkillAIUpdate(CharactherComponent cc, AIComponent aic, Engine en, float delta, PositionComponent pc,VelocityComponent vc,int index);
 	public abstract void SkillRender(SpriteBatch batch, ShapeRenderer shapeRebderer, CharactherComponent cc, PositionComponent pc, int index);
 	public abstract void ActiveCall(CharactherComponent cc, PositionComponent pc, int index);
-	
+	public boolean SkillDeadCall(CharactherComponent cc) {
+		return true;
+	};
 	
 	
 	

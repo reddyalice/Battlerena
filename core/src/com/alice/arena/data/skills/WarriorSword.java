@@ -40,8 +40,8 @@ public class WarriorSword extends Skill {
 		b.setBullet(true);
 		cc.var.put("swordBody",b);
 		
-		if(!PlayScreen.beginContantCalls.consumers.containsKey("swordHit"))
-			PlayScreen.beginContantCalls.Add("swordHit", x -> {
+		if(!PlayScreen.beginContantCalls.consumers.containsKey("swordHit" + cc.team))
+			PlayScreen.beginContantCalls.Add("swordHit" + cc.team, x -> {
 				String fA = (String) x.getFixtureA().getUserData();
 				String fB = (String) x.getFixtureB().getUserData();
 				

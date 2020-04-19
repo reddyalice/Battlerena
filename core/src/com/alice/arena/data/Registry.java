@@ -38,6 +38,7 @@ public class Registry {
 		public static final Race Elf = new Elf();
 		public static final Race Ghost = new Ghost();
 		public static final Race Undead = new Undead();
+		public static final Race Skeleton = new Skeleton();
 	}
 	
 	public static class STYLES{

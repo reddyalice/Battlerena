@@ -85,7 +85,7 @@ public class AIUpdateSystem extends EntitySystem {
 			};
 
 			for(int i = 0; i < 30; i++) {
-				PlayScreen.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 500f,  pc.y + cc.race.height / 2f + ls.y * 500f);
+				PlayScreen.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 300f,  pc.y + cc.race.height / 2f + ls.y * 300f);
 				ls.rotate(6f);
 			}
 			

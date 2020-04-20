@@ -4,6 +4,7 @@ import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
+import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.utils.Assets;
 import com.alice.arena.utils.TextureHolder;
@@ -21,7 +22,7 @@ public class Undying extends Skill {
 
 	@Override
 	public void SkillInit(CharactherComponent cc) {
-		// TODO Auto-generated method stub
+		cc.var.put("died", false);
 
 	}
 
@@ -54,8 +55,32 @@ public class Undying extends Skill {
 	
 	@Override
 	public boolean SkillDeadCall(CharactherComponent cc) {
-		// TODO Auto-generated method stub
-		return super.SkillDeadCall(cc);
+		boolean died = (boolean) cc.var.get("died");
+		if(died) {
+			
+			
+			return true;
+		}else {
+			
+			cc.race = Registry.RACES.Skeleton;
+			
+			cc.maxHealth = cc.race.baseHealth + (cc.race.baseHealth * cc.style.healthPercentMul / 100f);
+			cc.maxEnergy = cc.race.baseEnergy + (cc.race.baseEnergy * cc.style.energyPercentMul / 100f);
+			cc.health = cc.maxHealth;
+			cc.energy = cc.maxEnergy;
+			cc.speed = cc.race.baseSpeed + (cc.race.baseSpeed * cc.style.speedPercentMul / 100f);
+			cc.strength = cc.race.baseStrength + (cc.race.baseStrength * cc.style.strengthPercentMul / 100f);
+			cc.armor = cc.race.baseArmor + (cc.race.baseArmor * cc.style.armorPercentMul / 100f);
+			cc.noMoveVisibility = cc.race.baseVisibility + (cc.race.baseVisibility * cc.style.visibilityPercentMul / 100f);
+			cc.visibility = cc.noMoveVisibility;
+			cc.vision = cc.race.baseVision + (cc.race.baseVision * cc.style.visionPercentMul / 100f);
+			cc.healthRegen = cc.race.baseHealthRegen + (cc.race.baseHealthRegen * cc.style.healthRegenPercentMul / 100f);
+			cc.energyRegen = cc.race.baseEnergyRegen + (cc.race.baseEnergyRegen * cc.style.energyRegenPercentMul / 100f);
+			
+			cc.var.put("died", true);
+			return false;
+		}
+		
 	}
 
 }

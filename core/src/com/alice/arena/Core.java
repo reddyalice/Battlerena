@@ -27,7 +27,7 @@ public class Core extends Game {
 		Assets.fonts.put("empty", new BitmapFont());
 		Gdx.app.log("Init", "Loading " + Registry.RACES.Human);
 		Gdx.app.log("Init", "Loading " + Registry.STYLES.Warrior);
-		setScreen(new SelectScreenDemo());
+		setScreen(new SelectScreen());
 	}
 
 	@Override

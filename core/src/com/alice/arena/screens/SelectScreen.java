@@ -15,14 +15,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
+import com.crashinvaders.vfx.effects.OldTvEffect;
+import com.crashinvaders.vfx.effects.VignetteEffect;
 
 public class SelectScreen implements Screen {
 	
 	private SpriteBatch batch;
+	
+	private VfxManager vfxManager;
+    private ChromaticAberrationEffect chromeEffect;
+    private VignetteEffect vignetteEffect;
+	private OldTvEffect oldTVEffect;
+	
+	
 	private Texture skillSocket;
 	private Texture holder;
 	private Texture indic;
@@ -62,6 +74,15 @@ public class SelectScreen implements Screen {
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
 		viewport.apply(true);
+		
+		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+		chromeEffect = new ChromaticAberrationEffect();
+		vignetteEffect = new VignetteEffect(false);
+		chromeEffect.setMaxDistortion(0.1f);
+		oldTVEffect = new OldTvEffect();
+        vfxManager.addEffect(chromeEffect);
+        vfxManager.addEffect(vignetteEffect);
+        vfxManager.addEffect(oldTVEffect);;
 		
 
 		for(int key : Registry.raceList.keySet()) 
@@ -136,7 +157,8 @@ public class SelectScreen implements Screen {
 		
 		
 		
-		
+		vfxManager.cleanUpBuffers(Color.BLACK);
+		vfxManager.beginCapture();
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -190,6 +212,10 @@ public class SelectScreen implements Screen {
 		
 		
 		batch.end();
+		vfxManager.endCapture();
+		vfxManager.applyEffects();
+		vfxManager.renderToScreen();
+		
 		
 		timeHolder += delta * 10f;
 		regionPointer = 15 + (int) (timeHolder) % 3;
@@ -200,7 +226,7 @@ public class SelectScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
-
+		vfxManager.resize(width, height);
 	}
 
 	@Override
@@ -223,7 +249,12 @@ public class SelectScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		
+		batch.dispose();
+		vfxManager.dispose();
+		chromeEffect.dispose();
+		vignetteEffect.dispose();
+		oldTVEffect.dispose();
 
 	}
 

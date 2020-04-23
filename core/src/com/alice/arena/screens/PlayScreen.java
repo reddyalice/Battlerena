@@ -343,6 +343,7 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		vfxManager.resize(width, height);
 		UIViewport.update(width,height, true);
 		viewport.update(width,height, true);
 		rayHandler.resizeFBO(width / 8, height / 8);

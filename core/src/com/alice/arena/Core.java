@@ -1,6 +1,7 @@
 package com.alice.arena;
 
 import com.alice.arena.data.Registry;
+import com.alice.arena.screens.SelectScreen;
 import com.alice.arena.screens.SelectScreenDemo;
 import com.alice.arena.utils.Assets;
 import com.badlogic.gdx.Game;
@@ -17,15 +18,15 @@ public class Core extends Game {
 	public static Core instance;
 	public static Account account;
 	public static float deltaTime = 1f/60f;
-	public static int WIDTH = 640, HEIGHT = 480;
+	public static int WIDTH = 1024, HEIGHT = 768;
 	
 	@Override
 	public void create () {
 		instance = this;
 		account = new Account("Player");
 		Assets.fonts.put("empty", new BitmapFont());
-		System.out.println(Registry.RACES.Human);
-		System.out.println(Registry.STYLES.Warrior);
+		Gdx.app.log("Init", "Loading " + Registry.RACES.Human);
+		Gdx.app.log("Init", "Loading " + Registry.STYLES.Warrior);
 		setScreen(new SelectScreenDemo());
 	}
 
@@ -38,12 +39,6 @@ public class Core extends Game {
 		
 	}
 	
-	@Override
-	public void resize(int width, int height) {
-		WIDTH = width;
-		HEIGHT = height;
-		super.resize(width, height);
-	}
 	
 	@Override
 	public void dispose () {

@@ -99,10 +99,10 @@ public class PlayScreen implements Screen {
 		
 		
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(640, 480, camera);
+		viewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
 		viewport.apply(true);
 		UICamera = new OrthographicCamera();
-		UIViewport = new ExtendViewport(640, 480, UICamera);
+		UIViewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, UICamera);
 		UIViewport.apply(true);
 		
 		batch = new SpriteBatch();
@@ -123,7 +123,7 @@ public class PlayScreen implements Screen {
 		debugRenderer = new Box2DDebugRenderer();
 		
 		world = new World(new Vector2(0,0), false);
-		rayHandler = new RayHandler(world, 640 / 8, 480 / 8);
+		rayHandler = new RayHandler(world, Core.WIDTH / 8, Core.HEIGHT / 8);
 	 	rayHandler.setAmbientLight(0.5f);
 	 	
 	 	world.setContactListener(new ContactListener() {
@@ -221,26 +221,27 @@ public class PlayScreen implements Screen {
 		
 		engine.addEntity(Player);
 		UIDraws.Add("FPS", x -> {
-			BitmapFont f = Assets.GetFont("empty");
-			f.draw(x, "FPS : " + Gdx.graphics.getFramesPerSecond(), 30, 480 - 10);
-			f.draw(x, "Health : " + playerChar.health + "/" + playerChar.maxHealth, 30, 480 - 30);
-			f.draw(x, "Energy : " + playerChar.energy + "/" + playerChar.maxEnergy, 30,480 - 50);
-			f.draw(x, "Speed : " + playerChar.speed, 30,480 - 70);
-			f.draw(x, "Armor : " + playerChar.armor, 30,480 - 90);
-			f.draw(x, "Visibility : " + playerChar.visibility, 30,480 - 110);
-			f.draw(x, "Vision : " +  playerChar.vision, 30,480 - 130);
-			f.draw(x, "Health Regen : " + playerChar.healthRegen, 30,480 - 150);
-			f.draw(x, "Energy Regen : " + playerChar.energyRegen, 30,480 - 170);
+			BitmapFont f = Assets.GetFont("fff");
+			f.getData().setScale(0.4f);
+			f.draw(x, "FPS : " + Gdx.graphics.getFramesPerSecond(), 30, Core.HEIGHT - 10);
+			f.draw(x, "Health : " + playerChar.health + "/" + playerChar.maxHealth, 30, Core.HEIGHT - 30);
+			f.draw(x, "Energy : " + playerChar.energy + "/" + playerChar.maxEnergy, 30,Core.HEIGHT - 50);
+			f.draw(x, "Speed : " + playerChar.speed, 30,Core.HEIGHT - 70);
+			f.draw(x, "Armor : " + playerChar.armor, 30,Core.HEIGHT - 90);
+			f.draw(x, "Visibility : " + playerChar.visibility, 30,Core.HEIGHT - 110);
+			f.draw(x, "Vision : " +  playerChar.vision, 30,Core.HEIGHT - 130);
+			f.draw(x, "Health Regen : " + playerChar.healthRegen, 30,Core.HEIGHT - 150);
+			f.draw(x, "Energy Regen : " + playerChar.energyRegen, 30,Core.HEIGHT - 170);
 
 		});
 
-		
+		camera.zoom = Math.max(0.3f, Math.min(0.6f * playerChar.vision, camera.zoom));
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			
 			@Override
 			public boolean scrolled(int amount) {
 				camera.zoom += amount * Core.deltaTime * 3f;
-				camera.zoom = Math.max(0.5f, Math.min(3.6f, camera.zoom));
+				camera.zoom = Math.max(0.3f, Math.min(0.6f * playerChar.vision, camera.zoom));
 				return super.scrolled(amount);
 			}
 			
@@ -309,12 +310,11 @@ public class PlayScreen implements Screen {
 		batch.end();
 		
 		shapeRenderer.end();
+		
 		//debugRenderer.render(world, camera.combined);
-		if(vfxManager.isCapturing()) {
-			vfxManager.endCapture();
-			vfxManager.applyEffects();
-			vfxManager.renderToScreen();
-			}
+		vfxManager.endCapture();
+		vfxManager.applyEffects();
+		vfxManager.renderToScreen();
 		rayHandler.render();
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);

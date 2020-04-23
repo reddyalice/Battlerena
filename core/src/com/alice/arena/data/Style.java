@@ -32,6 +32,7 @@ public abstract class Style {
 	
 	
 	public boolean show = true;
+	public int skillLimit = 3;
 	
 	public HashSet<Skill> styleSkills = new HashSet<Skill>();
 

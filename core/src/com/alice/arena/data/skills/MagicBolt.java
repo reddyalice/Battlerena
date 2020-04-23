@@ -13,8 +13,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class MagicBolt extends Skill {
 
+
+	
 	public MagicBolt() {
-		super("Magic Bolt", new TextureHolder(Assets.GetTexture("icon_magicBolt")), null, 
+		super("Magic Bolt", new TextureHolder(Assets.GetTexture("icon_magicBolt")), new TextureHolder(Assets.GetTexture("magicBolt"), 16, 32), 
 				1, 1f, 20, "Shoot an exploding magic bolt.");
 		// TODO Auto-generated constructor stub
 	}

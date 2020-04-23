@@ -20,6 +20,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -46,7 +47,10 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
+import com.crashinvaders.vfx.effects.VignetteEffect;
+import com.crashinvaders.vfx.effects.OldTvEffect;
 import box2dLight.RayHandler;
 
 
@@ -58,6 +62,12 @@ public class PlayScreen implements Screen {
 	private ExtendViewport viewport;
 	private ExtendViewport UIViewport;
 	private Engine engine;
+   
+	private VfxManager vfxManager;
+    private ChromaticAberrationEffect chromeEffect;
+    private VignetteEffect vignetteEffect;
+	private OldTvEffect oldTVEffect;
+	
 	
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
@@ -101,8 +111,14 @@ public class PlayScreen implements Screen {
 		mapRenderer = new OrthogonalTiledMapRenderer(map, mapScale, batch);
 
 		shapeRenderer = new ShapeRenderer();
-		
-		
+		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+		chromeEffect = new ChromaticAberrationEffect();
+		vignetteEffect = new VignetteEffect(false);
+		chromeEffect.setMaxDistortion(0.1f);
+		oldTVEffect = new OldTvEffect();
+        vfxManager.addEffect(chromeEffect);
+        vfxManager.addEffect(vignetteEffect);
+        //vfxManager.addEffect(oldTVEffect);;
 		shapeRenderer.setAutoShapeType(true);
 		debugRenderer = new Box2DDebugRenderer();
 		
@@ -241,6 +257,8 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		
+
 		Thread[] worldSteps = new Thread[numberOfSteps + 1];
 		for(int i = 0; i < numberOfSteps; i++) {
 		Thread worldT = new Thread(new Runnable() {
@@ -270,11 +288,12 @@ public class PlayScreen implements Screen {
 		worldSteps[numberOfSteps] = rayH;
 		rayH.run();
 		
-		
-
+		vfxManager.cleanUpBuffers();
+		vfxManager.beginCapture();
 		camera.update();
 		mapRenderer.setView(camera);
 		mapRenderer.render();
+		
 		batch.begin();
 		shapeRenderer.begin();
 		
@@ -288,15 +307,23 @@ public class PlayScreen implements Screen {
 		rayHandler.setCombinedMatrix(camera);
 		
 		batch.end();
-		rayHandler.render();
+		
 		shapeRenderer.end();
 		//debugRenderer.render(world, camera.combined);
-		
-		
+		if(vfxManager.isCapturing()) {
+			vfxManager.endCapture();
+			vfxManager.applyEffects();
+			vfxManager.renderToScreen();
+			}
+		rayHandler.render();
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);
 		UIDraws.Broadcast(UIBatch);
 		UIBatch.end();
+		
+		
+		
+		
 		
 		for(Thread worldT : worldSteps)
 		try {
@@ -308,7 +335,7 @@ public class PlayScreen implements Screen {
 		
 		if(change) {
 			this.dispose();
-			Core.instance.setScreen(new SelectScreen());
+			Core.instance.setScreen(new SelectScreenDemo());
 		}
 		
 		
@@ -343,6 +370,10 @@ public class PlayScreen implements Screen {
 	public void dispose() {
 		UIDraws.Dispose();
 		shapeRenderer.dispose();
+		vfxManager.dispose();
+		chromeEffect.dispose();
+		vignetteEffect.dispose();
+		oldTVEffect.dispose();
 		batch.dispose();
 		world.dispose();
 		rayHandler.dispose();

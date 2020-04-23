@@ -1,39 +1,14 @@
 package com.alice.arena;
 
-import java.util.ArrayList;
-
-import com.alice.arena.components.AIComponent;
-import com.alice.arena.components.CharactherComponent;
-import com.alice.arena.components.MPComponent;
-import com.alice.arena.components.PhysicsComponent;
-import com.alice.arena.components.PlayerComponent;
-import com.alice.arena.components.PositionComponent;
-import com.alice.arena.components.VelocityComponent;
-import com.alice.arena.data.Race;
 import com.alice.arena.data.Registry;
-import com.alice.arena.data.Skill;
-import com.alice.arena.data.Style;
-import com.alice.arena.screens.PlayScreen;
-import com.alice.arena.screens.SelectScreen;
+import com.alice.arena.screens.SelectScreenDemo;
 import com.alice.arena.utils.Assets;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-import box2dLight.ConeLight;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
 
 public class Core extends Game {
@@ -51,7 +26,7 @@ public class Core extends Game {
 		Assets.fonts.put("empty", new BitmapFont());
 		System.out.println(Registry.RACES.Human);
 		System.out.println(Registry.STYLES.Warrior);
-		setScreen(new SelectScreen());
+		setScreen(new SelectScreenDemo());
 	}
 
 	@Override

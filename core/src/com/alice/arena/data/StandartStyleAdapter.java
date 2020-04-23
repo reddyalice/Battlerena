@@ -5,6 +5,7 @@ import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.components.VelocityComponent;
 import com.alice.arena.utils.TextureHolder;
+import com.alice.arena.utils.UtilFunctions;
 
 public class StandartStyleAdapter extends Style {
 
@@ -26,15 +27,13 @@ public class StandartStyleAdapter extends Style {
 
 	@Override
 	public void StyleUpdate(CharactherComponent cc, float deltaTime, PositionComponent pc, VelocityComponent vc) {
-		// TODO Auto-generated method stub
-
+		UtilFunctions.StandartStyleAnim(cc, vc, deltaTime);
 	}
 
 	@Override
 	public void StyleAIUpdate(CharactherComponent cc, AIComponent aic, float deltaTime, PositionComponent pc,
 			VelocityComponent vc) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

@@ -31,7 +31,7 @@ public abstract class Race {
 	public float baseEnergyRegen;
 	
 	public boolean show = true;
-	
+	public int skillLimit = 3;
 	
 	
 	

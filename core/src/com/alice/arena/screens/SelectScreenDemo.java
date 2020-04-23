@@ -19,7 +19,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-public class SelectScreen implements Screen {
+public class SelectScreenDemo implements Screen {
 
 	public SpriteBatch batch;
 	public int selectedRace;
@@ -36,7 +36,7 @@ public class SelectScreen implements Screen {
 	int kn = 4;
 	float timeHolder;
 
-	public SelectScreen() {
+	public SelectScreenDemo() {
 		Core.backgroundColor = Color.BLUE;
 		selectionT = Assets.GetTexture("selectionBox");
 		lock = Assets.GetTexture("lock");
@@ -66,7 +66,7 @@ public class SelectScreen implements Screen {
 
 			Race r = Registry.raceList.get(k);
 			if (r.show) {
-				float x = 30 + 3 * 32 * i;
+				float x = 30 + 3 * 32 * (i - selectedRace);
 				float y = 480 - 48 * 3;
 
 				if (ms.x <= x + 32 * 3f && ms.x >= x && ms.y >= y && ms.y <= y + 48 * 3)
@@ -92,7 +92,7 @@ public class SelectScreen implements Screen {
 
 			Style s = Registry.styleList.get(k);
 			if (s.show) {
-				float x = 30 + 3 * 32 * i;
+				float x = 30 + 3 * 32 * (i - selectedStyle);
 				float y = 480 - 48 * 3 * 2;
 
 				if (ms.x <= x + 32 * 3f && ms.x >= x && ms.y >= y && ms.y <= y + 48 * 3)

@@ -1,12 +1,10 @@
 package com.alice.arena.utils;
 
-import com.alice.arena.Core;
 import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PhysicsComponent;
 import com.alice.arena.data.Registry;
 import com.alice.arena.screens.PlayScreen;
-import com.alice.arena.screens.SelectScreen;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;

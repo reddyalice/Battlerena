@@ -62,6 +62,10 @@ public class SelectScreen implements Screen {
 	private int scale = 4;
 	private int regionPointer = 0; 
 	float timeHolder;
+	
+	private int sLimit;
+	private int rLimit;
+	
 
 	public SelectScreen() {
 		Core.backgroundColor = Color.BLACK;
@@ -128,22 +132,31 @@ public class SelectScreen implements Screen {
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
 			if(down) {
-				if(selectedStyleIndex < styles.size() - 1)
+				if(selectedStyleIndex < styles.size() - 1) {
 					selectedStyleIndex++;
+					styleSkills = new HashSet<Skill>();
+					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
+						styleSkills.add(k);
+					
+				}
 			}
 			else {
-				if(selectedRaceIndex < races.size() - 1)
+				if(selectedRaceIndex < races.size() - 1) {
 					selectedRaceIndex++;
+				}
 			}	
 		
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT))
 			if(down) {
-				if(selectedStyleIndex > 0)
+				if(selectedStyleIndex > 0) {
 					selectedStyleIndex--;
+				}
 			}else {
 				if(selectedRaceIndex > 0)
+				{
 					selectedRaceIndex--;
+				}
 			}
 		
 		
@@ -205,9 +218,9 @@ public class SelectScreen implements Screen {
 		font.draw(batch, races.get(selectedRaceIndex).name + " " + styles.get(selectedStyleIndex).name, 32 ,  Core.HEIGHT - 48 * scale -  38 *scale - 32f);
 		
 		if(down) {
-			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale -  38 *scale, 32 * scale, 42 * scale);
+			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale -  38 *scale - 15f, 32 * scale, 42 * scale);
 		}else {
-			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale , 32 * scale, 42 * scale);
+			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale -15f , 32 * scale, 42 * scale);
 		}
 		
 		

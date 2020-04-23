@@ -29,6 +29,7 @@ public class Registry {
 		public static final Skill CallAid = new CallAid();
 		public static final Skill Stab = new Stab();
 		public static final Skill Undying = new Undying();
+		public static final Skill MagicBolt = new MagicBolt();
 	}
 	
 	public static class RACES{

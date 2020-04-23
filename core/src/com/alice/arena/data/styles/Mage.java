@@ -18,7 +18,7 @@ public class Mage extends StandartStyleAdapter {
 		super(2, "Mage", new TextureHolder(Assets.GetTexture("mage"), 16, 24), 32, 48, 
 				-30, 20, -10, 0,
 				-10, 20, 50, 15, 20,
-				Registry.SKILLS.ShootArrow);
+				Registry.SKILLS.MagicBolt);
 		// TODO Auto-generated constructor stub
 	}
 

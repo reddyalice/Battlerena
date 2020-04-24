@@ -1,5 +1,7 @@
 package com.alice.arena;
 
+import javax.swing.JFrame;
+
 import com.alice.arena.data.Registry;
 import com.alice.arena.screens.SelectScreen;
 import com.alice.arena.screens.SelectScreenDemo;
@@ -19,6 +21,12 @@ public class Core extends Game {
 	public static Account account;
 	public static float deltaTime = 1f/60f;
 	public static int WIDTH = 1024, HEIGHT = 768;
+	
+	private JFrame launcher;
+	
+	public Core(JFrame launcher) {
+		this.launcher = launcher;
+	}
 	
 	@Override
 	public void create () {
@@ -45,6 +53,7 @@ public class Core extends Game {
 	public void dispose () {
 		Assets.Dispose();
 		super.dispose();
+		launcher.dispose();
 	}
 	
 

@@ -22,16 +22,10 @@ public class Core extends Game {
 	public static float deltaTime = 1f/60f;
 	public static int WIDTH = 1024, HEIGHT = 768;
 	
-	private JFrame launcher;
-	
-	public Core(JFrame launcher) {
-		this.launcher = launcher;
-	}
 	
 	@Override
 	public void create () {
 		instance = this;
-		
 		Assets.fonts.put("empty", new BitmapFont());
 		Gdx.app.log("Init", "Loading " + Registry.RACES.Human);
 		Gdx.app.log("Init", "Loading " + Registry.STYLES.Warrior);
@@ -53,7 +47,6 @@ public class Core extends Game {
 	public void dispose () {
 		Assets.Dispose();
 		super.dispose();
-		launcher.dispose();
 	}
 	
 

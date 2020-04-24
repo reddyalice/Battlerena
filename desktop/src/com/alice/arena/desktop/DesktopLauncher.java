@@ -36,7 +36,8 @@ public class DesktopLauncher {
 				config.setWindowedMode(Core.WIDTH, Core.HEIGHT);
 				config.useVsync(window.chckbxVsync.isSelected());
 				window.frame.setVisible(false);
-				new Lwjgl3Application(new Core(window.frame), config);
+				window.frame.dispose();
+				new Lwjgl3Application(new Core(), config);
 				
 			}
 		});

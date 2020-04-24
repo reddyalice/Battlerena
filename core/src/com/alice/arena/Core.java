@@ -23,10 +23,11 @@ public class Core extends Game {
 	@Override
 	public void create () {
 		instance = this;
-		account = new Account("Player");
+		
 		Assets.fonts.put("empty", new BitmapFont());
 		Gdx.app.log("Init", "Loading " + Registry.RACES.Human);
 		Gdx.app.log("Init", "Loading " + Registry.STYLES.Warrior);
+		account = new Account("Player");
 		setScreen(new SelectScreen());
 	}
 

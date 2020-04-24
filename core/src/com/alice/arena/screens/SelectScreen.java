@@ -38,6 +38,7 @@ public class SelectScreen implements Screen {
 	private Texture skillSocket;
 	private Texture holder;
 	private Texture indic;
+	private Texture lock;
 	private BitmapFont font;
 	
 	
@@ -59,7 +60,7 @@ public class SelectScreen implements Screen {
 	private ExtendViewport viewport;
 	private OrthographicCamera camera;
 	
-	private int scale = 4;
+	private float scale = 5;
 	private int regionPointer = 0; 
 	float timeHolder;
 	
@@ -73,7 +74,7 @@ public class SelectScreen implements Screen {
 		holder = Assets.GetTexture("holder"); 
 		indic = Assets.GetTexture("indic");
 		font = Assets.GetFont("fff");
-		
+		lock = Assets.GetTexture("lock");
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
@@ -87,7 +88,7 @@ public class SelectScreen implements Screen {
         vfxManager.addEffect(chromeEffect);
         vfxManager.addEffect(vignetteEffect);
         vfxManager.addEffect(oldTVEffect);;
-		
+		scale *= ((float)Core.WIDTH / 1024f);
 
 		for(int key : Registry.raceList.keySet()) 
 			if(Registry.raceList.get(key).show)
@@ -95,6 +96,16 @@ public class SelectScreen implements Screen {
 		for(int key : Registry.styleList.keySet()) 
 			if(Registry.styleList.get(key).show)
 				styles.add(Registry.styleList.get(key));
+		
+		styleSkills = new HashSet<Skill>();
+		sLimit = styles.get(selectedStyleIndex).skillLimit;
+		for(Skill k : styles.get(selectedStyleIndex).styleSkills)
+			styleSkills.add(k);
+		
+		raceSkills = new HashSet<Skill>();
+		rLimit = races.get(selectedRaceIndex).skillLimit;
+		for(Skill k : races.get(selectedRaceIndex).raceSkills)
+			raceSkills.add(k);
 		
 		
 	}
@@ -135,6 +146,7 @@ public class SelectScreen implements Screen {
 				if(selectedStyleIndex < styles.size() - 1) {
 					selectedStyleIndex++;
 					styleSkills = new HashSet<Skill>();
+					sLimit = styles.get(selectedStyleIndex).skillLimit;
 					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 						styleSkills.add(k);
 					
@@ -143,6 +155,10 @@ public class SelectScreen implements Screen {
 			else {
 				if(selectedRaceIndex < races.size() - 1) {
 					selectedRaceIndex++;
+					raceSkills = new HashSet<Skill>();
+					rLimit = races.get(selectedRaceIndex).skillLimit;
+					for(Skill k : races.get(selectedRaceIndex).raceSkills)
+						raceSkills.add(k);
 				}
 			}	
 		
@@ -151,11 +167,20 @@ public class SelectScreen implements Screen {
 			if(down) {
 				if(selectedStyleIndex > 0) {
 					selectedStyleIndex--;
+					styleSkills = new HashSet<Skill>();
+					sLimit = styles.get(selectedStyleIndex).skillLimit;
+					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
+						styleSkills.add(k);
 				}
 			}else {
 				if(selectedRaceIndex > 0)
 				{
 					selectedRaceIndex--;
+					raceSkills = new HashSet<Skill>();
+					rLimit = races.get(selectedRaceIndex).skillLimit;
+					for(Skill k : races.get(selectedRaceIndex).raceSkills)
+						raceSkills.add(k);
+					
 				}
 			}
 		
@@ -176,13 +201,17 @@ public class SelectScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		batch.setColor(Color.WHITE);
-		batch.draw(holder, 0, Core.HEIGHT - 38 *scale - (50), (32 * scale * 6f), 38 * scale);
-		batch.draw(holder, 0, Core.HEIGHT - 38 *scale * 2f - (50), (32 * scale * 6f), 38 * scale);
+		
+		float offset = (Core.WIDTH - (32 * scale * 6f)) / 2f;
+		
+		
+		batch.draw(holder, offset, Core.HEIGHT - 38 *scale - (50), (32 * scale * 6f), 38 * scale);
+		batch.draw(holder, offset, Core.HEIGHT - 38 *scale * 2f - (50), (32 * scale * 6f), 38 * scale);
 		
 		for(int i = 0; i < races.size(); i++) {
 			Race r  = races.get(i);
 		
-			float x = 32 * scale * 2.5f + scale * 32 * (i - selectedRaceIndex);
+			float x = 32 * scale * 2.5f + scale * 32 * (i - selectedRaceIndex) + offset;
 			float y = Core.HEIGHT - 48 * scale;
 			
 			
@@ -191,7 +220,7 @@ public class SelectScreen implements Screen {
 			if(dist < 3) {
 				
 				//batch.setColor(1,1,1,  (3f - dist) / 3f);
-				r.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f), 32 * scale,  48 * scale, i == selectedRaceIndex ? regionPointer : 0, false, false, 0);
+				r.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f),  (int)(32f * scale),  (int)(48 * scale), i == selectedRaceIndex ? regionPointer : 0, false, false, 0);
 			}
 		}
 		
@@ -200,7 +229,7 @@ public class SelectScreen implements Screen {
 			Race r  = races.get(selectedRaceIndex);
 			Style s = styles.get(i);
 		
-			float x = 32 * scale * 2.5f + scale * 32 * (i - selectedStyleIndex);
+			float x = 32 * scale * 2.5f + scale * 32 * (i - selectedStyleIndex) + offset;
 			float y = Core.HEIGHT - 48 * scale -  38 *scale;
 			
 			
@@ -210,18 +239,66 @@ public class SelectScreen implements Screen {
 				
 				//batch.setColor(1,1,1,  (3f - dist) / 3f);
 				
-				r.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f), 32 * scale,  48 * scale, i == selectedStyleIndex ? regionPointer : 0, false, false, 0);
-				s.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f), 32 * scale,  48 * scale,  i == selectedStyleIndex ? regionPointer : 0, false, false, 0);
+				r.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f),  (int)(32f * scale),  (int)(48 * scale), i == selectedStyleIndex ? regionPointer : 0, false, false, 0);
+				s.texture.Draw(batch, x, y, (32 * scale / 2f) , (48 * scale / 2f), (int)(32f * scale),  (int)(48 * scale),  i == selectedStyleIndex ? regionPointer : 0, false, false, 0);
 			}
 		}
-		
+		font.getData().setScale(scale / 5f);
 		font.draw(batch, races.get(selectedRaceIndex).name + " " + styles.get(selectedStyleIndex).name, 32 ,  Core.HEIGHT - 48 * scale -  38 *scale - 32f);
 		
 		if(down) {
-			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale -  38 *scale - 15f, 32 * scale, 42 * scale);
+			batch.draw(indic, 32 * scale * 2.5f + offset, Core.HEIGHT - 48 * scale -  38 *scale - 15f, 32 * scale, 42 * scale);
 		}else {
-			batch.draw(indic, 32 * scale * 2.5f, Core.HEIGHT - 48 * scale -15f , 32 * scale, 42 * scale);
+			batch.draw(indic, 32 * scale * 2.5f + offset, Core.HEIGHT - 48 * scale -15f , 32 * scale, 42 * scale);
 		}
+		
+		
+		for(int i = 0; i < sLimit; i++) {
+			float x =  Core.WIDTH - 38 * 2 - 32 - 38 * 2 * i;
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 5;
+			batch.draw(skillSocket, x, y, 38 * 2, 38 * 2);
+		}
+		
+
+		for(int i = 0; i < rLimit; i++) {
+			float x =  Core.WIDTH - 38 * 2 - 32 - 38 * 2 * i;
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 8;
+			batch.draw(skillSocket, x, y, 38 * 2, 38 * 2);
+		}
+		
+		
+		
+		int i = 0;
+		for(Skill rc : raceSkills) {
+			
+			float x =  32 + 38 * 2 * (scale / 5f) * i;
+			float y = Core.HEIGHT - 48 * scale - 38 * scale * 2;
+			
+			batch.draw(skillSocket, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
+			rc.iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
+			if(rc.level > Core.account.raceLevels.get(races.get(selectedRaceIndex).id))
+				batch.draw(lock, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
+			
+			i++;
+			
+		}
+		
+		i = 0;
+		for(Skill rc : styleSkills) {
+			
+			float x =  32 + 38 * 2 * (scale / 5f) * i;
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 8 * (scale / 5f);
+			
+			batch.draw(skillSocket, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
+			rc.iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
+			if(rc.level > Core.account.styleLevels.get(styles.get(selectedStyleIndex).id))
+				batch.draw(lock, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
+			
+			i++;
+			
+		}
+		
+		
 		
 		
 		batch.end();

@@ -14,7 +14,7 @@ import com.alice.arena.Core;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-		Launcher window = new Launcher();
+		//Launcher window = new Launcher();
 		
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 	//	window.frame.setTitle("Battlerena");
@@ -34,9 +34,10 @@ public class DesktopLauncher {
 				
 				config.setTitle("Battlerena: Maybe a game?");
 				config.setWindowedMode(Core.WIDTH, Core.HEIGHT);
-				config.useVsync(false);//window.chckbxVsync.isSelected());
-				window.frame.setVisible(false);
-				window.frame.dispose();
+				config.useVsync(true);//window.chckbxVsync.isSelected());
+				config.setIdleFPS(60);
+				//window.frame.setVisible(false);
+				//window.frame.dispose();
 				new Lwjgl3Application(new Core(), config);
 				
 	//		}

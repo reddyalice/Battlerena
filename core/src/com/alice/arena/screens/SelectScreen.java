@@ -345,7 +345,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 							if(Gdx.input.isButtonJustPressed(0)) {
 								holderSkill = selectedStyleSkills[i];
 								selectedStyleSkills[i] = null;
-								rS = true;	
+								rS = false;	
 							}
 						}
 						
@@ -369,7 +369,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 							if(Gdx.input.isButtonJustPressed(0)) {
 								holderSkill = selectedRaceSkills[i];
 								 selectedRaceSkills[i] = null;
-								rS = false;	
+								rS = true;	
 							}
 						}
 						

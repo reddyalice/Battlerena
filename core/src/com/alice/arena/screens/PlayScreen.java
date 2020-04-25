@@ -107,7 +107,7 @@ public class PlayScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		UIBatch = new SpriteBatch();
-		TiledMap map = Assets.GetMap("dungeon");
+		TiledMap map = Assets.GetMap("map1");
 		mapRenderer = new OrthogonalTiledMapRenderer(map, mapScale, batch);
 
 		shapeRenderer = new ShapeRenderer();
@@ -194,9 +194,9 @@ public class PlayScreen implements Screen {
 		RectangleMapObject playerSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("playerSpawn");
 		
 		
-		Entity[] ais = new Entity[4];
+		Entity[] ais = new Entity[3];
 		
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 3; i++) {
 			RectangleMapObject aiSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("ai" + (i + 1));
 			ais[i] = Builder.SpawnRandomAICharacther(rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, "test");
 		}

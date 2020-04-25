@@ -336,7 +336,7 @@ public class PlayScreen implements Screen {
 		
 		if(change) {
 			this.dispose();
-			Core.instance.setScreen(new SelectScreenDemo());
+			Core.instance.setScreen(new SelectScreen());
 		}
 		
 		

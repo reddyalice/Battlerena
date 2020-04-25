@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 
 import com.alice.arena.data.Registry;
 import com.alice.arena.screens.SelectScreen;
-import com.alice.arena.screens.SelectScreenDemo;
 import com.alice.arena.utils.Assets;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

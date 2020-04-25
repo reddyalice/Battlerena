@@ -219,7 +219,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 					selectedStyleSkills = new Skill[sLimit];
 					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 						styleSkills.add(k);
-					
+					holderSkill = null;
 				}
 			}
 			else {
@@ -230,6 +230,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 					selectedRaceSkills = new Skill[rLimit];
 					for(Skill k : races.get(selectedRaceIndex).raceSkills)
 						raceSkills.add(k);
+					holderSkill = null;
 				}
 			}	
 		
@@ -243,6 +244,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 					selectedStyleSkills = new Skill[sLimit];
 					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 						styleSkills.add(k);
+					holderSkill = null;
 				}
 			}else {
 				if(selectedRaceIndex > 0)
@@ -253,7 +255,7 @@ if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 					selectedRaceSkills = new Skill[rLimit];
 					for(Skill k : races.get(selectedRaceIndex).raceSkills)
 						raceSkills.add(k);
-					
+					holderSkill = null;
 				}
 			}
 		

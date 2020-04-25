@@ -116,7 +116,7 @@ public class PlayScreen implements Screen {
 		vignetteEffect = new VignetteEffect(false);
 		chromeEffect.setMaxDistortion(0.1f);
 		oldTVEffect = new OldTvEffect();
-        vfxManager.addEffect(chromeEffect);
+        //vfxManager.addEffect(chromeEffect);
         vfxManager.addEffect(vignetteEffect);
         //vfxManager.addEffect(oldTVEffect);;
 		shapeRenderer.setAutoShapeType(true);

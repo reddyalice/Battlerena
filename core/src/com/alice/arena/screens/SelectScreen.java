@@ -89,7 +89,7 @@ public class SelectScreen implements Screen {
 		vignetteEffect = new VignetteEffect(false);
 		chromeEffect.setMaxDistortion(0.1f);
 		oldTVEffect = new OldTvEffect();
-        vfxManager.addEffect(chromeEffect);
+        //vfxManager.addEffect(chromeEffect);
         vfxManager.addEffect(vignetteEffect);
         vfxManager.addEffect(oldTVEffect);;
 		scale *= ((float)Core.WIDTH / 1024f);

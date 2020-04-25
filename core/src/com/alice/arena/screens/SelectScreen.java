@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
@@ -39,6 +40,7 @@ public class SelectScreen implements Screen {
 	private Texture holder;
 	private Texture indic;
 	private Texture lock;
+	private Texture dotdot;
 	private BitmapFont font;
 	
 	
@@ -49,20 +51,21 @@ public class SelectScreen implements Screen {
 	private int selectedRaceIndex = 0;
 	private int selectedStyleIndex = 0;
 	private boolean down = false;
+	private boolean rS = false;
 	
 	private HashSet<Skill> raceSkills = new HashSet<Skill>();
 	private HashSet<Skill> styleSkills = new HashSet<Skill>();
 	
-	private HashSet<Skill> selectedRaceSkills = new HashSet<Skill>();
-	private HashSet<Skill> selectedStyleSkills = new HashSet<Skill>();
-	
+	private Skill[] selectedRaceSkills = new Skill[3];
+	private Skill[] selectedStyleSkills = new Skill[3];
+	private Skill holderSkill = null;
 	
 	private ExtendViewport viewport;
 	private OrthographicCamera camera;
 	
 	private float scale = 5;
 	private int regionPointer = 0; 
-	float timeHolder;
+	private float timeHolder;
 	
 	private int sLimit;
 	private int rLimit;
@@ -75,6 +78,7 @@ public class SelectScreen implements Screen {
 		indic = Assets.GetTexture("indic");
 		font = Assets.GetFont("fff");
 		lock = Assets.GetTexture("lock");
+		dotdot = Assets.GetTexture("dotdot");
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
@@ -99,11 +103,13 @@ public class SelectScreen implements Screen {
 		
 		styleSkills = new HashSet<Skill>();
 		sLimit = styles.get(selectedStyleIndex).skillLimit;
+		selectedStyleSkills = new Skill[sLimit];
 		for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 			styleSkills.add(k);
 		
 		raceSkills = new HashSet<Skill>();
 		rLimit = races.get(selectedRaceIndex).skillLimit;
+		selectedRaceSkills = new Skill[rLimit];
 		for(Skill k : races.get(selectedRaceIndex).raceSkills)
 			raceSkills.add(k);
 		
@@ -128,6 +134,9 @@ public class SelectScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		Vector2 mousePosition = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+		
+		
 		if(races.isEmpty() || styles.isEmpty())
 		{
 			for(int key : Registry.raceList.keySet()) 
@@ -147,6 +156,7 @@ public class SelectScreen implements Screen {
 					selectedStyleIndex++;
 					styleSkills = new HashSet<Skill>();
 					sLimit = styles.get(selectedStyleIndex).skillLimit;
+					selectedStyleSkills = new Skill[sLimit];
 					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 						styleSkills.add(k);
 					
@@ -157,6 +167,7 @@ public class SelectScreen implements Screen {
 					selectedRaceIndex++;
 					raceSkills = new HashSet<Skill>();
 					rLimit = races.get(selectedRaceIndex).skillLimit;
+					selectedRaceSkills = new Skill[rLimit];
 					for(Skill k : races.get(selectedRaceIndex).raceSkills)
 						raceSkills.add(k);
 				}
@@ -169,6 +180,7 @@ public class SelectScreen implements Screen {
 					selectedStyleIndex--;
 					styleSkills = new HashSet<Skill>();
 					sLimit = styles.get(selectedStyleIndex).skillLimit;
+					selectedStyleSkills = new Skill[sLimit];
 					for(Skill k : styles.get(selectedStyleIndex).styleSkills)
 						styleSkills.add(k);
 				}
@@ -178,6 +190,7 @@ public class SelectScreen implements Screen {
 					selectedRaceIndex--;
 					raceSkills = new HashSet<Skill>();
 					rLimit = races.get(selectedRaceIndex).skillLimit;
+					selectedRaceSkills = new Skill[rLimit];
 					for(Skill k : races.get(selectedRaceIndex).raceSkills)
 						raceSkills.add(k);
 					
@@ -255,15 +268,52 @@ public class SelectScreen implements Screen {
 		
 		for(int i = 0; i < sLimit; i++) {
 			float x =  Core.WIDTH - 38 * 2 - 32 - 38 * 2 * i;
-			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 5;
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 8;
+			
+			
+			
 			batch.draw(skillSocket, x, y, 38 * 2, 38 * 2);
+			if(selectedStyleSkills[i] != null) {
+				selectedStyleSkills[i].iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
+				if(mousePosition.x > x + 6f && mousePosition.x < x + 6f + (int)(64 * scale / 5f))
+				{
+					if(mousePosition.y > y + 6f && mousePosition.y < y + 6f + (int)(64 * scale / 5f)) {
+						
+						if(holderSkill == null) {	
+							if(Gdx.input.isButtonJustPressed(0)) {
+								holderSkill = selectedStyleSkills[i];
+								selectedStyleSkills[i] = null;
+								rS = true;	
+							}
+						}
+						
+					}
+				}
+			}
 		}
 		
 
 		for(int i = 0; i < rLimit; i++) {
 			float x =  Core.WIDTH - 38 * 2 - 32 - 38 * 2 * i;
-			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 8;
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * 5;
 			batch.draw(skillSocket, x, y, 38 * 2, 38 * 2);
+			if(selectedRaceSkills[i] != null) {
+				selectedRaceSkills[i].iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
+				if(mousePosition.x > x + 6f && mousePosition.x < x + 6f + (int)(64 * scale / 5f))
+				{
+					if(mousePosition.y > y + 6f && mousePosition.y < y + 6f + (int)(64 * scale / 5f)) {
+						
+						if(holderSkill == null) {	
+							if(Gdx.input.isButtonJustPressed(0)) {
+								holderSkill = selectedRaceSkills[i];
+								 selectedRaceSkills[i] = null;
+								rS = false;	
+							}
+						}
+						
+					}
+				}
+			}
 		}
 		
 		
@@ -276,8 +326,22 @@ public class SelectScreen implements Screen {
 			
 			batch.draw(skillSocket, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
 			rc.iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
-			if(rc.level > Core.account.raceLevels.get(races.get(selectedRaceIndex).id))
+			if(rc.level > Core.account.raceLevels.get(races.get(selectedRaceIndex).id)) {
 				batch.draw(lock, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
+			}
+			else {
+				if(mousePosition.x > x + 6f && mousePosition.x < x + 6f + (int)(64 * scale / 5f))
+				{
+					if(mousePosition.y > y + 6f && mousePosition.y < y + 6f + (int)(64 * scale / 5f)) {
+						if(holderSkill == null) {	
+							if(Gdx.input.isButtonJustPressed(0)) {
+								holderSkill = rc;
+								rS = true;	
+							}
+						}
+					}
+				}
+			}
 			
 			i++;
 			
@@ -291,14 +355,88 @@ public class SelectScreen implements Screen {
 			
 			batch.draw(skillSocket, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
 			rc.iconTexture.Draw(batch, x + 6f, y + 6f, 32 * scale / 5f, 32 * scale / 5f, (int)(64 * scale / 5f), (int)(64 * scale / 5f), 0, false, false, 0);
-			if(rc.level > Core.account.styleLevels.get(styles.get(selectedStyleIndex).id))
+			if(rc.level > Core.account.styleLevels.get(styles.get(selectedStyleIndex).id)) {
 				batch.draw(lock, x, y, (38 * 2f  * scale / 5f), (38 * 2f * scale / 5f));
-			
+			}else {
+				if(mousePosition.x > x + 6f && mousePosition.x < x + 6f + (int)(64 * scale / 5f))
+				{
+					if(mousePosition.y > y + 6f && mousePosition.y < y + 6f + (int)(64 * scale / 5f)) {
+						
+						if(holderSkill == null) {	
+							if(Gdx.input.isButtonJustPressed(0)) {
+								holderSkill = rc;
+								rS = false;	
+							}
+						}
+					}
+				}
+			}
 			i++;
 			
 		}
 		
-		
+		if(holderSkill != null) {
+			
+			float x =  Core.WIDTH - 38 * 2 - 32 - 38 * 2 * ((rS ? rLimit : sLimit) - 1);
+			float width = 38 * 2 * (rS ? rLimit : sLimit);
+			float height = 38 * 2;
+			
+			float y = Core.HEIGHT - 48 * scale -  38 *scale - 38 * ( rS ? 5 : 8);
+			if(!Gdx.input.isButtonPressed(0)) {
+				if(mousePosition.x > x && mousePosition.x < x + width && mousePosition.y > y && mousePosition.y < y + height) {
+					if(rS)
+					{
+						boolean con = true;
+						for(int j = 0; j < rLimit; j++) {
+							if(selectedRaceSkills[j] == holderSkill) {
+								con = false;
+								break;
+							}
+						}
+						
+						if(con) {
+							for(int j = 0; j < rLimit; j++) {
+								if(selectedRaceSkills[j] == null) {
+									selectedRaceSkills[j] = holderSkill;
+									break;
+								}
+							}
+						}
+						holderSkill = null;
+						
+						
+					}else {
+						boolean con = true;
+						for(int j = 0; j < sLimit; j++) {
+							if(selectedStyleSkills[j] == holderSkill) {
+								con = false;
+								break;
+							}
+						}
+						
+						if(con) {
+							for(int j = 0; j < sLimit; j++) {
+								if(selectedStyleSkills[j] == null) {
+									selectedStyleSkills[j] = holderSkill;
+									break;
+								}
+							}
+						}
+						holderSkill = null;
+					}
+				}
+				else {
+					holderSkill = null;
+				}
+			}else {
+				holderSkill.iconTexture.Draw(batch, mousePosition.x -  34 * scale / 5f, mousePosition.y -  34 * scale / 5f, 34 * scale / 5f, 34 * scale / 5f, (int)(68 * scale / 5f), (int)(68 * scale / 5f), 0, false, false, 0);
+				batch.draw(dotdot, mousePosition.x -  40 * scale / 5f, mousePosition.y -  40 * scale / 5f, (int)(80 * scale / 5f), (int)(80 * scale / 5f) );
+				font.getData().setScale(scale / 5f * 0.5f);
+				font.draw(batch, holderSkill.name,mousePosition.x + 50 * scale / 5f, mousePosition.y +  25f * scale / 5f );
+				font.getData().setScale(scale / 5f * 0.25f);
+				font.draw(batch, holderSkill.description,  mousePosition.x + 50 * scale / 5f , mousePosition.y -  15f * scale / 5f);
+			}
+		}
 		
 		
 		batch.end();

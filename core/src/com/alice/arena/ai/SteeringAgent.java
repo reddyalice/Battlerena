@@ -216,7 +216,7 @@ public class SteeringAgent extends SteerableAdapter<Vector2>{
 		@Override
 		public float getMaxLinearSpeed() {
 			// TODO Auto-generated method stub
-			return 25f * cc.speed;
+			return 25f * cc.speed * 0.7f;
 		}
 		
 		@Override

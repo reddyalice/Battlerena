@@ -90,8 +90,8 @@ public class SelectScreen implements Screen {
 		chromeEffect.setMaxDistortion(0.1f);
 		oldTVEffect = new OldTvEffect();
         //vfxManager.addEffect(chromeEffect);
-        vfxManager.addEffect(vignetteEffect);
-        vfxManager.addEffect(oldTVEffect);;
+        //vfxManager.addEffect(vignetteEffect);
+        //vfxManager.addEffect(oldTVEffect);;
 		scale *= ((float)Core.WIDTH / 1024f);
 
 		for(int key : Registry.raceList.keySet()) 
@@ -131,11 +131,28 @@ public class SelectScreen implements Screen {
 
 	}
 
+	
+	Race tmp;
 	@Override
 	public void render(float delta) {
 		
+		if(tmp != races.get(selectedRaceIndex)) {
+			if(races.get(selectedRaceIndex) == Registry.RACES.Glitch) {	
+				vfxManager.addEffect(chromeEffect);
+	        	vfxManager.addEffect(vignetteEffect);
+	        	vfxManager.addEffect(oldTVEffect);;
+			
+			}else {
+				vfxManager.removeAllEffects();
+			}
+		}
 		
-if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+		tmp = races.get(selectedRaceIndex);
+		
+		
+		
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			
 			
 			boolean con = false;

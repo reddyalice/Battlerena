@@ -3,6 +3,8 @@ package com.alice.arena.screens;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.lwjgl.Version.BuildType;
+
 import com.alice.arena.Core;
 import com.alice.arena.data.Race;
 import com.alice.arena.data.Registry;
@@ -25,7 +27,7 @@ import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
 import com.crashinvaders.vfx.effects.OldTvEffect;
 import com.crashinvaders.vfx.effects.VignetteEffect;
-
+import com.crashinvaders.vfx.effects.BloomEffect;
 public class SelectScreen implements Screen {
 	
 	private SpriteBatch batch;
@@ -34,7 +36,7 @@ public class SelectScreen implements Screen {
     private ChromaticAberrationEffect chromeEffect;
     private VignetteEffect vignetteEffect;
 	private OldTvEffect oldTVEffect;
-	
+	private BloomEffect bloom;
 	
 	private Texture skillSocket;
 	private Texture holder;
@@ -89,6 +91,7 @@ public class SelectScreen implements Screen {
 		vignetteEffect = new VignetteEffect(false);
 		chromeEffect.setMaxDistortion(0.1f);
 		oldTVEffect = new OldTvEffect();
+		bloom = new BloomEffect(Pixmap.Format.RGBA8888);
         //vfxManager.addEffect(chromeEffect);
         //vfxManager.addEffect(vignetteEffect);
         //vfxManager.addEffect(oldTVEffect);;
@@ -138,11 +141,21 @@ public class SelectScreen implements Screen {
 		
 		if(tmp != races.get(selectedRaceIndex)) {
 			if(races.get(selectedRaceIndex) == Registry.RACES.Glitch) {	
+				vfxManager.removeAllEffects();
 				vfxManager.addEffect(chromeEffect);
 	        	vfxManager.addEffect(vignetteEffect);
 	        	vfxManager.addEffect(oldTVEffect);;
 			
-			}else {
+			}else if(races.get(selectedRaceIndex) == Registry.RACES.Elf) {
+				vfxManager.removeAllEffects();
+				vfxManager.addEffect(bloom);
+			}
+			
+			
+			else {
+				
+				
+				
 				vfxManager.removeAllEffects();
 			}
 		}
@@ -562,6 +575,7 @@ public class SelectScreen implements Screen {
 	public void dispose() {
 		
 		batch.dispose();
+		bloom.dispose();
 		vfxManager.dispose();
 		chromeEffect.dispose();
 		vignetteEffect.dispose();

@@ -3,6 +3,7 @@ package com.alice.arena.screens;
 import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.data.Race;
+import com.alice.arena.data.Registry;
 import com.alice.arena.data.Skill;
 import com.alice.arena.data.Style;
 import com.alice.arena.systems.AIUpdateSystem;
@@ -48,6 +49,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
 import com.crashinvaders.vfx.effects.VignetteEffect;
 import com.crashinvaders.vfx.effects.OldTvEffect;
@@ -67,7 +69,8 @@ public class PlayScreen implements Screen {
     private ChromaticAberrationEffect chromeEffect;
     private VignetteEffect vignetteEffect;
 	private OldTvEffect oldTVEffect;
-	
+	private BloomEffect bloom;
+
 	
 	public static Entity Player; 
 	public static CharactherComponent playerChar;
@@ -116,6 +119,7 @@ public class PlayScreen implements Screen {
 		vignetteEffect = new VignetteEffect(false);
 		chromeEffect.setMaxDistortion(0.1f);
 		oldTVEffect = new OldTvEffect();
+		bloom = new BloomEffect(Pixmap.Format.RGBA8888);
 		//vfxManager.addEffect(chromeEffect);
         //vfxManager.addEffect(vignetteEffect);
         //vfxManager.addEffect(oldTVEffect);;
@@ -234,6 +238,26 @@ public class PlayScreen implements Screen {
 			f.draw(x, "Energy Regen : " + playerChar.energyRegen, 30,Core.HEIGHT - 170);
 
 		});
+		
+		
+		if(playerChar.race == Registry.RACES.Glitch) {	
+			vfxManager.removeAllEffects();
+			vfxManager.addEffect(chromeEffect);
+        	vfxManager.addEffect(vignetteEffect);
+        	vfxManager.addEffect(oldTVEffect);;
+		
+		}else if(playerChar.race == Registry.RACES.Elf) {
+			vfxManager.removeAllEffects();
+			vfxManager.addEffect(bloom);
+		}
+		
+		
+		else {
+			
+			
+			
+			vfxManager.removeAllEffects();
+		}
 
 		camera.zoom = Math.max(0.3f, Math.min(0.6f * playerChar.vision, camera.zoom));
 		Gdx.input.setInputProcessor(new InputAdapter() {
@@ -376,6 +400,7 @@ public class PlayScreen implements Screen {
 		chromeEffect.dispose();
 		vignetteEffect.dispose();
 		oldTVEffect.dispose();
+		bloom.dispose();
 		batch.dispose();
 		world.dispose();
 		rayHandler.dispose();

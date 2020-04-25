@@ -315,6 +315,7 @@ public class PlayScreen implements Screen {
 		vfxManager.endCapture();
 		vfxManager.applyEffects();
 		vfxManager.renderToScreen();
+		
 		rayHandler.render();
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);

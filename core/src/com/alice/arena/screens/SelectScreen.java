@@ -134,7 +134,67 @@ public class SelectScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		
+if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			
+			
+			boolean con = false;
+			for(int j = 0; j < sLimit; j++) {
+				
+				if(selectedStyleSkills[j] != null) {
+					con = true;
+					break;
+				}
+				
+			}
+			
+			if(!con) {
+				for(int j = 0; j < rLimit; j++) {
+					
+					if(selectedRaceSkills[j] != null) {
+						con = true;
+						break;
+					}
+					
+				}
+			}
+			
+			
+			
+			if(con) {
+			
+			ArrayList<Skill> skills = new ArrayList<Skill>();
+			
+				for(int j = 0; j < sLimit + rLimit; j++) {
+				
+					if(j < sLimit) {
+						if( selectedStyleSkills[j] != null)
+						skills.add(selectedStyleSkills[j]);
+						
+						
+					}else {
+						
+					
+						if( selectedRaceSkills[j - sLimit] != null)
+							skills.add(selectedRaceSkills[j - sLimit]);
+						
+					}
+
+				}
+				
+				Core.instance.setScreen(new PlayScreen(races.get(selectedRaceIndex), styles.get(selectedStyleIndex), skills.toArray(new Skill[0])));
+				
+				
+			}
+			
+			
+			
+		}
+		
 		Vector2 mousePosition = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+		
+		
+		
 		
 		
 		if(races.isEmpty() || styles.isEmpty())
@@ -447,6 +507,10 @@ public class SelectScreen implements Screen {
 		
 		timeHolder += delta * 10f;
 		regionPointer = 15 + (int) (timeHolder) % 3;
+		
+		
+		
+		
 		
 		
 	}

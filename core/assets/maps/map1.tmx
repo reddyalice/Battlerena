@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="36">
+<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="37">
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16" tilecount="256" columns="16">
   <image source="tilemaptextures/dungeon.png" width="256" height="256"/>
  </tileset>
@@ -332,11 +332,11 @@
   <object id="31" x="208.25" y="140" width="127.5" height="25"/>
   <object id="32" x="336" y="172.25" width="335.75" height="16.5"/>
   <object id="35" x="672" y="107.25" width="63.75" height="74.5"/>
+  <object id="36" x="26.6665" y="11.3333" width="192.667" height="12.8333"/>
  </objectgroup>
  <objectgroup id="3" name="pits">
   <object id="22" x="367.854" y="30.75" width="271.333" height="41.5"/>
   <object id="23" x="367.854" y="123.958" width="272.667" height="51.5"/>
-  <object id="25" x="22.894" y="11.0303" width="192.667" height="12.8333"/>
  </objectgroup>
  <objectgroup id="6" name="spawns">
   <object id="26" name="playerSpawn" x="71" y="71">

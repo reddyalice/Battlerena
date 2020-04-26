@@ -48,12 +48,12 @@ public class ShootArrow extends Skill {
 		font = Assets.GetFont("empty"); 
 		cc.var.put("lastShootArrowN", -1);
 		
-		if(cc == PlayScreen.playerChar)
+		if(cc == Core.playerChar)
 		PlayScreen.UIDraws.Add("arrow", x -> {
 			font.draw(x, "Existing Arrow Count : " + (1 + (int)cc.var.get("lastShootArrowN")), 30, 30);
 		});
 		
-		PlayScreen.beginContantCalls.Add("arrowContact"+ cc.team, c -> {
+		Core.beginContantCalls.Add("arrowContact"+ cc.team, c -> {
 			String fA = (String)c.getFixtureA().getUserData();
 			String fB = (String)c.getFixtureB().getUserData();
 	
@@ -178,7 +178,7 @@ public class ShootArrow extends Skill {
 							cc.var.remove("shootArrowO" + k);
 							cc.var.remove("shootArrowRot" + k);
 							//light.remove();
-							PlayScreen.world.destroyBody(body);
+							Core.world.destroyBody(body);
 							cc.var.remove("shootArrawBody" + k);
 							//cc.var.remove("shootArrowLight" + k);
 							if(k == lastN) {

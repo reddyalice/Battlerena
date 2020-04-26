@@ -41,7 +41,7 @@ public class UpdateCharactherSystem extends EntitySystem {
 		VelocityComponent vc =  entity.getComponent(VelocityComponent.class);
 		PhysicsComponent phc = entity.getComponent(PhysicsComponent.class);
 		cc.lookDir.nor();
-		float vis = (cc.visibility + PlayScreen.playerChar.vision) / 2f;
+		float vis = (cc.visibility + Core.playerChar.vision) / 2f;
 		float dot = -cc.lookDir.x;
 		float det = -cc.lookDir.y;
 		cc.rotation = (float) Math.atan2(det, dot);

@@ -1,5 +1,6 @@
 package com.alice.arena.systems;
 
+import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PlayerComponent;
 import com.alice.arena.components.PositionComponent;
@@ -39,7 +40,7 @@ public class ControlSystem extends EntitySystem {
 	public void update(float deltaTime) {
 		
 		Vector2 diff = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-		Entity en = PlayScreen.Player;
+		Entity en = Core.Player;
 		VelocityComponent vc = en.getComponent(VelocityComponent.class);
 		CharactherComponent cc = en.getComponent(CharactherComponent.class);
 		PositionComponent pc = en.getComponent(PositionComponent.class);

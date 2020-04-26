@@ -1,5 +1,6 @@
 package com.alice.arena.data.skills;
 
+import com.alice.arena.Core;
 import com.alice.arena.components.AIComponent;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
@@ -40,8 +41,8 @@ public class WarriorSword extends Skill {
 		b.setBullet(true);
 		cc.var.put("swordBody",b);
 		
-		if(!PlayScreen.beginContantCalls.consumers.containsKey("swordHit" + cc.team))
-			PlayScreen.beginContantCalls.Add("swordHit" + cc.team, x -> {
+		if(!Core.beginContantCalls.consumers.containsKey("swordHit" + cc.team))
+			Core.beginContantCalls.Add("swordHit" + cc.team, x -> {
 				String fA = (String) x.getFixtureA().getUserData();
 				String fB = (String) x.getFixtureB().getUserData();
 				
@@ -95,7 +96,8 @@ public class WarriorSword extends Skill {
 						int id = Integer.parseInt(ct[2]);
 						if(!charTeam.contentEquals(team))
 						{
-							Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
+							if(Registry.chars.get(id) != null)
+								Registry.chars.get(id).getComponent(CharactherComponent.class).health -= damage;
 						}
 						
 					}

@@ -1,5 +1,7 @@
 package com.alice.arena.screens;
 
+import java.util.HashSet;
+
 import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.data.Race;
@@ -65,25 +67,16 @@ public class PlayScreen implements Screen {
 	private ExtendViewport UIViewport;
 	private Engine engine;
    
-	private VfxManager vfxManager;
-    private ChromaticAberrationEffect chromeEffect;
-    private VignetteEffect vignetteEffect;
-	private OldTvEffect oldTVEffect;
-	private BloomEffect bloom;
+	
 
 	
-	public static Entity Player; 
-	public static CharactherComponent playerChar;
-	public static Vector2 playerSpawnPoint;
-	
 	public static EvE<SpriteBatch> UIDraws = new EvE<SpriteBatch>();
-	public static EvE<Contact> beginContantCalls = new EvE<Contact>();
-	public static EvE<Contact> endContantCalls = new EvE<Contact>();
+
 	public static PlayScreen screen;
 	
 	public boolean change = false;
 	
-	private int numberOfSteps = 3;
+	private int numberOfSteps = 6;
 	
 	private SpriteBatch batch;
 	private SpriteBatch UIBatch;
@@ -93,8 +86,7 @@ public class PlayScreen implements Screen {
 	private float mapScale = 2;
 	
 	
-	public static World world;
-	public static RayHandler rayHandler;
+
 	
 	public PlayScreen(Race selectedR, Style selectedS, Skill... selectedSS) {
 		screen = this;
@@ -110,52 +102,22 @@ public class PlayScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		UIBatch = new SpriteBatch();
-		TiledMap map = Assets.GetMap("map1");
+		TiledMap map = Assets.GetMap("dungeon");
 		mapRenderer = new OrthogonalTiledMapRenderer(map, mapScale, batch);
 
 		shapeRenderer = new ShapeRenderer();
-		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
-		chromeEffect = new ChromaticAberrationEffect();
-		vignetteEffect = new VignetteEffect(false);
-		chromeEffect.setMaxDistortion(0.1f);
-		oldTVEffect = new OldTvEffect();
-		bloom = new BloomEffect(Pixmap.Format.RGBA8888);
+	
+		
 		//vfxManager.addEffect(chromeEffect);
         //vfxManager.addEffect(vignetteEffect);
         //vfxManager.addEffect(oldTVEffect);;
 		shapeRenderer.setAutoShapeType(true);
 		debugRenderer = new Box2DDebugRenderer();
 		
-		world = new World(new Vector2(0,0), false);
-		rayHandler = new RayHandler(world, Core.WIDTH / 8, Core.HEIGHT / 8);
-	 	rayHandler.setAmbientLight(0.5f);
+
+		Core.rayHandler.setAmbientLight(0.5f);
 	 	
-	 	world.setContactListener(new ContactListener() {
-			
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void endContact(Contact contact) {
-				endContantCalls.Broadcast(contact);
-				
-			}
-			
-			@Override
-			public void beginContact(Contact contact) {
-				beginContantCalls.Broadcast(contact);
-				
-			}
-		});
+	 	
 	 	
 	 	
 		
@@ -172,7 +134,7 @@ public class PlayScreen implements Screen {
 			def.position.set(rect.getX() * mapScale + rect.width / 2f *mapScale, rect.getY() * mapScale + rect.height / 2f * mapScale);
 			fdef.shape = shape;
 			
-			b = world.createBody(def);
+			b = Core.world.createBody(def);
 			Fixture f = b.createFixture(fdef);
 			f.setUserData("wall");
 
@@ -188,29 +150,41 @@ public class PlayScreen implements Screen {
 			def.position.set(rect.getX() * mapScale + rect.width / 2f *mapScale, rect.getY() * mapScale + rect.height / 2f * mapScale);
 			fdef.shape = shape;
 			
-			b = world.createBody(def);
+			b = Core.world.createBody(def);
 			Fixture f = b.createFixture(fdef);
 			f.setUserData("pit");
 
 		
 		}
-	
-		RectangleMapObject playerSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("playerSpawn");
+			
+		
+		HashSet<Entity> ais = new HashSet<Entity>();
 		
 		
-		Entity[] ais = new Entity[3];
-		
-		for(int i = 0; i < 3; i++) {
-			RectangleMapObject aiSpawn = (RectangleMapObject) map.getLayers().get("spawns").getObjects().get("ai" + (i + 1));
-			ais[i] = Builder.SpawnRandomAICharacther(rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, "test");
+		for(RectangleMapObject mObject : map.getLayers().get("spawns").getObjects().getByType(RectangleMapObject.class))
+			
+		{
+			if(mObject.getName().contentEquals("playerSpawn")) {
+
+				RectangleMapObject playerSpawn = mObject;
+
+				Core.playerSpawnPoint = new Vector2(playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale);
+				Core.Player = Builder.SpawnPlayerCharacther(Core.rayHandler,Core.playerSpawnPoint.x, Core.playerSpawnPoint.y, selectedR, selectedS, "player", selectedSS);
+
+			}
+			
+			if(mObject.getName().startsWith("ai")) {
+				RectangleMapObject aiSpawn = mObject;
+				ais.add(Builder.SpawnRandomAICharacther(Core.rayHandler, aiSpawn.getRectangle().getX()  * mapScale, aiSpawn.getRectangle().getY() * mapScale, 1, Math.random() < 0.5d ? "test" : "not test"));
+			}
+			
+			
 		}
 		
 		
 		
-		playerSpawnPoint = new Vector2(playerSpawn.getRectangle().x * mapScale, (float)playerSpawn.getRectangle().y * mapScale);
 		
 		engine = new Engine();
-		Player = Builder.SpawnPlayerCharacther(rayHandler,playerSpawnPoint.x, playerSpawnPoint.y, selectedR, selectedS, "player", selectedSS);
 
 		
 		engine.addSystem(new ControlSystem(viewport));
@@ -221,34 +195,35 @@ public class PlayScreen implements Screen {
 		
 		for(Entity en : ais)
 			engine.addEntity(en);
-		playerChar = Player.getComponent(CharactherComponent.class);
+		Core.playerChar = Core.Player.getComponent(CharactherComponent.class);
 		
-		engine.addEntity(Player);
+		engine.addEntity(Core.Player);
 		UIDraws.Add("FPS", x -> {
 			BitmapFont f = Assets.GetFont("fff");
 			f.getData().setScale(0.4f);
 			f.draw(x, "FPS : " + Gdx.graphics.getFramesPerSecond(), 30, Core.HEIGHT - 10);
-			f.draw(x, "Health : " + playerChar.health + "/" + playerChar.maxHealth, 30, Core.HEIGHT - 30);
-			f.draw(x, "Energy : " + playerChar.energy + "/" + playerChar.maxEnergy, 30,Core.HEIGHT - 50);
-			f.draw(x, "Speed : " + playerChar.speed, 30,Core.HEIGHT - 70);
-			f.draw(x, "Armor : " + playerChar.armor, 30,Core.HEIGHT - 90);
-			f.draw(x, "Visibility : " + playerChar.visibility, 30,Core.HEIGHT - 110);
-			f.draw(x, "Vision : " +  playerChar.vision, 30,Core.HEIGHT - 130);
-			f.draw(x, "Health Regen : " + playerChar.healthRegen, 30,Core.HEIGHT - 150);
-			f.draw(x, "Energy Regen : " + playerChar.energyRegen, 30,Core.HEIGHT - 170);
+			f.draw(x, "Health : " + Core.playerChar.health + "/" + Core.playerChar.maxHealth, 30, Core.HEIGHT - 30);
+			f.draw(x, "Energy : " + Core.playerChar.energy + "/" + Core.playerChar.maxEnergy, 30,Core.HEIGHT - 50);
+			f.draw(x, "Speed : " + Core.playerChar.speed, 30,Core.HEIGHT - 70);
+			f.draw(x, "Armor : " + Core.playerChar.armor, 30,Core.HEIGHT - 90);
+			f.draw(x, "Visibility : " + Core.playerChar.visibility, 30,Core.HEIGHT - 110);
+			f.draw(x, "Vision : " +  Core.playerChar.vision, 30,Core.HEIGHT - 130);
+			f.draw(x, "Health Regen : " + Core.playerChar.healthRegen, 30,Core.HEIGHT - 150);
+			f.draw(x, "Energy Regen : " + Core.playerChar.energyRegen, 30,Core.HEIGHT - 170);
 
 		});
 		
 		
-		if(playerChar.race == Registry.RACES.Glitch) {	
-			vfxManager.removeAllEffects();
-			vfxManager.addEffect(chromeEffect);
-        	vfxManager.addEffect(vignetteEffect);
-        	vfxManager.addEffect(oldTVEffect);;
+		if(Core.playerChar.race == Registry.RACES.Glitch) {	
+			Core.VfxManager.removeAllEffects();
+			
+			Core.VfxManager.addEffect(Core.vignetteEffect);
+			Core.VfxManager.addEffect(Core.oldTVEffect);;
 		
-		}else if(playerChar.race == Registry.RACES.Elf) {
-			vfxManager.removeAllEffects();
-			vfxManager.addEffect(bloom);
+		}else if(Core.playerChar.race == Registry.RACES.Elf) {
+			Core.VfxManager.removeAllEffects();
+			Core.VfxManager.addEffect(Core.chromeEffect);
+		
 		}
 		
 		
@@ -256,16 +231,16 @@ public class PlayScreen implements Screen {
 			
 			
 			
-			vfxManager.removeAllEffects();
+			Core.VfxManager.removeAllEffects();
 		}
 
-		camera.zoom = Math.max(0.3f, Math.min(0.6f * playerChar.vision, camera.zoom));
+		camera.zoom = Math.max(0.3f, Math.min(0.6f * Core.playerChar.vision, camera.zoom));
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			
 			@Override
 			public boolean scrolled(int amount) {
 				camera.zoom += amount * Core.deltaTime * 3f;
-				camera.zoom = Math.max(0.3f, Math.min(0.6f * playerChar.vision, camera.zoom));
+				camera.zoom = Math.max(0.3f, Math.min(0.6f * Core.playerChar.vision, camera.zoom));
 				return super.scrolled(amount);
 			}
 			
@@ -290,8 +265,7 @@ public class PlayScreen implements Screen {
 			
 			@Override
 			public void run() {
-				world.step(delta, 12, 6);
-				world.step(delta, 12, 6);
+				Core.world.step(delta, 12, 6);
 				
 			}
 		});
@@ -306,15 +280,15 @@ public class PlayScreen implements Screen {
 			
 			@Override
 			public void run() {
-				rayHandler.update();
+				Core.rayHandler.update();
 				
 			}
 		});
 		worldSteps[numberOfSteps] = rayH;
 		rayH.run();
 		
-		vfxManager.cleanUpBuffers();
-		vfxManager.beginCapture();
+		Core.VfxManager.cleanUpBuffers();
+		Core.VfxManager.beginCapture();
 		camera.update();
 		mapRenderer.setView(camera);
 		mapRenderer.render();
@@ -329,18 +303,18 @@ public class PlayScreen implements Screen {
 		
 		
 		engine.update(delta);
-		rayHandler.setCombinedMatrix(camera);
+		Core.rayHandler.setCombinedMatrix(camera);
 		
 		batch.end();
 		
 		shapeRenderer.end();
 		
 		//debugRenderer.render(world, camera.combined);
-		vfxManager.endCapture();
-		vfxManager.applyEffects();
-		vfxManager.renderToScreen();
+		Core.VfxManager.endCapture();
+		Core.VfxManager.applyEffects();
+		Core.VfxManager.renderToScreen();
 		
-		rayHandler.render();
+		Core.rayHandler.render();
 		UIBatch.begin();
 		UIBatch.setProjectionMatrix(UICamera.combined);
 		UIDraws.Broadcast(UIBatch);
@@ -368,10 +342,10 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		vfxManager.resize(width, height);
+		
 		UIViewport.update(width,height, true);
 		viewport.update(width,height, true);
-		rayHandler.resizeFBO(width / 8, height / 8);
+		
 	}
 
 	@Override
@@ -396,14 +370,8 @@ public class PlayScreen implements Screen {
 	public void dispose() {
 		UIDraws.Dispose();
 		shapeRenderer.dispose();
-		vfxManager.dispose();
-		chromeEffect.dispose();
-		vignetteEffect.dispose();
-		oldTVEffect.dispose();
-		bloom.dispose();
+		
 		batch.dispose();
-		world.dispose();
-		rayHandler.dispose();
 		debugRenderer.dispose();
 		mapRenderer.dispose();
 	}

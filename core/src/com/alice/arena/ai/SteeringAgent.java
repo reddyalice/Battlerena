@@ -1,5 +1,6 @@
 package com.alice.arena.ai;
 
+import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PhysicsComponent;
 import com.alice.arena.components.PositionComponent;
@@ -111,7 +112,7 @@ public class SteeringAgent extends SteerableAdapter<Vector2>{
 					@Override
 					public boolean collides(Ray<Vector2> ray) {
 						RCallback callback = new RCallback();
-						PlayScreen.world.rayCast(callback, ray.start, ray.end);
+						Core.world.rayCast(callback, ray.start, ray.end);
 						return callback.collided;
 					}
 					
@@ -125,7 +126,7 @@ public class SteeringAgent extends SteerableAdapter<Vector2>{
 						RCallback callback = new RCallback();
 						
 						outputCollision = callback.outputCollision;
-						PlayScreen.world.rayCast(callback, inputRay.start, inputRay.end);
+						Core.world.rayCast(callback, inputRay.start, inputRay.end);
 						return callback.collided;
 					}
 					

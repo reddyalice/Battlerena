@@ -1,5 +1,6 @@
 package com.alice.arena.systems;
 
+import com.alice.arena.Core;
 import com.alice.arena.components.CharactherComponent;
 import com.alice.arena.components.PositionComponent;
 import com.alice.arena.data.Skill;
@@ -42,7 +43,7 @@ public class CharactherRenderingSystem extends IteratingSystem {
 		CharactherComponent cc = entity.getComponent(CharactherComponent.class);
 		
 		Color c = new Color(Color.WHITE);
-		float vis = (cc.visibility +  PlayScreen.playerChar.vision) / 2f;
+		float vis = (cc.visibility +  Core.playerChar.vision) / 2f;
 		if(vis < 1f && vis >= 0.5f)
 			c.a *= vis;
 		

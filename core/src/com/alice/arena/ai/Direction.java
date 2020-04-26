@@ -1,5 +1,6 @@
 package com.alice.arena.ai;
 
+import com.alice.arena.Core;
 import com.alice.arena.screens.PlayScreen;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +33,7 @@ public class Direction implements Connection<Vector2> {
 				return 0;
 			}
 		};
-		PlayScreen.world.rayCast(callBack, origin, destinaion);
+		Core.world.rayCast(callBack, origin, destinaion);
 		
 		
 	}

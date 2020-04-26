@@ -2,6 +2,7 @@ package com.alice.arena.systems;
 
 import java.util.ArrayList;
 
+import com.alice.arena.Core;
 import com.alice.arena.ai.AIState;
 import com.alice.arena.ai.AnyHeuristic;
 import com.alice.arena.ai.Direction;
@@ -85,7 +86,7 @@ public class AIUpdateSystem extends EntitySystem {
 			};
 
 			for(int i = 0; i < 30; i++) {
-				PlayScreen.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 300f,  pc.y + cc.race.height / 2f + ls.y * 300f);
+				Core.world.rayCast(callback, pc.x + cc.race.width / 2f , pc.y + cc.race.height / 2f, pc.x  + cc.race.width / 2f + ls.x * 300f,  pc.y + cc.race.height / 2f + ls.y * 300f);
 				ls.rotate(6f);
 			}
 			

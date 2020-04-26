@@ -191,7 +191,7 @@ public class Builder {
 		def.type = type;
 		def.position.set(x  + pivotX, y +pivotY );
 		fdef.shape = shape;
-		Body body = PlayScreen.world.createBody(def);
+		Body body = Core.world.createBody(def);
 		Fixture fixture =body.createFixture(fdef);
 		fixture.setUserData(userData);
 		fixture.setSensor(trigger);

@@ -32,12 +32,6 @@ public class SelectScreen implements Screen {
 	
 	private SpriteBatch batch;
 	
-	private VfxManager vfxManager;
-    private ChromaticAberrationEffect chromeEffect;
-    private VignetteEffect vignetteEffect;
-	private OldTvEffect oldTVEffect;
-	private BloomEffect bloom;
-	
 	private Texture skillSocket;
 	private Texture holder;
 	private Texture indic;
@@ -85,16 +79,7 @@ public class SelectScreen implements Screen {
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(Core.WIDTH, Core.HEIGHT, camera);
 		viewport.apply(true);
-		
-		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
-		chromeEffect = new ChromaticAberrationEffect();
-		vignetteEffect = new VignetteEffect(false);
-		chromeEffect.setMaxDistortion(0.1f);
-		oldTVEffect = new OldTvEffect();
-		bloom = new BloomEffect(Pixmap.Format.RGBA8888);
-        //vfxManager.addEffect(chromeEffect);
-        //vfxManager.addEffect(vignetteEffect);
-        //vfxManager.addEffect(oldTVEffect);;
+	
 		scale *= ((float)Core.WIDTH / 1024f);
 
 		for(int key : Registry.raceList.keySet()) 
@@ -141,14 +126,14 @@ public class SelectScreen implements Screen {
 		
 		if(tmp != races.get(selectedRaceIndex)) {
 			if(races.get(selectedRaceIndex) == Registry.RACES.Glitch) {	
-				vfxManager.removeAllEffects();
-				vfxManager.addEffect(chromeEffect);
-	        	vfxManager.addEffect(vignetteEffect);
-	        	vfxManager.addEffect(oldTVEffect);;
+				Core.VfxManager.removeAllEffects();
+				Core.VfxManager.addEffect(Core.vignetteEffect);
+				Core.VfxManager.addEffect(Core.oldTVEffect);;
 			
 			}else if(races.get(selectedRaceIndex) == Registry.RACES.Elf) {
-				vfxManager.removeAllEffects();
-				vfxManager.addEffect(bloom);
+				Core.VfxManager.removeAllEffects();
+				Core.VfxManager.addEffect(Core.chromeEffect);
+				
 			}
 			
 			
@@ -156,7 +141,7 @@ public class SelectScreen implements Screen {
 				
 				
 				
-				vfxManager.removeAllEffects();
+				Core.VfxManager.removeAllEffects();
 			}
 		}
 		
@@ -300,8 +285,8 @@ public class SelectScreen implements Screen {
 		
 		
 		
-		vfxManager.cleanUpBuffers(Color.BLACK);
-		vfxManager.beginCapture();
+		Core.VfxManager.cleanUpBuffers(Color.BLACK);
+		Core.VfxManager.beginCapture();
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -532,9 +517,9 @@ public class SelectScreen implements Screen {
 		
 		
 		batch.end();
-		vfxManager.endCapture();
-		vfxManager.applyEffects();
-		vfxManager.renderToScreen();
+		Core.VfxManager.endCapture();
+		Core.VfxManager.applyEffects();
+		Core.VfxManager.renderToScreen();
 		
 		
 		timeHolder += delta * 10f;
@@ -550,7 +535,6 @@ public class SelectScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
-		vfxManager.resize(width, height);
 	}
 
 	@Override
@@ -575,11 +559,6 @@ public class SelectScreen implements Screen {
 	public void dispose() {
 		
 		batch.dispose();
-		bloom.dispose();
-		vfxManager.dispose();
-		chromeEffect.dispose();
-		vignetteEffect.dispose();
-		oldTVEffect.dispose();
 
 	}
 
